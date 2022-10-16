@@ -1,30 +1,38 @@
 import React, { useState, useEffect } from "react";
-import "../styles/productCard.css";
+import "../Components/styles/productCard.css";
 import { Container, Row, Col } from "reactstrap";
 import { motion } from "framer-motion";
 import { IoCartSharp } from "react-icons/io5";
 import { Radio, Checkbox, RadioGroup } from "@mui/material";
-import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Card } from "reactstrap";
-import { useStateValue } from "../../context/StateProvider";
-import { actionType } from "../../context/reducer";
-import { Troubleshoot } from "@mui/icons-material";
-import { connectStorageEmulator } from "firebase/storage";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+// import { useStateValue } from "../../context/StateProvider";
+import { useStateValue } from "../context/StateProvider";
+// import { actionType } from "../../context/reducer";
+import { actionType } from "../context/reducer";
 
 const ProductCard = ({ data }) => {
   const [modal, setModal] = useState(false);
-  const [{ cartItems }, dispatch] = useStateValue();
+  const [{ cartItems }, dispatch] = useStateValue([]);
   const [size, setSize] = useState([]);
-  // const [boxChecked, setBoxChecked] = useState(false);
-  // const [modalInfoPrice, setModalInfoPrice] = useState(0);
-  // const [selectedAddon, setSelectedAddon] = useState();
   const [isChecked, setIsChecked] = useState(false);
   const [sizeIsChecked, setSizeIsChecked] = useState(false);
+  // states 
+  const [addonsMeat, setAddonsMeat] = useState([]);
+  const [meatOption, setMeatOption] = useState(null);
+  const [meatOptionPrice, setMeatOptionPrice] = useState(0);
+  const [sumMeatAndAddons, setSumMeatAndAddons] = useState();
+  const [addonsMeatPrice, setAddonsMeatPrice] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+  const [totalItems, setTotalItems] = useState([]) // total selected items in this state
+
+
   const [price, setPrice] = useState(0);
   const [selectedAddonPrice, setSelectedAddonPrice] = useState(0);
   const [arabicVariantDescription, setArabicVariantDescription] = useState();
   const [variantDescription, setVariantDescription] = useState();
+  const [meatPrice, setMeatPrice] = useState(0);
+
   const [addons, setAddons] = useState([]);
   // console.log("addons:", { addons });
   const [modalInfo, setModalInfo] = useState([]);
@@ -37,15 +45,20 @@ const ProductCard = ({ data }) => {
   };
   const toggle = () => {
     setModal(!modal);
+    setAddonsMeat([])
+    setMeatOption([])
   };
 
-  const cartDispatch = () => {
-    localStorage.setItem("cartItems", JSON.stringify(productItems));
-    dispatch({
-      type: actionType.SET_CARTITEMS,
-      cartItems: productItems,
-    });
-  };
+
+  // const cartDispatch = () => {
+  //   localStorage.setItem("cartItems", JSON.stringify(productItems));
+  //   dispatch({
+  //     type: actionType.SET_CARTITEMS,
+  //     cartItems: productItems,
+  //   });
+  // };
+
+  console.log('totalItems', totalItems)
 
   const addToCart = (item) => {
     // cartItems.map((cartItem) => {
@@ -63,9 +76,9 @@ const ProductCard = ({ data }) => {
     dispatch({
       type: actionType.SET_CARTITEMS,
       // cartItems: [...cartItems, item],
-      cartItems: [...filteredCartItems, item],
+      cartItems: [...cartItems,totalItems],
     });
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    localStorage.setItem("cartItems", JSON.stringify(totalItems));
   };
 
   const increase = (item) => {
@@ -108,7 +121,7 @@ const ProductCard = ({ data }) => {
     // setproductQty(productQty - 1);
     // return productQty;
   };
-  // console.log(modalInfo.qty)
+  console.log(modalInfo.qty)
   // const handleMeatOptionsChange = (event) => {
   //   const { value, checked } = event.target;
   //   console.log(`${value} is ${checked}`);
@@ -132,29 +145,75 @@ const ProductCard = ({ data }) => {
   const handleChange = (event) => {
     setValue(event.target.value);
     setSizeIsChecked(event.target.checked);
-    setIsChecked(!isChecked);
+    setIsChecked(!isChecked)
     // setIsChecked(false);
   };
+
+  // let a = modalInfo?.variations[0]?.meatOptions?.map(v => v?.meatOption)
+  //   let b = addons?.map(v => v?.meatOption)
+
+  //   // console.log('addons', a)
+  //   console.log('addons filtter', option)
+  //   console.log('addons =====>', addons)
 
   const handleAddonsChange = (event, option) => {
     const { value, checked } = event.target;
     // console.log(`${value} is ${checked}`);
-    if (checked) {
-      setAddons([...addons, option]);
-      setIsChecked(true);
-      modalInfo.price = parseFloat(modalInfo.price) + parseFloat(option.price);
-    } else {
-      setAddons(addons.filter((addon) => addon !== option));
-      setIsChecked(false);
-      modalInfo.price = parseFloat(modalInfo.price) - parseFloat(option.price);
-    }
+    // console.log('option', option)
+    // if (checked) {
+    //   setAddons([...addons, option]);
+    //   setIsChecked(true);
+    //   modalInfo.price = parseFloat(modalInfo.price) + parseFloat(option.price)
+    // } else {
+    //   setAddons(addons.filter((addon) => addon !== option));
+    //   setIsChecked(false);
+    //   modalInfo.price = parseFloat(modalInfo.price) - parseFloat(option.price)
+    // }
+  };
 
-    addAddons(modalInfo);
-  };
-  const addAddons = (selectedItem) => {
-    console.log(selectedItem.variations.map((item) => item.addOns));
-  };
-  console.log(addons);
+
+
+  const meat = (e, option) => {
+    setMeatOptionPrice(option.price)
+    setMeatOption(option)
+    setSumMeatAndAddons(option.price)
+  }
+
+  const addonsMeatFun = (e, option) => {
+
+    if (e?.target?.checked) {
+      setIsChecked(true);
+      setAddonsMeat([...addonsMeat, option])
+    } else {
+      setAddonsMeat(addonsMeat.filter((a) => a !== option))
+      setIsChecked(false);
+      console.log('runing')
+    }
+  }
+
+  let sum = 0
+  let add = () => {
+    addonsMeat?.map((v, i) => {
+      sum = sum + (+v?.price || 0)
+      setAddonsMeatPrice(sum)
+      return sum
+    })
+    setSumMeatAndAddons((+meatOptionPrice || 0) + (+addonsMeatPrice || 0)) // adding the prices of meatoptions and addon
+    // setTotalItems([...totalItems])
+    setTotalItems([meatOption, {addons:addonsMeat}]) // combining meatoptions state and addons state to get a final state 
+
+  }
+
+  useEffect(() => {
+    add()
+  }, [addonsMeat])
+
+
+  // console.log('addonsMeat', addonsMeatPrice)
+
+
+  let totalPrice = ((+meatOptionPrice || 0) + (+addonsMeatPrice || 0)) * quantity  // total price that is addition of all the items
+  console.log('meatOptionPrice', totalPrice)
   return (
     <>
       {data &&
@@ -165,7 +224,8 @@ const ProductCard = ({ data }) => {
             onClick={() => {
               toggle();
               setModalInfo(item);
-              // console.log(item.title);
+              // setTotalItems([item]) 
+
             }}
             style={{ width: "15rem" }}
           >
@@ -210,34 +270,34 @@ const ProductCard = ({ data }) => {
                             "hot drinks" ||
                             "cold drinks" ||
                             "smoothies") && (
-                          <div
-                            // className="imgContainer"
-                            style={{
-                              minHeight: "13rem",
-                              maxHeight: "28rem",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              overflow: "hidden",
-                              transition: "all 0.2s ease",
-                            }}
-                          >
-                            <img src={modalInfo?.imageURL} />
-                          </div>
-                        )}
+                            <div
+                              // className="imgContainer"
+                              style={{
+                                minHeight: "13rem",
+                                maxHeight: "28rem",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                overflow: "hidden",
+                                transition: "all 0.2s ease",
+                              }}
+                            >
+                              <img src={modalInfo?.imageURL} />
+                            </div>
+                          )}
                         {modalInfo.category !==
                           ("fresh juices" ||
                             "cold coffee" ||
                             "hot drinks" ||
                             "cold drinks" ||
                             "smoothies") && (
-                          <div className="imgContainer">
-                            <img
-                              src={modalInfo?.imageURL}
-                              onClick={() => console.log(modalInfo.category)}
-                            />
-                          </div>
-                        )}
+                            <div className="imgContainer">
+                              <img
+                                src={modalInfo?.imageURL}
+                                onClick={() => console.log(modalInfo.category)}
+                              />
+                            </div>
+                          )}
 
                         <p style={{ marginTop: "0.5rem" }}>
                           {modalInfo?.description || variantDescription}
@@ -277,7 +337,7 @@ const ProductCard = ({ data }) => {
                                       <RadioGroup
                                         aria-labelledby="demo-controlled-radio-buttons-group"
                                         name="radio-buttons"
-                                        // value={variant?.meatOption}
+                                      // value={variant?.meatOption}
                                       >
                                         {modalInfo.variations?.map((variants) =>
                                           variants.sizes?.map(
@@ -292,6 +352,7 @@ const ProductCard = ({ data }) => {
                                                   name="radio-buttons"
                                                   value={variant?.size}
                                                   onChange={(e) => {
+                                                    meat(e, variant);
                                                     console.log(e.target.value);
                                                     setVariantDescription(
                                                       variant?.variantDescription
@@ -302,9 +363,9 @@ const ProductCard = ({ data }) => {
                                                     {
                                                       e.target.checked
                                                         ? (modalInfo.price =
-                                                            variant?.price)
+                                                          variant?.price)
                                                         : (modalInfo.price =
-                                                            modalInfo.price);
+                                                          modalInfo.price);
                                                     }
                                                     // setSelectedAddonPrice(
                                                     //   modalInfo.price
@@ -364,7 +425,6 @@ const ProductCard = ({ data }) => {
                                         aria-labelledby="demo-controlled-radio-buttons-group"
                                         name="radio-buttons"
 
-                                        // value={variant?.meatOption}
                                       >
                                         {modalInfo.variations?.map((variants) =>
                                           variants.meatOptions?.map(
@@ -373,15 +433,6 @@ const ProductCard = ({ data }) => {
                                                 className="sizeBtn"
                                                 key={index}
                                               >
-                                                {/* <input
-                                              type='radio'
-                                              name='react-radio-btn'
-                                              value={variant?.price}
-                                              // checked= {isRadioSelected()}
-                                              onChange={(e) => handleRadioClick(e)}
-                                
-                                              /> */}
-
                                                 <Radio
                                                   // {...controlProps(variant?.meatOption)}
                                                   color="success"
@@ -390,8 +441,8 @@ const ProductCard = ({ data }) => {
                                                   value={variant?.meatOption}
                                                   // checked={isChecked[index]}
                                                   onChange={(e) => {
-                                                    // console.log(e.target.value);
-
+                                                    meat(e, variant);
+                                                    setMeatPrice(0)
                                                     setVariantDescription(
                                                       variant?.variantDescription
                                                     );
@@ -400,19 +451,20 @@ const ProductCard = ({ data }) => {
                                                     );
                                                     {
                                                       e.target.checked
-                                                        ? (modalInfo.price =
-                                                            variant?.price)
+                                                        ? (modalInfo.price = Number(modalInfo?.price || 0) + Number(variant?.price || 0))
                                                         : (modalInfo.price = (
-                                                            <small>
-                                                              Price on selction
-                                                            </small>
-                                                          ));
+                                                          <small>
+                                                            Price on selction
+                                                          </small>
+                                                        ));
                                                     }
                                                     // changePrice(variant?.price);
                                                     setSelectedAddonPrice(
                                                       modalInfo.price
                                                     );
                                                     handleChange(e);
+                                                    setMeatPrice(variant?.price || 0)
+
                                                     // handleOnChange(e,index);
                                                   }}
                                                 />
@@ -425,85 +477,6 @@ const ProductCard = ({ data }) => {
                                                   </div>
                                                   <div className="sizeDetails__price">
                                                     QAR {variant?.price}
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            )
-                                          )
-                                        )}
-                                      </RadioGroup>
-
-                                      <hr
-                                        style={{
-                                          background: "#139652",
-                                          color: "#139652",
-                                          borderColor: "#139652",
-                                          height: "3px",
-
-                                          width: "50%",
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-                                )
-                            )}
-                            {modalInfo.variations?.map(
-                              (variant) =>
-                                variant.pastaTypes && (
-                                  <div style={{ width: "100%" }}>
-                                    <h6
-                                      style={{
-                                        width: "100%",
-                                        color: "green",
-                                        margin: 0,
-                                      }}
-                                    >
-                                      Pasta Types
-                                    </h6>
-                                    <small
-                                      style={{ color: "rgb(184, 179, 179)" }}
-                                    >
-                                      Choose 1
-                                    </small>
-                                    <div className="sizeBtns-container">
-                                      <RadioGroup
-                                        aria-labelledby="demo-controlled-radio-buttons-group"
-                                        name="radio-buttons"
-
-                                        // value={variant?.meatOption}
-                                      >
-                                        {modalInfo.variations?.map((variants) =>
-                                          variants.pastaTypes?.map(
-                                            (variant, index) => (
-                                              <div
-                                                className="sizeBtn"
-                                                key={index}
-                                              >
-                                                <Radio
-                                                  color="success"
-                                                  name="radio-buttons"
-                                                  // value={index}
-                                                  value={variant}
-                                                  // checked={isChecked[index]}
-                                                  onChange={(e) => {
-                                                    // e.target.checked
-                                                    //   ? (modalInfo.price =
-                                                    //       variant?.price)
-                                                    //   : (modalInfo.price = (
-                                                    //       <small>
-                                                    //         Price on selction
-                                                    //       </small>
-                                                    //     ));
-
-                                                    
-                                                    // handleChange(e);
-                                                    // handleOnChange(e,index);
-                                                  }}
-                                                />
-
-                                                <div className="sizeDetails">
-                                                  <div className="sizeDetails__name">
-                                                    {variant}
                                                   </div>
                                                 </div>
                                               </div>
@@ -551,10 +524,13 @@ const ProductCard = ({ data }) => {
                                         <div className="addonBtn" key={index}>
                                           <Checkbox
                                             type="checkbox"
+
                                             value={variant?.price}
                                             color="success"
                                             disabled={!modalInfo.price}
                                             onChange={(e) => {
+                                              addonsMeatFun(e, variant)
+                                              console.log('e===>', variant?.price)
                                               handleAddonsChange(e, variant);
                                               // modalInfo.price &&
                                               // e.target.checked === true
@@ -573,7 +549,8 @@ const ProductCard = ({ data }) => {
                                               //         ) -
                                               //         parseInt(variant.price))
                                               //     );
-                                            }}
+                                            }
+                                            }
                                           />
 
                                           <div className="addonDetails">
@@ -600,30 +577,28 @@ const ProductCard = ({ data }) => {
                   <div className="descrptionFooter d-flex align-items-center justify-content-around">
                     {cartItems.map(
                       (item) =>
-                        item.id === modalInfo.id &&
-                        modalInfo.qty >= 1 &&
-                        modalInfo.price && (
+                        /* item.id === modalInfo.id && */ modalInfo.qty >= 1 && modalInfo.price && (
                           <div className="increase-decrease-btns d-flex align-items-center justify-content-between">
                             <motion.button
+                              disabled={quantity > 1 ? false : true}
                               whileTap={{ scale: 0.75 }}
                               className="decrease__btn"
-                              onClick={() => decrease(modalInfo)}
+                              onClick={() => setQuantity((pre) => pre - 1)}
                             >
                               <i className="ri-subtract-line"></i>
                             </motion.button>
                             <span className="counter-quantity">
-                              {cartItems?.length > 0 &&
+                              {quantity}
+                              {/* {cartItems?.length > 0 &&
                                 cartItems?.map((item) => {
+
                                   if (modalInfo.id === item.id) return item.qty;
-                                })}
+                                })} */}
                             </span>
                             <motion.button
                               whileTap={{ scale: 0.75 }}
                               className="increase__btn"
-                              onClick={() => {
-                                // modalInfo.qty += 1;
-                                increase(modalInfo);
-                              }}
+                              onClick={() => setQuantity((pre) => pre + 1)}
                             >
                               <i className="ri-add-line"></i>
                             </motion.button>
@@ -632,21 +607,11 @@ const ProductCard = ({ data }) => {
                     )}
                     <div className="product__price-modal">
                       {modalInfo.price ? (
-                        <span>QAR {modalInfo?.price}</span>
+                        <span>QAR {totalPrice}</span>
                       ) : (
                         <small>Price on selction</small>
                       )}
 
-                      {/* {console.log(
-                          parseFloat(modalInfo?.price) +
-                            parseFloat(selectedAddonPrice)
-                        )} */}
-                      {/* QAR{" "}
-                                  {cartItems.map((item) => {
-                                    if (modalInfo.id === item.id) return modalInfo?.price * item.qty; 
-                                   
-                                  })} */}
-                      {/* modalInfo?.price * qty */}
                     </div>
                     {/* </div> */}
                     {modalInfo?.price || price ? (
@@ -656,7 +621,9 @@ const ProductCard = ({ data }) => {
                           onClick={(e) => {
                             // toggleActiveClass();
 
-                            addToCart(modalInfo);
+                            // addToCart(modalInfo);
+                            addToCart(totalItems);
+
                             toggleActiveClass(e);
                           }}
                           className="cart_btn btn btn-primary"
@@ -736,9 +703,7 @@ const ProductCard = ({ data }) => {
                     {/* <div className="increaseDecreaseBtns__price"> */}
                     {cartItems.map(
                       (item) =>
-                        item.id === modalInfo.id &&
-                        modalInfo.qty >= 1 &&
-                        modalInfo.price && (
+                        item.id === modalInfo.id && modalInfo.qty >= 1 && modalInfo.price && (
                           <div className="increase-decrease-btns d-flex align-items-center justify-content-between">
                             <motion.button
                               disabled={item.qty <= 0}
@@ -771,6 +736,7 @@ const ProductCard = ({ data }) => {
                     <div className="product__price-modal">
                       <span>
                         QAR {modalInfo?.price}
+                        {console.log('modalInfo?.price', modalInfo?.price)}
                         {/* QAR{" "}
                       {cartItems.map((item) => {
                         if (modalInfo.id === item.id) return modalInfo?.price * item.qty; 

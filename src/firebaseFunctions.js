@@ -18,7 +18,18 @@ export const saveItem = async (data) => {
   });
 };
 
+export const saveReviewFS = async (reviewData) => {
+  await setDoc(doc(firestore, "testimonials", `${Date.now()}`), reviewData, {
+    merge: true,
+  });
+};
+
 //get all menu items from firestore
+
+export const getAllReviews = async () => {
+  const reviews = await getDocs(query(collection(firestore, "testimonials"), orderBy("id","desc")));
+  return reviews.docs.map((doc) => doc.reviewData());
+}
 
 export const getAllMenuItems = async () => {
   const items = await getDocs(query(collection(firestore, "menuItems"), orderBy("id","desc")));

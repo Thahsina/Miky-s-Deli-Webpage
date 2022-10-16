@@ -276,7 +276,7 @@ const CreateContainer = () => {
         setAlertStatus("success");
         setTimeout(() => {
           setFields(false);
-          setArabicTitle('')
+          
         }, 4000);
 
         clearData();
@@ -297,6 +297,7 @@ const CreateContainer = () => {
 
   const clearData = () => {
     setTitle("");
+    setArabicTitle('');
     setImageAsset(null);
     setPrice("");
     setDescription("");

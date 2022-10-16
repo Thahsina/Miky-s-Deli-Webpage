@@ -5,6 +5,7 @@ import Helmet from "../Components/Helmet";
 import { Container, Row, Col } from "reactstrap";
 import Slider from "react-slick";
 import ProductCard from "../Components/UI/ProductCard";
+// import ProductCard from "./ProductCCard.jsx";
 import {
   BsFillArrowRightCircleFill,
   BsFillArrowLeftCircleFill,

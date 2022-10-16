@@ -351,25 +351,32 @@ const CateringCard = ({ data }) => {
                                       <li className="d-flex justify-content-between">
                                         <span>{eachType}</span>
                                         <div className="counter d-flex">
-                                          <motion.div
+                                          <motion.button
                                             whileTap={{ scale: 0.5 }}
                                             className="minusBtn"
+                                            // onClick={(e)=> {e.preventDefault()}}
                                           >
                                             <BiMinus
                                               style={{ fontSize: "1rem" }}
                                             />
-                                          </motion.div>
-                                          <div className="counterQuantity">
-                                            1
-                                          </div>
-                                          <motion.div
+                                          </motion.button>
+                                          {/* <div className="counterQuantity">1</div> */}
+                                          <input
+                                            class="counterQuantity"
+                                            name="product-qty"
+                                            min="0"
+                                            max="10"
+                                            value="0"
+                                          />
+                                          <motion.button
                                             whileTap={{ scale: 0.5 }}
                                             className="plusBtn"
+                                            // onClick={()=> {e.preventDefault()}}
                                           >
                                             <BiPlus
                                               style={{ fontSize: "1rem" }}
                                             />
-                                          </motion.div>
+                                          </motion.button>
                                         </div>
                                       </li>
                                     </ul>
@@ -718,29 +725,29 @@ const CateringCard = ({ data }) => {
                                 </div>
 
                                 <div className="counter d-flex">
-                                      <motion.button
-                                        whileTap={{ scale: 0.5 }}
-                                        className="minusBtn"
-                                        // onClick={(e)=> {e.preventDefault()}}
-                                      >
-                                        <BiMinus style={{ fontSize: "1rem" }} />
-                                      </motion.button>
-                                      {/* <div className="counterQuantity">1</div> */}
-                                      <input
-                                        class="counterQuantity"
-                                        name="product-qty"
-                                        min="0"
-                                        max="10"
-                                        value="0"
-                                      />
-                                      <motion.button
-                                        whileTap={{ scale: 0.5 }}
-                                        className="plusBtn"
-                                        // onClick={()=> {e.preventDefault()}}
-                                      >
-                                        <BiPlus style={{ fontSize: "1rem" }} />
-                                      </motion.button>
-                                    </div>
+                                  <motion.button
+                                    whileTap={{ scale: 0.5 }}
+                                    className="minusBtn"
+                                    // onClick={(e)=> {e.preventDefault()}}
+                                  >
+                                    <BiMinus style={{ fontSize: "1rem" }} />
+                                  </motion.button>
+                                  {/* <div className="counterQuantity">1</div> */}
+                                  <input
+                                    class="counterQuantity"
+                                    name="product-qty"
+                                    min="0"
+                                    max="10"
+                                    value="0"
+                                  />
+                                  <motion.button
+                                    whileTap={{ scale: 0.5 }}
+                                    className="plusBtn"
+                                    // onClick={()=> {e.preventDefault()}}
+                                  >
+                                    <BiPlus style={{ fontSize: "1rem" }} />
+                                  </motion.button>
+                                </div>
                               </li>
                             </ul>
                           ))

@@ -4,7 +4,7 @@ import { NavLink, Link } from "react-router-dom";
 import { FaBars, FaHome, FaUser } from "react-icons/fa";
 import { BsCartCheck } from "react-icons/bs";
 import { useState } from "react";
-import { MdKeyboardBackspace } from "react-icons/md";
+import { MdKeyboardBackspace,MdLocationOn } from "react-icons/md";
 
 import "../../Components/styles/sideBar.css";
 
@@ -24,11 +24,16 @@ const routes = [
     name: "Orders",
     icon: <BsCartCheck />,
   },
-  // {
-  //   path: "addresses",
-  //   name: "Addresses",
-  //   icon: <MdLocationOn />,
-  // },
+  {
+    path: "cateringorders",
+    name: "Catering Order",
+    icon: <MdLocationOn />,
+  },
+  {
+    path: "dropofforders",
+    name: "Drop Off Order",
+    icon: <MdLocationOn />,
+  },
 ];
 
 const SideBar = () => {

@@ -344,7 +344,8 @@ const Home = () => {
       {/* <Menu /> */}
 
       <section className="testimonial__section">
-        <Container>
+      <TestimonialSlider />
+        {/* <Container>
           <Row>
             <div className="curve"></div>
             <Col lg="6" md="6" className="mt-4">
@@ -354,9 +355,7 @@ const Home = () => {
                   What our <span>customers</span> are saying
                 </h2>
                 <p className="testimonial__desc">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Distinctio quasi qui minus quos sit perspiciatis inventore
-                  quis provident placeat fugiat!
+                  Find what our customers are talking about us!
                 </p>
 
                 <TestimonialSlider />
@@ -400,7 +399,7 @@ const Home = () => {
               </form>
             </Col>
           </Row>
-        </Container>
+        </Container> */}
       </section>
     </Helmet>
   );
