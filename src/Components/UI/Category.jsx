@@ -9,7 +9,7 @@ import categoryImg02 from "../../images/pasta.png";
 import categoryImg03 from "../../images/sandwich.png";
 import categoryImg04 from "../../images/appetizer.png";
 
-import ProductCard from "../UI/ProductCard";
+import ProductCard from "./ProductCard";
 
 import "../styles/category.css";
 import { useEffect } from "react";
@@ -53,9 +53,9 @@ const Category = () => {
     ],
   });
 
-const toggleIsalandClick =() => {
-  setIslandClick(true)
-}
+  const toggleIsalandClick = () => {
+    setIslandClick(true)
+  }
 
   const toggleActiveCat = (index) => {
     changeCategoryState({
@@ -115,7 +115,7 @@ const toggleIsalandClick =() => {
           </Col>
         ))}
         <div>
-          
+
           {/* <div className="col align-self-end chevron-btns"> */}
           <div className={islandClick ? "col align-self-end chevron-btns" : " "}>
             <motion.div
@@ -134,13 +134,13 @@ const toggleIsalandClick =() => {
             </motion.div>
           </div>
           <div className="w-full my-6 specialitySection" ref={specialitySection}>
-          <div className="w-full specialitySection__container">
-            <ProductCard data={catItems} />
+            <div className="w-full specialitySection__container">
+              <ProductCard data={catItems} />
+            </div>
           </div>
         </div>
-        </div>
 
-        
+
       </Row>
     </Container>
   );
