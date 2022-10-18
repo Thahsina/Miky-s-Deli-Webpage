@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
-import ServicesHeader from "../Components/ServicesHeader";
+import ServicesHeader from "../Components/Header/ServicesHeader";
 import "../Components/styles/servicesPage.css";
 import CateringPage from "./CateringPage";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
-import "../Components/styles/servicesHeader.css";
-import logo from "../images/mikyslogo.png";
+import "../styles/servicesHeader.css";
+import logo from "../../images/mikyslogo.png";
 
 const nav__links = [
   {

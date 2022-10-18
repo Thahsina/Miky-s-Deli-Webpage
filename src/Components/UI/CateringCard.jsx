@@ -16,18 +16,24 @@ import Server from "../../images/server.png";
 import StopWatch from "../../images/stopwatch.png";
 import Location from "../../images/location.png";
 import BookNow from "../../images/bookNow.png";
+import TickImg from "../../images/tick.png";
 import BulletArrow from "../../images/bulletarrow.png";
 import FemaleServer from "../../images/femaleServer.png";
 import image from "../../images/crispy-sandwiches.png";
 import { FaClock } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
 import { BiMinus, BiPlus } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 const CateringCard = ({ data }) => {
   const [modal, setModal] = useState(false);
+  const [modalConfirm, setModalConfirm] = useState(false);
   const [cateringModalInfo, setCateringModalInfo] = useState([]);
 
   const toggle = () => setModal(!modal);
+  const toggleConfirm = () => {
+    setModalConfirm(!modalConfirm);
+  };
   const closeBtn = (
     <button className="close" onClick={toggle} type="button">
       &times;
@@ -804,17 +810,32 @@ const CateringCard = ({ data }) => {
                         </motion.div>
                       </div>
                     </div>
+
                     <motion.button
                       whileTap={{ scale: 0.9 }}
                       type="button"
                       className="booknowBtn"
                       data-dismiss="modal"
+                      onClick={toggleConfirm}
                     >
                       <span>Book Now</span>
                       <span>QAR {cateringModalInfo.price}</span>
                     </motion.button>
                   </ModalFooter>
                 </Modal>
+                <Modal
+                  className="checkout__modal"
+                  isOpen={modalConfirm}
+                  toggle={toggleConfirm}
+                >
+                  <ModalBody className="checkout__modal-content text-center">
+                    <img src={TickImg} alt=" Green Tick" />
+                    <h2>Your order is Comfirmed</h2>
+                    <p>Thank You</p>
+                    <h3>You will recieve a call shortly from our customer support for more details.</h3>
+                  </ModalBody>
+                </Modal>
+                
               </article>
             </div>
           </div>

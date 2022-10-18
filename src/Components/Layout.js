@@ -8,7 +8,7 @@ import Routes from "../routes/Routers";
 import Area from "../pages/Area";
 
 import ScrollToTop from "../Components/UI/ScrollToTop";
-import ServicesHeader from "./ServicesHeader.jsx";
+import ServicesHeader from "../Components/Header/ServicesHeader";
 
 const Layout = () => {
   // useEffect(()=>{

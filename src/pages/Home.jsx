@@ -270,7 +270,7 @@ const Home = () => {
       <section className="pt-4">
         <Category />
       </section>
-      <section>
+      {/* <section>
         <div className="curved-div upper">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 309">
             <path
@@ -299,7 +299,7 @@ const Home = () => {
             ></path>
           </svg>
         </div>
-      </section>
+      </section> */}
       <section className="serviceSection">
         <Container>
           <Row>

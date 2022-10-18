@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
 import TreeView from "@mui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -16,10 +16,6 @@ import {
 const Footer = () => {
   return (
     <footer className="footer">
-      {/* <h1 className="text-center pb-2 text-white">GET IN TOUCH WITH US</h1> */}
-      {/* <section className="mapSection">
-        <div className="mapp__container"></div>
-      </section> */}
       <Container className="mb-4">
         <Row>
           <Col lg="12" md="12" sm="12">
@@ -75,7 +71,7 @@ const Footer = () => {
                     </TreeItem>
                     {/* <TreeItem
                       nodeId="11"
-                      sx={{ pb: 2 }}
+                      sx={{ pb: 2,pt:2, mt:2 }}
                       label="ASAS Twin Towers"
                     >
                       <TreeItem nodeId="12" label="44410993" />

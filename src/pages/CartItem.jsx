@@ -10,7 +10,7 @@ import { actionType } from "../context/reducer";
 
 const CartItem = ({ cartItem, setFlag, flag }) => {
   const [qty, setQty] = useState(cartItem.qty);
-  const [{ cartItems }, dispatch] = useStateValue();
+  const [{ cartItems, user }, dispatch] = useStateValue();
   const [items, setItems] = useState([]);
 
   const cartDispatch = () => {
@@ -84,13 +84,12 @@ const CartItem = ({ cartItem, setFlag, flag }) => {
               QAR {cartItem?.price * qty}
             </span>
           </div>
-          
+
           <div className="catering__quantityContainer">
             <div className=" d-flex align-items-center justify-content-between cartItem-increase__decrease-btns">
               {/* {qty > 1 &&  */}
               <div
                 whileTap={{ scale: 0.75 }}
-               
                 className={`cartItem-decrease__btn ${
                   qty <= 1 ? "disabled" : ""
                 }`}

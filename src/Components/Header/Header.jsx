@@ -1,18 +1,18 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Box, Typography, Menu, MenuItem } from "@mui/material";
+import { Box, Menu, MenuItem } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import { PersonOutline } from "@mui/icons-material";
 import Cart from "../../pages/Cart";
 import adminUser from "../../images/adminUser.png";
 import { Container, Button } from "reactstrap";
-import { Alert } from "reactstrap";
-// import Alert from 'react-bootstrap/Alert';
 import { IoIosCloseCircle } from "react-icons/io";
 import { IoCartSharp } from "react-icons/io5";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import Area from "../../pages/Area";
+import PhoneInput from "react-phone-number-input/input";
+import "react-phone-number-input/style.css";
 import { NavLink, Link } from "react-router-dom";
 
 import {
@@ -60,6 +60,7 @@ const Header = () => {
   const [OTP, setOTP] = useState("");
   const [expandForm, setExpandForm] = useState(false);
   const [cartMenu, setCartMenu] = useState(false);
+
 
   const [error, setError] = useState(null);
   const [loginStatus, setLoginStatus] = useState("");
@@ -193,7 +194,6 @@ const Header = () => {
               ))}
             </div>
           </div>
-          
 
           {/* ======== nav right icons ========= */}
           <div className="nav__right relative d-flex align-items-center gap-4">
@@ -291,34 +291,22 @@ const Header = () => {
                     >
                       <IoIosCloseCircle size="2rem" />
                     </motion.span>
-                    <h3>Sign in to your account</h3>
-                    <h5>with your mobile number</h5>
+                    <div className="logoutMenu__header">
+                      <h3>Sign in </h3>
+                      <h5>with your mobile number</h5>
+                    </div>
                     <div>
                       <form action="submit">
                         <div className="select-input-value">
-                          <input
-                            type="text"
-                            requried="true"
-                            pattern="[0-9]*"
-                            placeholder="Mobile Number"
+                          <PhoneInput
                             autoFocus
+                            defaultCountry="QA"
+                            placeholder="Enter phone number"
                             value={phoneNumber}
-                            onChange={(e) => {
-                              if (e.target.value === "+974 ") {
-                                setExpandForm(false);
-                              }
-                              const experssion = e.target.value.replace(
-                                /[a-zA-Z<>,./!@#$%^&*()_"';:\|?/=-]/,
-                                ""
-                              );
-                              // setPhoneNumber(experssion)
-                              {
-                                e.target.value.length <= 13 &&
-                                  setPhoneNumber(experssion);
-                              }
-                              console.log(phoneNumber);
-                            }}
+                            maxLength={9}
+                            onChange={setPhoneNumber}
                           />
+                         
                           {fields && (
                             <motion.p
                               initial={{ opacity: 0, scale: 0.5 }}
@@ -349,8 +337,8 @@ const Header = () => {
                           {/* Enter OTP */}
                           <input
                             type="password"
-                            placeholder="Enter the OTP"
-                            maxLength={8}
+                            placeholder=""
+                            maxLength={6}
                             value={OTP}
                             onChange={verifyOTP}
                           />

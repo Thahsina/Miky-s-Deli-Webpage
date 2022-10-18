@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Container, Row } from "reactstrap";
-import { useStateValue } from "../context/StateProvider";
-import '../Components/styles/ordersPage.css'
+import { useStateValue } from "../../context/StateProvider";
+import '../../Components/styles/ordersPage.css'
 
 const OrdersPage = () => {
   const [{ user, cart }] = useStateValue();
@@ -28,17 +28,7 @@ const OrdersPage = () => {
               </tbody>
             </table>
 
-            {/* total section */}
-            <div className=" total mt-4">
-              <h6>
-                Subtotal: QAR
-                <span className="cart__subtotal">SubAmount</span>
-              </h6>
-              <h6>
-                Delivery:
-                <span className="cart__subtotal">Free</span>
-              </h6>
-            </div>
+            
           </Col>
         </Row>
       </Container>

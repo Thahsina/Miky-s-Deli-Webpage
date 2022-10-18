@@ -107,7 +107,7 @@ const Cart = ({ cartMenu, setCartMenu }) => {
              
             </Link>
           ) : (
-            <Link to="/">
+            // <Link to="/">
               <motion.button
                 type="button"
                 whileTap={{ scale: 0.8 }}
@@ -116,7 +116,7 @@ const Cart = ({ cartMenu, setCartMenu }) => {
               >
                 Sign In to Check Out
               </motion.button>
-            </Link>
+            // </Link>
           )}
         </div>
 
