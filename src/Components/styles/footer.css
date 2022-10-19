@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Istok+Web&display=swap");
 .footer {
   padding-top: 2rem;
- 
+
   margin-bottom: 0rem;
   background: #e01f25;
   color: #fff;
@@ -11,45 +11,11 @@
   cursor: pointer;
 }
 
-
-/* .follow-icons {
-  margin-bottom: 2rem;
-  border: 1px solid blue;
-} */
-
 .map__container {
   border: 1px solid salmon;
   min-height: 300px;
   overflow: hidden;
 }
-
-/* .footer__branches {
-  background: transparent !important;
-  border: none !important;
-}
-
-.footer__branches:focus {
-  border: none !important;
-}
-
-.branches-item,
-.services-item {
-  background: transparent !important;
-}
-.services-item a {
-  text-decoration: none;
-  outline: none;
-}
-.branches-item span,
-.services-item span {
-  font-weight: 400;
-  font-size: 1rem;
-  color: #ffffff;
-}
-.services-item span:hover {
-  font-weight: 600;
-  cursor: pointer;
-} */
 
 .follow-icons ul a {
   color: #ffff;
@@ -85,10 +51,9 @@
   transform: scale(1.2);
 }
 
-.contactUs__container{
+.contactUs__container {
   min-width: 100%;
   /* border: 1px solid blue; */
-  
 }
 
 .copyright {
@@ -127,11 +92,8 @@
   .footer-col {
     margin-top: 10px;
   }
-.contactUs__container{
-  min-width: 100%;
-  overflow-y: scroll;
-}
-
-
-  
+  .contactUs__container {
+    min-width: 100%;
+    /* overflow-y: scroll; */
+  }
 }

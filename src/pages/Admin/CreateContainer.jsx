@@ -61,7 +61,7 @@ const categories = [
   {
     id: 8,
     name: "Main Course",
-    urlParamName: "maincourse",
+    urlParamName: "main course",
   },
   {
     id: 9,
@@ -76,17 +76,17 @@ const categories = [
   {
     id: 11,
     name: "Cold Drinks",
-    urlParamName: "colddrinks",
+    urlParamName: "cold drinks",
   },
   {
     id: 12,
     name: "Cold Coffee",
-    urlParamName: "coldcoffee",
+    urlParamName: "cold coffee",
   },
   {
     id: 13,
     name: "Hot Drinks",
-    urlParamName: "hotdrinks",
+    urlParamName: "hot drinks",
   },
   {
     id: 14,
@@ -100,52 +100,19 @@ const categories = [
   },
 ];
 
-// const sizes = [
-//   {
-//     id: 1,
-//     name: "Regular",
-//     urlParamName: "regular",
-//   },
-//   {
-//     id: 2,
-//     name: "Medium",
-//     urlParamName: "medium",
-//   },
-//   {
-//     id: 3,
-//     name: "Large",
-//     urlParamName: "large",
-//   },
-//   {
-//     id: 4,
-//     name: "Jumbo",
-//     urlParamName: "jumbo",
-//   },
-//   {
-//     id: 5,
-//     name: "VIP",
-//     urlParamName: "vip",
-//   },
-// ];
-
 const CreateContainer = () => {
   const [{ menuItems }, dispatch] = useStateValue();
-
   const [title, setTitle] = useState("");
   const [arabicTitle, setArabicTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [arabicDescription, setArabicDescription] = useState("");
   const [price, setPrice] = useState("");
-  // const [varaitions, setVaraitions] = useState([]);
-
   const [category, setCategory] = useState(null);
-  // const [size, setSize] = useState(null);
   const [fields, setFields] = useState(false);
   const [alertStatus, setAlertStatus] = useState("danger");
   const [msg, setMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [imageAsset, setImageAsset] = useState(null);
-  // const [addon, setAddon] = useState(null);
-  // const [meatOption, setMeatOption] = useState(null);
 
   const uploadImage = (e) => {
     setIsLoading(true);
@@ -213,7 +180,7 @@ const CreateContainer = () => {
   const saveDetails = () => {
     setIsLoading(true);
     try {
-      if (!title || !price || !imageAsset || !description || !category) {
+      if (!title || !price || !imageAsset || !category) {
         setFields(true);
         setMsg("Required fields can't be empty");
         setAlertStatus("danger");
@@ -226,15 +193,13 @@ const CreateContainer = () => {
           id: `${Date.now()}`,
           title: title,
           arabicTitle: arabicTitle,
+          arabicDescription: arabicDescription,
           imageURL: imageAsset,
           category: category,
-          // varaitions:varaitions,
+
           description: description,
           qty: 1,
           price: price,
-          // size: size,
-          // addon: addon,
-          // meatOption: meatOption,
         };
         saveItem(data);
         setIsLoading(false);
@@ -267,10 +232,8 @@ const CreateContainer = () => {
     setImageAsset(null);
     setPrice("");
     setDescription("");
-    setCategory("Select Category");
-    // setAddon("Select Category");
-    // setSize("Select Category");
-    // setMeatOption("Select Category")
+    setArabicDescription("");
+    setCategory(null);
   };
 
   const fetchMenuItems = async () => {
@@ -387,7 +350,7 @@ const CreateContainer = () => {
                     )}
                   </div>
                   <div className="descriptionContainer">
-                    <div className="description">
+                    <div className="createDescription">
                       <MdFoodBank />
                       <input
                         type="text"
@@ -397,42 +360,17 @@ const CreateContainer = () => {
                         onChange={(e) => setDescription(e.target.value)}
                       />
                     </div>
+                    <div className="createDescription">
+                      <MdFoodBank />
+                      <input
+                        type="text"
+                        requried
+                        placeholder="Give me an arabic description...."
+                        value={arabicDescription}
+                        onChange={(e) => setArabicDescription(e.target.value)}
+                      />
+                    </div>
                   </div>
-
-                  {/* sizes, addons , meatoptions */}
-                  {/* <div
-                    className="optionsContainer"
-                    style={{ width: "100%", display: "flex" }}
-                  >
-                    <div className="sizeContainer">
-                      <select
-                        // className="sizeSelect"
-                        onChange={(e) => setSize(e.target.value)}
-                      >
-                        <option value="other">Size</option>
-                        {sizes.map((size) => (
-                          <option
-                            key={size.id}
-                            className="sizeOptions"
-                            value={size.urlParamName}
-                          >
-                            {size.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="addon">
-                      <select onChange={(e) => setAddon(e.target.value)}>
-                        <option>Add Ons</option>
-                      </select>
-                    </div>
-
-                    <div className="meatOptions">
-                      <select onChange={(e) => setMeatOption(e.target.value)}>
-                        <option>Meat Options</option>
-                      </select>
-                    </div>
-                  </div> */}
 
                   <div className="priceContainer">
                     <MdAttachMoney />
@@ -463,7 +401,6 @@ const CreateContainer = () => {
             </form>
           </AnimatePresence>
         </Col>
-        
       </section>
     </Helmet>
   );

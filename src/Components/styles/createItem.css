@@ -210,7 +210,7 @@
   /* border: 1px solid #374151; */
 }
 
-.description {
+.createDescription {
   display: flex;
   padding: 0.5rem 0rem;
   
@@ -221,13 +221,13 @@
   height: auto;
 }
 
-.description a {
+.createDescription a {
   color: #374151;
   font-size: 1.5rem;
   line-height: 2rem;
 }
 
-.description input {
+.createDescription input {
   background-color: transparent;
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -326,9 +326,9 @@
     cursor: pointer;
     height: 300px;
   }
-  .descriptionContainer {
+  /* .descriptionContainer {
     flex-direction: row;
-  }
+  } */
   .saveBtn button {
     width: auto;
     margin: auto;

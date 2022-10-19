@@ -43,7 +43,7 @@ const Footer = () => {
             <Container className="contactUs__container">
               <h4 style={{ paddingBottom: "1rem" }}>Contact Us</h4>
 
-              <Row style={{ maxHeight: "6rem" }}>
+              <Row>
                 {/* <Col sm={{ size: "auto", offset: 1 }} > */}
                   <Col lg="4" md="6" sm="6"> 
                   {" "}

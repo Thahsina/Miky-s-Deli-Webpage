@@ -151,39 +151,10 @@ const Menu = () => {
       );
   };
 
-  // const example = menuItems?.map((item) => {
-  //   item.variations?.map((i) => {
-  //     console.log(i.price, i.size);
-  //     console.log(i.addOns);
-  //     i.addOns?.map((hg) => {
-  //       console.log(hg.addOn, hg.price);
-  //     }); //////////////
-  //   });
-  // });
-
-  // i.addOns.forEach(it => console.log(it))
-  // Object.keys(i.addOns)?.forEach(function(key){
-  //   var val=i.addOns[key]
-  //   console.log(val)
-  // })
-  // console.log(item?.variants)
-  // Object.keys(item.variants).forEach(function (key){
-  //   var value= item.variants[key]
-  //   console.log(value)
-  // })
-
-  // console.log(item.title)
-  // item.variations?.map((eachVariant)=>
-  // Object.keys(eachVariant).forEach(function (key){
-  //   var value = eachVariant[key];
-  //   console.log(key)
-  //   console.log(value.forEach(i => i)
-  //    )
-  // })
-  // )
+  
 
   const clearInput = () => {
-    // setFilteredData([]);
+    
     setWordEntered("");
   };
 

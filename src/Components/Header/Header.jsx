@@ -61,12 +61,11 @@ const Header = () => {
   const [expandForm, setExpandForm] = useState(false);
   const [cartMenu, setCartMenu] = useState(false);
 
-
   const [error, setError] = useState(null);
   const [loginStatus, setLoginStatus] = useState("");
   const [fields, setFields] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
-  // const [profile, setProfile] = useState(null)
+
   const open = Boolean(anchorEl);
 
   const firebaseAuth = getAuth(app);
@@ -227,12 +226,7 @@ const Header = () => {
                   bgcolor="grey.200"
                   onClick={handleClick}
                 >
-                  <PersonOutline
-                    // aria-controls={open ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    // aria-expanded={open ? "true" : undefined}
-                    // onClick={handleClick}
-                  />
+                  <PersonOutline aria-haspopup="true" />
                   <Menu
                     id="basic-menu"
                     anchorEl={anchorEl}
@@ -306,7 +300,7 @@ const Header = () => {
                             maxLength={9}
                             onChange={setPhoneNumber}
                           />
-                         
+
                           {fields && (
                             <motion.p
                               initial={{ opacity: 0, scale: 0.5 }}
@@ -331,7 +325,7 @@ const Header = () => {
                           </button>
                         ) : null}
 
-                        {/* {expandForm === true &&  */}
+                        
 
                         <div className=" otpContainer mt-4 text-center">
                           {/* Enter OTP */}
@@ -345,8 +339,6 @@ const Header = () => {
                         </div>
 
                         <div id="recaptcha-container"></div>
-
-                        {/* }  */}
                       </form>
                     </div>
 

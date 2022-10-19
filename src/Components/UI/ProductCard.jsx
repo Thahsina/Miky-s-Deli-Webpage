@@ -152,7 +152,7 @@ const ProductCard = ({ data }) => {
     addAddons(modalInfo);
   };
   const addAddons = (selectedItem) => {
-    console.log(selectedItem.variations.map((item) => item.addOns));
+    console.log(selectedItem.variations?.map((item) => item.addOns));
   };
   console.log(addons);
   return (
@@ -201,43 +201,16 @@ const ProductCard = ({ data }) => {
                 </ModalHeader>
                 <ModalBody className="modalBody">
                   <Container>
-                    <Row>
+                    <Row style={{height:"23rem", overflowY: "auto"}}>
                       <Col lg="6" md="6">
                         {/* <Col lg="12" md="12"> */}
-                        {modalInfo.category ===
-                          ("fresh juices" ||
-                            "cold coffee" ||
-                            "hot drinks" ||
-                            "cold drinks" ||
-                            "smoothies") && (
-                          <div
-                            // className="imgContainer"
-                            style={{
-                              minHeight: "13rem",
-                              maxHeight: "28rem",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              overflow: "hidden",
-                              transition: "all 0.2s ease",
-                            }}
-                          >
-                            <img src={modalInfo?.imageURL} />
-                          </div>
-                        )}
-                        {modalInfo.category !==
-                          ("fresh juices" ||
-                            "cold coffee" ||
-                            "hot drinks" ||
-                            "cold drinks" ||
-                            "smoothies") && (
-                          <div className="imgContainer">
-                            <img
-                              src={modalInfo?.imageURL}
-                              onClick={() => console.log(modalInfo.category)}
-                            />
-                          </div>
-                        )}
+
+                        <div className="imgContainer">
+                          <img
+                            src={modalInfo?.imageURL}
+                            onClick={() => console.log(modalInfo.category)}
+                          />
+                        </div>
 
                         <p style={{ marginTop: "0.5rem" }}>
                           {modalInfo?.description || variantDescription}
@@ -250,7 +223,7 @@ const ProductCard = ({ data }) => {
                       <Col
                         lg="6"
                         md="6"
-                        style={{ height: "18rem", overflowY: "scroll" }}
+                        style={{ height: "18rem", overflowY: "auto" }}
                       >
                         <div className="descContainer">
                           <div className="description col-md-12">
@@ -373,15 +346,6 @@ const ProductCard = ({ data }) => {
                                                 className="sizeBtn"
                                                 key={index}
                                               >
-                                                {/* <input
-                                              type='radio'
-                                              name='react-radio-btn'
-                                              value={variant?.price}
-                                              // checked= {isRadioSelected()}
-                                              onChange={(e) => handleRadioClick(e)}
-                                
-                                              /> */}
-
                                                 <Radio
                                                   // {...controlProps(variant?.meatOption)}
                                                   color="success"
@@ -421,6 +385,79 @@ const ProductCard = ({ data }) => {
                                                 <div className="sizeDetails">
                                                   <div className="sizeDetails__name">
                                                     {variant?.meatOption}
+                                                    {/* {console.log(variant?.size, variant?.price)} */}
+                                                  </div>
+                                                  <div className="sizeDetails__price">
+                                                    QAR {variant?.price}
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            )
+                                          )
+                                        )}
+                                      </RadioGroup>
+
+                                      <hr
+                                        style={{
+                                          background: "#139652",
+                                          color: "#139652",
+                                          borderColor: "#139652",
+                                          height: "3px",
+
+                                          width: "50%",
+                                        }}
+                                      />
+                                    </div>
+                                  </div>
+                                )
+                            )}
+                            {modalInfo.variations?.map(
+                              (variant) =>
+                                variant.extraFlavours && (
+                                  <div style={{ width: "100%" }}>
+                                    <h6
+                                      style={{
+                                        width: "100%",
+                                        color: "green",
+                                        margin: 0,
+                                      }}
+                                    >
+                                      Extra Flavours
+                                    </h6>
+                                    <small
+                                      style={{ color: "rgb(184, 179, 179)" }}
+                                    >
+                                      Choose items from the list
+                                    </small>
+                                    <div className="sizeBtns-container">
+                                      <RadioGroup
+                                        aria-labelledby="demo-controlled-radio-buttons-group"
+                                        name="radio-buttons"
+
+                                        // value={variant?.meatOption}
+                                      >
+                                        {modalInfo.variations?.map((variants) =>
+                                          variants.extraFlavours?.map(
+                                            (variant, index) => (
+                                              <div
+                                                className="sizeBtn"
+                                                key={index}
+                                              >
+                                                <Radio
+                                                  // {...controlProps(variant?.meatOption)}
+                                                  color="success"
+                                                  name="radio-buttons"
+                                                  // value={index}
+                                                  value={variant?.extraFlavour}
+                                                  // checked={isChecked[index]}
+                                                  onChange={(e) => {
+                                                    // console.log(e.target.value);
+                                                  }}
+                                                />
+
+                                                <div className="sizeDetails">
+                                                  <div className="sizeDetails__name">
+                                                    {variant?.extraFlavour}
                                                     {/* {console.log(variant?.size, variant?.price)} */}
                                                   </div>
                                                   <div className="sizeDetails__price">
@@ -494,8 +531,6 @@ const ProductCard = ({ data }) => {
                                                     //         Price on selction
                                                     //       </small>
                                                     //     ));
-
-                                                    
                                                     // handleChange(e);
                                                     // handleOnChange(e,index);
                                                   }}
@@ -522,6 +557,61 @@ const ProductCard = ({ data }) => {
                                           width: "50%",
                                         }}
                                       />
+                                    </div>
+                                  </div>
+                                )
+                            )}
+                            {modalInfo.variations?.map(
+                              (variant) =>
+                                variant.flavours && (
+                                  <div style={{ width: "100%" }}>
+                                    <h6
+                                      style={{
+                                        width: "100%",
+                                        color: "green",
+                                        margin: 0,
+                                      }}
+                                    >
+                                      Your Choice of Flavour
+                                    </h6>
+                                    <small
+                                      style={{ color: "rgb(184, 179, 179)" }}
+                                    >
+                                      Choose 1
+                                    </small>
+                                    <div className="sizeBtns-container">
+                                      <RadioGroup
+                                        aria-labelledby="demo-controlled-radio-buttons-group"
+                                        name="radio-buttons"
+
+                                        // value={variant?.meatOption}
+                                      >
+                                        {modalInfo.variations?.map((variants) =>
+                                          variants.flavours?.map(
+                                            (variant, index) => (
+                                              <div
+                                                className="sizeBtn"
+                                                key={index}
+                                              >
+                                                <Radio
+                                                  color="success"
+                                                  name="radio-buttons"
+                                                  // value={index}
+                                                  value={variant}
+                                                  // checked={isChecked[index]}
+                                                  onChange={(e) => {}}
+                                                />
+
+                                                <div className="sizeDetails">
+                                                  <div className="sizeDetails__name">
+                                                    {variant}
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            )
+                                          )
+                                        )}
+                                      </RadioGroup>
                                     </div>
                                   </div>
                                 )
