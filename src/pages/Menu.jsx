@@ -290,7 +290,7 @@ const Menu = () => {
           className="my-4 mx-auto justify-content-around"
         >
           {/* {<ProductCard data={items} /> || <CardSkeleton cards={items.length}/>} */}
-          {isLoading && <CardSkeleton cards={items?.length} />}
+          {/* {isLoading && <CardSkeleton cards={items?.length} />} */}
           {/* <CardSkeleton cards={items?.length}/> */}
           {wordEntered === "" ? (
             <ProductCard data={items} />

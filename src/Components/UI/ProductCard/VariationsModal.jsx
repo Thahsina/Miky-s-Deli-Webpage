@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { motion } from "framer-motion";
 import { Container, Row, Col } from "reactstrap";
+import { If, Then, Else } from "react-if";
 import { Radio, Checkbox, RadioGroup } from "@mui/material";
 
 import { IoCartSharp } from "react-icons/io5";
@@ -12,31 +13,31 @@ function VariationsModal({ modal, toggle, modalInfo, cartItems, toggleActiveClas
   const [price, setPrice] = useState(0);
   const [addons, setAddons] = useState([]);
 
-  const [value, setValue] = React.useState("");
+  // const [value, setValue] = React.useState("");
   const [selectedSize, setSelectedSize] = React.useState('');
-  const [isChecked, setIsChecked] = useState(false);
-  const [sizeIsChecked, setSizeIsChecked] = useState(false);
+  // const [isChecked, setIsChecked] = useState(false);
+  // const [sizeIsChecked, setSizeIsChecked] = useState(false);
 
-  useEffect(() => {
-    modal && console.log("modal", modal)
-  }, [modal])
+  // useEffect(() => {
+  // modal && console.log("modal", modal)
+  // }, [modal])
 
   // console.log("modal", modal)
 
   const handleChangeSize = (newSize, newPrice) => {
     setSelectedSize(newSize);
-    console.log("newSize", newSize)
-    console.log("newPrice", newPrice)
+    // console.log("newSize", newSize)
+    // console.log("newPrice", newPrice)
     setPrice(Number(newPrice));
     setAddons([]);
   }
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
-    setSizeIsChecked(event.target.checked);
-    setIsChecked(!isChecked)
-    // setIsChecked(false);
-  };
+  // const handleChange = (event) => {
+  // setValue(event.target.value);
+  // setSizeIsChecked(event.target.checked);
+  // setIsChecked(!isChecked)
+  // setIsChecked(false);
+  // };
   const handleAddonsChange = (option) => {
     const isPresent = addons.find((a) => a.addOn === option.addOn);
     if (!isPresent) { // if already present, remove the addon
@@ -100,7 +101,7 @@ function VariationsModal({ modal, toggle, modalInfo, cartItems, toggleActiveClas
                     <img
                       alt="info-img"
                       src={modalInfo?.imageURL}
-                      onClick={() => console.log(modalInfo.category)}
+                    // onClick={() => console.log(modalInfo.category)}
                     />
                   </div>
                 )}
@@ -146,13 +147,13 @@ function VariationsModal({ modal, toggle, modalInfo, cartItems, toggleActiveClas
                                       name="radio-buttons"
                                       value={variant?.size}
                                       onChange={(e) => {
-                                        console.log(
-                                          "modalInfo.variations",
-                                          modalInfo.variations
-                                        );
-                                        console.log("variants", variants);
-                                        console.log("variant", variant);
-                                        console.log("index", index);
+                                        // console.log(
+                                        //   "modalInfo.variations",
+                                        //   modalInfo.variations
+                                        // );
+                                        // console.log("variants", variants);
+                                        // console.log("variant", variant);
+                                        // console.log("index", index);
                                         setVariantDescription(
                                           variant?.variantDescription
                                         );
@@ -160,7 +161,7 @@ function VariationsModal({ modal, toggle, modalInfo, cartItems, toggleActiveClas
                                           variant?.variantDescriptionArabic
                                         );
                                         handleChangeSize(variant?.size, variant?.price);
-                                        handleChange(e);
+                                        // handleChange(e);
                                       }}
                                     />
 
@@ -170,8 +171,8 @@ function VariationsModal({ modal, toggle, modalInfo, cartItems, toggleActiveClas
                                       </div>
                                       <div className="sizeDetails__price">
                                         QAR {variant?.price}
-                                        {console.log("variant?.price", variant?.price)}
-                                        {console.log("selectedSize", selectedSize)}
+                                        {/* {console.log("variant?.price", variant?.price)}
+                                        {console.log("selectedSize", selectedSize)} */}
                                       </div>
                                     </div>
                                   </div>
@@ -253,7 +254,7 @@ function VariationsModal({ modal, toggle, modalInfo, cartItems, toggleActiveClas
                                         }
                                         // changePrice(variant?.price);
                                         // setSelectedAddonPrice(modalInfo.price);
-                                        handleChange(e);
+                                        // handleChange(e);
                                         // handleOnChange(e,index);
                                       }}
                                     />
@@ -308,7 +309,7 @@ function VariationsModal({ modal, toggle, modalInfo, cartItems, toggleActiveClas
                           {modalInfo.variations?.map((variants) =>
                             variants.addOns?.map((variant, index) => {
 
-                              console.log(Boolean(addons.findIndex((a) => a.addOn === variant.addOn) + 1))
+                              {/* console.log(Boolean(addons.findIndex((a) => a.addOn === variant.addOn) + 1)) */ }
                               return <div className="addonBtn" key={index}>
                                 <Checkbox
                                   checked={Boolean(addons.findIndex((a) => a.addOn === variant.addOn) + 1)}

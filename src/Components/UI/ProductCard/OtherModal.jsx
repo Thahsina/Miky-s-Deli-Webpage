@@ -50,7 +50,7 @@ function OtherModal({ modal, toggle, modalInfo, cartItems, addToCart, toggleActi
                                 <div className="imgContainer">
                                     <img
                                         src={modalInfo?.imageURL}
-                                        onClick={() => console.log(modalInfo.category)}
+                                    // onClick={() => console.log(modalInfo.category)}
                                     />
                                 </div>
                             )}

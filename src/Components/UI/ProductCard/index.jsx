@@ -5,7 +5,7 @@ import { useStateValue } from "../../../context/StateProvider";
 import { actionType } from "../../../context/reducer";
 import { connectStorageEmulator } from "firebase/storage";
 
-// import { If, Then, Else } from 'react-if';
+import { If, Then, Else } from 'react-if';
 
 import VariationsModal from "./VariationsModal";
 import OtherModal from "./OtherModal";
@@ -59,7 +59,7 @@ const ProductCard = ({ data }) => {
         if (cartItem.qty > 25) {
           cartItem.qty += 1;
           setCartFlag(cartFlag + 1);
-          console.log(cartItem.qty);
+          // console.log(cartItem.qty);
         }
       }
     });
@@ -74,7 +74,7 @@ const ProductCard = ({ data }) => {
         if (cartItem.qty > 1) {
           cartItem.qty -= 1;
           setCartFlag(cartFlag + 1);
-          console.log(cartItem.qty);
+          // console.log(cartItem.qty);
           return cartItem.qty;
         }
       }
@@ -93,6 +93,7 @@ const ProductCard = ({ data }) => {
             onClick={() => {
               toggle();
               setModalInfo(item);
+              console.log(item)
             }}
             style={{ width: "15rem" }}
           >
@@ -109,12 +110,12 @@ const ProductCard = ({ data }) => {
 
               <p className="card-text card-description">{item?.description}</p>
             </div>
-            {modalInfo.variations ? (
+            {/* {modalInfo.variations && item.id === modalInfo?.id ? (
               <VariationsModal modal={modal} toggle={toggle} modalInfo={modalInfo} cartItems={cartItems} decrease={decrease} increase={increase} addToCart={st.addToCart} toggleActiveClass={toggleActiveClass} />
             ) : (
               <OtherModal modal={modal} toggle={toggle} modalInfo={modalInfo} cartItems={cartItems} addToCart={addToCart} decrease={decrease} increase={increase} toggleActiveClass />
-            )}
-            {/* <If condition={!modalInfo.variations}>
+            )} */}
+            <If condition={!(modalInfo.variations && item.id === modalInfo?.id)}>
               <Then>
                 <OtherModal
                   modal={modal}
@@ -139,7 +140,7 @@ const ProductCard = ({ data }) => {
                   toggleActiveClass={toggleActiveClass}
                 />
               </Else>
-            </If> */}
+            </If>
           </div>
         ))}
     </>
