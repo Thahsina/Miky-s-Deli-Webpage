@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../styles/productCard.css";
 import "react-loading-skeleton/dist/skeleton.css";
-import { If, Then, Else } from 'react-if'
+import { If, Then, Else, When } from 'react-if'
 import VariationsModal from "./VariationsModal";
 import OtherModal from "./OtherModal";
 
@@ -20,7 +20,6 @@ const ProductCard = ({ data }) => {
             className="card mb-4"
             onClick={() => {
               toggle();
-              console.log(item);
               setModalInfo(item);
             }}
             style={{ width: "15rem" }}
@@ -36,24 +35,26 @@ const ProductCard = ({ data }) => {
               <h6 className="card-arabicTitle">{item?.arabicTitle}</h6>
               <p className="card-text card-description">{item?.description}</p>
             </div>
-            <If condition={!Boolean(modalInfo.variations)}>
-              <Then>
-                <OtherModal
-                  modal={modal && modalInfo.id === item.id}
-                  toggle={toggle}
-                  modalInfo={modalInfo}
-                />
-              </Then>
-              <Else>
-                <VariationsModal
-                  modal={modal && modalInfo.id === item.id}
-                  toggle={toggle}
-                  modalInfo={modalInfo}
-                />
-              </Else>
-            </If>
           </div>
         ))}
+      <When condition={modalInfo && modal}>
+        <If condition={!Boolean(modalInfo.variations)}>
+          <Then>
+            <OtherModal
+              modal={modal}
+              toggle={toggle}
+              modalInfo={modalInfo}
+            />
+          </Then>
+          <Else>
+            <VariationsModal
+              modal={modal}
+              toggle={toggle}
+              modalInfo={modalInfo}
+            />
+          </Else>
+        </If>
+      </When>
     </>
   );
 };

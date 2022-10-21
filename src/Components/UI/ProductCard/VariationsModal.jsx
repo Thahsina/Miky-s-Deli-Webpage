@@ -187,6 +187,12 @@ function Addons({ addOns, selectedAddons, handleAddonsChange }) {
   )
 }
 
+function calculatePrice(sizePrice, addOnsPrices, quantity) {
+  let val = Number(sizePrice);
+  addOnsPrices?.forEach((a) => val += Number(a.price));
+  return val * Number(quantity);
+}
+
 function VariationsModal({
   modal,
   toggle,
@@ -201,47 +207,31 @@ function VariationsModal({
   const [price, setPrice] = useState(0);
   const [selectedAddons, setSelectedAddons] = useState([]);
   const [selectedSize, setSelectedSize] = React.useState('');
-  function updatePrice(price) {
-    if (currentItem) {
-      updateItem(currentItem.id, { ...currentItem, price });
-    }
-    else setPrice(price);
-  }
-  function updateSelectedAddons(addons) {
-    if (currentItem) {
-      updateItem(currentItem.id, { ...currentItem, selectedAddons: addons })
-    }
-    else setSelectedAddons(addons);
-  }
-  function updateSelectedSize(size) {
-    if (currentItem) {
-      updateItem(currentItem.id, { ...currentItem, selectedSize: size });
-    }
-    else setSelectedSize(size);
-  }
   const handleChangeSize = (newSize, newPrice) => {
-    /*setSelectedSize(newSize);
-    setPrice(Number(newPrice));
-    setSelectedAddons([]);*/
+    // if item is present in cart, update the values in cart
+    if (currentItem) updateItem(currentItem.id, { ...currentItem, price: newPrice, selectedSize: newSize, selectedAddons: [] });
     setSelectedSize(newSize);
-    if (currentItem) updateItem(currentItem.id, { ...currentItem, selectedSize: newSize });
     setPrice(newPrice);
-    if (currentItem) updateItem(currentItem.id, { ...currentItem, price: currentItem.qty * newPrice });
     setSelectedAddons([]);
-    if (currentItem) updateItem(currentItem.id, { ...currentItem, selectedAddons: [] });
   };
   const handleAddonsChange = (option) => {
+    if (currentItem) { // if item is present in cart, update the values in cart also
+      const isPresent = currentItem.selectedAddons.find((a) => a.addOn === option.addOn);
+      if (!isPresent) {
+        updateItem(currentItem.id, { ...currentItem, selectedAddons: [...currentItem.selectedAddons, option] })
+      } else {
+        updateItem(currentItem.id, { ...currentItem, selectedAddons: currentItem.selectedAddons.filter((a) => a.addOn !== option.addOn) })
+      }
+    }
+    // update local variables values
     const isPresent = selectedAddons.find((a) => a.addOn === option.addOn);
     if (!isPresent) {
       // if already present, remove the addon
-      updateSelectedAddons([...selectedAddons, option]);
-      updatePrice(Number(price) + Number(option.price));
+      setSelectedAddons([...selectedAddons, option]);
     } else {
-      updateSelectedAddons(selectedAddons.filter((a) => a.addOn !== option.addOn));
-      updatePrice(Number(price) - Number(option.price));
+      setSelectedAddons(selectedAddons.filter((a) => a.addOn !== option.addOn));
     }
   };
-  console.log("selectedSize", selectedSize)
   return (
     <Modal size="lg" isOpen={modal} toggle={toggle}>
       <ModalHeader className="modalHeader" toggle={toggle}>
@@ -342,7 +332,13 @@ function VariationsModal({
           <div className="product__price-modal">
             <If condition={currentItem?.price || price}>
               <Then>
-                <span>QAR {currentItem?.price || price}</span>
+                <span>QAR&nbsp;
+                  <If condition={!currentItem}>
+                    {/* If item is not present in cart show local state calculation, else show calculation according to cart */}
+                    <Then>{calculatePrice(price, selectedAddons, 1)}</Then>
+                    <Else>{calculatePrice(currentItem?.price, currentItem?.selectedAddons, currentItem?.qty)}</Else>
+                  </If>
+                </span>
               </Then>
               <Else>
                 <small>Price on selction</small>
