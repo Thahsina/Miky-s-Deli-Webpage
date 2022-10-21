@@ -1,53 +1,247 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { motion } from "framer-motion";
 import { Container, Row, Col } from "reactstrap";
-import { If, Then, Else } from "react-if";
+import { If, Then, Else, When, Switch, Case } from "react-if";
 import { Radio, Checkbox, RadioGroup } from "@mui/material";
 
 import { IoCartSharp } from "react-icons/io5";
+import { useStateValue } from "../../../context/StateProvider";
 
-function VariationsModal({ modal, toggle, modalInfo, cartItems, toggleActiveClass, decrease, increase, addToCart }) {
+const toggleActiveClass = (event) => {
+  event.currentTarget.classList.toggle("active");
+};
+
+function Sizes({ selectedSize, sizes, handleChangeSize, setVariantDescription, setArabicVariantDescription }) {
+  return (
+    <div style={{ width: "100%" }}>
+      <h6
+        style={{
+          width: "100%",
+          color: "green",
+          margin: 0,
+        }}
+      >
+        Sizes
+      </h6>
+      <small style={{ color: "rgb(184, 179, 179)" }}>
+        Select size
+      </small>
+      <div className="sizeBtns-container">
+        <RadioGroup
+          aria-labelledby="demo-controlled-radio-buttons-group"
+          name="radio-buttons"
+          value={selectedSize}
+        >
+          {sizes?.map((variant, index) => (
+            <div className="sizeBtn" key={index}>
+              <Radio
+                color="success"
+                name="radio-buttons"
+                value={variant?.size}
+                onChange={(e) => {
+                  setVariantDescription(
+                    variant?.variantDescription
+                  );
+                  setArabicVariantDescription(
+                    variant?.variantDescriptionArabic
+                  );
+                  handleChangeSize(
+                    variant?.size,
+                    variant?.price
+                  );
+                }}
+              />
+              <div className="sizeDetails">
+                <div className="sizeDetails__name">
+                  {variant?.size}
+                </div>
+                <div className="sizeDetails__price">
+                  QAR {variant?.price}
+                </div>
+              </div>
+            </div>
+          ))}
+        </RadioGroup>
+        <hr
+          style={{
+            background: "#139652",
+            color: "#139652",
+            borderColor: "#139652",
+            height: "3px",
+            width: "50%",
+          }}
+        />
+      </div>
+    </div>
+  )
+}
+
+function MeatOptions({ meatOptions, setArabicVariantDescription, setVariantDescription }) {
+  return (
+    <div style={{ width: "100%" }}>
+      <h6
+        style={{
+          width: "100%",
+          color: "green",
+          margin: 0,
+        }}
+      >
+        Meat Options
+      </h6>
+      <small style={{ color: "rgb(184, 179, 179)" }}>
+        Choose 1
+      </small>
+      <div className="sizeBtns-container">
+        <RadioGroup
+          aria-labelledby="demo-controlled-radio-buttons-group"
+          name="radio-buttons"
+        >
+          {meatOptions?.map((variant, index) => (
+            <div className="sizeBtn" key={index}>
+              <Radio
+                color="success"
+                name="radio-buttons"
+                value={variant?.meatOption}
+                onChange={(e) => {
+                  setVariantDescription(
+                    variant?.variantDescription
+                  );
+                  setArabicVariantDescription(
+                    variant?.variantDescriptionArabic
+                  );
+                  // handle the meatoption selection here
+                }}
+              />
+
+              <div className="sizeDetails">
+                <div className="sizeDetails__name">
+                  {variant?.meatOption}
+                </div>
+                <div className="sizeDetails__price">
+                  QAR {variant?.price}
+                </div>
+              </div>
+            </div>
+          ))
+          }
+        </RadioGroup>
+        <hr
+          style={{
+            background: "#139652",
+            color: "#139652",
+            borderColor: "#139652",
+            height: "3px",
+            width: "50%",
+          }}
+        />
+      </div>
+    </div>
+  )
+}
+
+function Addons({ addOns, selectedAddons, handleAddonsChange }) {
+  return (
+    <div style={{ width: "100%" }}>
+      <h6
+        style={{
+          width: "100%",
+          color: "green",
+          margin: 0,
+        }}
+      >
+        Add Ons
+      </h6>
+      <small style={{ color: "rgb(184, 179, 179)" }}>
+        Choose addon items from list
+      </small>
+      <div className="addonBtns-container">
+        {addOns?.map((variant, index) => {
+          return (
+            <div className="addonBtn" key={index}>
+              <Checkbox
+                checked={Boolean(
+                  selectedAddons.findIndex(
+                    (a) => a.addOn === variant.addOn
+                  ) + 1
+                )}
+                color="success"
+                onChange={() => {
+                  handleAddonsChange(variant);
+                }}
+              />
+              <div className="addonDetails">
+                <div className="addonDetails__name">
+                  {variant?.addOn}
+                </div>
+                <div className="addonDetails__price">
+                  Qr <span>{variant?.price}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })
+        }
+      </div>
+    </div>
+  )
+}
+
+function VariationsModal({
+  modal,
+  toggle,
+  modalInfo
+}) {
+  const { cartItems, updateItem, toggleAddToCart, increase, decrease } = useStateValue()[2];
+  // find this item in cartItems
+  const currentItem = cartItems.find((i) => i.id === modalInfo.id);
   const [arabicVariantDescription, setArabicVariantDescription] = useState();
   const [variantDescription, setVariantDescription] = useState();
+  // if item is already present in cart, display values from cart
   const [price, setPrice] = useState(0);
-  const [addons, setAddons] = useState([]);
-
-  // const [value, setValue] = React.useState("");
+  const [selectedAddons, setSelectedAddons] = useState([]);
   const [selectedSize, setSelectedSize] = React.useState('');
-  // const [isChecked, setIsChecked] = useState(false);
-  // const [sizeIsChecked, setSizeIsChecked] = useState(false);
-
-  // useEffect(() => {
-  // modal && console.log("modal", modal)
-  // }, [modal])
-
-  // console.log("modal", modal)
-
-  const handleChangeSize = (newSize, newPrice) => {
-    setSelectedSize(newSize);
-    // console.log("newSize", newSize)
-    // console.log("newPrice", newPrice)
-    setPrice(Number(newPrice));
-    setAddons([]);
+  function updatePrice(price) {
+    if (currentItem) {
+      updateItem(currentItem.id, { ...currentItem, price });
+    }
+    else setPrice(price);
   }
-
-  // const handleChange = (event) => {
-  // setValue(event.target.value);
-  // setSizeIsChecked(event.target.checked);
-  // setIsChecked(!isChecked)
-  // setIsChecked(false);
-  // };
+  function updateSelectedAddons(addons) {
+    if (currentItem) {
+      updateItem(currentItem.id, { ...currentItem, selectedAddons: addons })
+    }
+    else setSelectedAddons(addons);
+  }
+  function updateSelectedSize(size) {
+    if (currentItem) {
+      updateItem(currentItem.id, { ...currentItem, selectedSize: size });
+    }
+    else setSelectedSize(size);
+  }
+  const handleChangeSize = (newSize, newPrice) => {
+    /*setSelectedSize(newSize);
+    setPrice(Number(newPrice));
+    setSelectedAddons([]);*/
+    setSelectedSize(newSize);
+    if (currentItem) updateItem(currentItem.id, { ...currentItem, selectedSize: newSize });
+    setPrice(newPrice);
+    if (currentItem) updateItem(currentItem.id, { ...currentItem, price: currentItem.qty * newPrice });
+    setSelectedAddons([]);
+    if (currentItem) updateItem(currentItem.id, { ...currentItem, selectedAddons: [] });
+  };
   const handleAddonsChange = (option) => {
-    const isPresent = addons.find((a) => a.addOn === option.addOn);
-    if (!isPresent) { // if already present, remove the addon
-      setAddons([...addons, option]);
-      setPrice(Number(price) + Number(option.price));
+    const isPresent = selectedAddons.find((a) => a.addOn === option.addOn);
+    if (!isPresent) {
+      // if already present, remove the addon
+      updateSelectedAddons([...selectedAddons, option]);
+      updatePrice(Number(price) + Number(option.price));
     } else {
-      setAddons(addons.filter((a) => a.addOn !== option.addOn));
-      setPrice(Number(price) - Number(option.price));
+      updateSelectedAddons(selectedAddons.filter((a) => a.addOn !== option.addOn));
+      updatePrice(Number(price) - Number(option.price));
     }
   };
+  console.log("selectedSize", selectedSize)
   return (
     <Modal size="lg" isOpen={modal} toggle={toggle}>
       <ModalHeader className="modalHeader" toggle={toggle}>
@@ -60,7 +254,6 @@ function VariationsModal({ modal, toggle, modalInfo, cartItems, toggleActiveClas
           <span aria-hidden="true" className="modal_button">
             &times;
           </span>
-          {/* <span class="sr-only">Close</span> */}
         </button>
         {modalInfo?.title}
         {modalInfo?.arabicTitle}
@@ -69,43 +262,9 @@ function VariationsModal({ modal, toggle, modalInfo, cartItems, toggleActiveClas
         <Container>
           <Row>
             <Col lg="6" md="6">
-              {/* <Col lg="12" md="12"> */}
-              {modalInfo.category ===
-                ("fresh juices" ||
-                  "cold coffee" ||
-                  "hot drinks" ||
-                  "cold drinks" ||
-                  "smoothies") && (
-                  <div
-                    // className="imgContainer"
-                    style={{
-                      minHeight: "13rem",
-                      maxHeight: "28rem",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      overflow: "hidden",
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    <img src={modalInfo?.imageURL} />
-                  </div>
-                )}
-              {modalInfo.category !==
-                ("fresh juices" ||
-                  "cold coffee" ||
-                  "hot drinks" ||
-                  "cold drinks" ||
-                  "smoothies") && (
-                  <div className="imgContainer">
-                    <img
-                      alt="info-img"
-                      src={modalInfo?.imageURL}
-                    // onClick={() => console.log(modalInfo.category)}
-                    />
-                  </div>
-                )}
-
+              <div className="imgContainer">
+                <img alt="info-img" src={modalInfo?.imageURL} />
+              </div>
               <p style={{ marginTop: "0.5rem" }}>
                 {modalInfo?.description || variantDescription}
               </p>
@@ -116,224 +275,40 @@ function VariationsModal({ modal, toggle, modalInfo, cartItems, toggleActiveClas
             <Col lg="6" md="6" style={{ height: "18rem", overflowY: "scroll" }}>
               <div className="descContainer">
                 <div className="description col-md-12">
-                  {modalInfo.variations?.map(
-                    (variant) =>
-                      variant.sizes && (
-                        <div style={{ width: "100%" }}>
-                          <h6
-                            style={{
-                              width: "100%",
-                              color: "green",
-                              margin: 0,
-                            }}
-                          >
-                            Sizes
-                          </h6>
-                          <small style={{ color: "rgb(184, 179, 179)" }}>
-                            Select size
-                          </small>
-                          <div className="sizeBtns-container">
-                            <RadioGroup
-                              aria-labelledby="demo-controlled-radio-buttons-group"
-                              name="radio-buttons"
-                              value={selectedSize}
-                            >
-                              {modalInfo.variations?.map((variants) =>
-                                variants.sizes?.map((variant, index) => (
-                                  <div className="sizeBtn" key={index}>
-                                    <Radio
-                                      // {...controlProps(variant?.meatOption)}
-                                      color="success"
-                                      name="radio-buttons"
-                                      value={variant?.size}
-                                      onChange={(e) => {
-                                        // console.log(
-                                        //   "modalInfo.variations",
-                                        //   modalInfo.variations
-                                        // );
-                                        // console.log("variants", variants);
-                                        // console.log("variant", variant);
-                                        // console.log("index", index);
-                                        setVariantDescription(
-                                          variant?.variantDescription
-                                        );
-                                        setArabicVariantDescription(
-                                          variant?.variantDescriptionArabic
-                                        );
-                                        handleChangeSize(variant?.size, variant?.price);
-                                        // handleChange(e);
-                                      }}
-                                    />
-
-                                    <div className="sizeDetails">
-                                      <div className="sizeDetails__name">
-                                        {variant?.size}
-                                      </div>
-                                      <div className="sizeDetails__price">
-                                        QAR {variant?.price}
-                                        {/* {console.log("variant?.price", variant?.price)}
-                                        {console.log("selectedSize", selectedSize)} */}
-                                      </div>
-                                    </div>
-                                  </div>
-                                ))
-                              )}
-                            </RadioGroup>
-
-                            <hr
-                              style={{
-                                background: "#139652",
-                                color: "#139652",
-                                borderColor: "#139652",
-                                height: "3px",
-
-                                width: "50%",
-                              }}
-                            />
-                          </div>
-                        </div>
-                      )
-                  )}
-                  {modalInfo.variations?.map(
-                    (variant) =>
-                      variant.meatOptions && (
-                        <div style={{ width: "100%" }}>
-                          <h6
-                            style={{
-                              width: "100%",
-                              color: "green",
-                              margin: 0,
-                            }}
-                          >
-                            Meat Options
-                          </h6>
-                          <small style={{ color: "rgb(184, 179, 179)" }}>
-                            Choose 1
-                          </small>
-                          <div className="sizeBtns-container">
-                            <RadioGroup
-                              aria-labelledby="demo-controlled-radio-buttons-group"
-                              name="radio-buttons"
-
-                            // value={variant?.meatOption}
-                            >
-                              {modalInfo.variations?.map((variants) =>
-                                variants.meatOptions?.map((variant, index) => (
-                                  <div className="sizeBtn" key={index}>
-                                    {/* <input
-                                            type='radio'
-                                            name='react-radio-btn'
-                                            value={variant?.price}
-                                            // checked= {isRadioSelected()}
-                                            onChange={(e) => handleRadioClick(e)}
-                            
-                                            /> */}
-
-                                    <Radio
-                                      // {...controlProps(variant?.meatOption)}
-                                      color="success"
-                                      name="radio-buttons"
-                                      // value={index}
-                                      value={variant?.meatOption}
-                                      // checked={isChecked[index]}
-                                      onChange={(e) => {
-                                        // console.log(e.target.value);
-
-                                        setVariantDescription(
-                                          variant?.variantDescription
-                                        );
-                                        setArabicVariantDescription(
-                                          variant?.variantDescriptionArabic
-                                        );
-                                        {
-                                          e.target.checked
-                                            ? (modalInfo.price = variant?.price)
-                                            : (modalInfo.price = (
-                                              <small>Price on selction</small>
-                                            ));
-                                        }
-                                        // changePrice(variant?.price);
-                                        // setSelectedAddonPrice(modalInfo.price);
-                                        // handleChange(e);
-                                        // handleOnChange(e,index);
-                                      }}
-                                    />
-
-                                    {/* <RadioButton props={variants.meatOptions}/> */}
-                                    <div className="sizeDetails">
-                                      <div className="sizeDetails__name">
-                                        {variant?.meatOption}
-                                        {/* {console.log(variant?.size, variant?.price)} */}
-                                      </div>
-                                      <div className="sizeDetails__price">
-                                        QAR {variant?.price}
-                                      </div>
-                                    </div>
-                                  </div>
-                                ))
-                              )}
-                            </RadioGroup>
-
-                            <hr
-                              style={{
-                                background: "#139652",
-                                color: "#139652",
-                                borderColor: "#139652",
-                                height: "3px",
-
-                                width: "50%",
-                              }}
-                            />
-                          </div>
-                        </div>
-                      )
-                  )}
+                  {
+                    modalInfo.variations?.map((variation) => (
+                      <Switch>
+                        <Case condition={Boolean(variation.sizes)}>
+                          <Sizes
+                            sizes={variation?.sizes || []}
+                            selectedSize={currentItem?.selectedSize || selectedSize}
+                            handleChangeSize={handleChangeSize}
+                            setArabicVariantDescription={setArabicVariantDescription}
+                            setVariantDescription={setVariantDescription}
+                          />
+                        </Case>
+                        <Case condition={Boolean(variation.meatOptions)}>
+                          <MeatOptions
+                            meatOptions={currentItem?.selectedMeatOptions || variation?.meatOption || []}
+                            setArabicVariantDescription={setArabicVariantDescription}
+                            setVariantDescription={setVariantDescription}
+                          />
+                        </Case>
+                      </Switch>
+                    ))
+                  }
                 </div>
-                {modalInfo.variations?.map(
-                  (variant) =>
-                    variant.addOns && (
-                      <div style={{ width: "100%" }}>
-                        <h6
-                          style={{
-                            width: "100%",
-                            color: "green",
-                            margin: 0,
-                          }}
-                        >
-                          Add Ons
-                        </h6>
-                        <small style={{ color: "rgb(184, 179, 179)" }}>
-                          Choose addon items from list
-                        </small>
-                        <div className="addonBtns-container">
-                          {modalInfo.variations?.map((variants) =>
-                            variants.addOns?.map((variant, index) => {
-
-                              {/* console.log(Boolean(addons.findIndex((a) => a.addOn === variant.addOn) + 1)) */ }
-                              return <div className="addonBtn" key={index}>
-                                <Checkbox
-                                  checked={Boolean(addons.findIndex((a) => a.addOn === variant.addOn) + 1)}
-                                  color="success"
-                                  onChange={() => {
-                                    handleAddonsChange(variant);
-                                  }}
-                                />
-
-                                <div className="addonDetails">
-                                  <div className="addonDetails__name">
-                                    {variant?.addOn}
-                                  </div>
-                                  <div className="addonDetails__price">
-                                    Qr <span>{variant?.price}</span>
-                                  </div>
-                                </div>
-                              </div>
-                            })
-                          )}
-                        </div>
-                      </div>
+                {
+                  modalInfo.variations?.map((variation) => (
+                    variation.addOns && (
+                      <Addons
+                        addOns={variation?.addOns}
+                        selectedAddons={currentItem?.selectedAddons || selectedAddons}
+                        handleAddonsChange={handleAddonsChange}
+                      />
                     )
-                )}
+                  ))
+                }
               </div>
             </Col>
           </Row>
@@ -341,68 +316,61 @@ function VariationsModal({ modal, toggle, modalInfo, cartItems, toggleActiveClas
       </ModalBody>
       <ModalFooter className="modalFooter border-0 d-flex flex-row justify-content-between">
         <div className="descrptionFooter d-flex align-items-center justify-content-around">
-          {cartItems.map(
-            (item) =>
-              item.id === modalInfo.id &&
-              modalInfo.qty >= 1 &&
-              modalInfo.price && (
-                <div className="increase-decrease-btns d-flex align-items-center justify-content-between">
-                  <motion.button
-                    whileTap={{ scale: 0.75 }}
-                    className="decrease__btn"
-                    onClick={() => decrease(modalInfo)}
-                  >
-                    <i className="ri-subtract-line"></i>
-                  </motion.button>
-                  <span className="counter-quantity">
-                    {cartItems?.length > 0 &&
-                      cartItems?.map((item) => {
-                        if (modalInfo.id === item.id) return item.qty;
-                      })}
-                  </span>
-                  <motion.button
-                    whileTap={{ scale: 0.75 }}
-                    className="increase__btn"
-                    onClick={() => {
-                      // modalInfo.qty += 1;
-                      increase(modalInfo);
-                    }}
-                  >
-                    <i className="ri-add-line"></i>
-                  </motion.button>
-                </div>
-              )
-          )}
+          <When condition={Boolean(currentItem)}>
+            <div className="increase-decrease-btns d-flex align-items-center justify-content-between">
+              <motion.button
+                whileTap={{ scale: 0.75 }}
+                className="decrease__btn"
+                onClick={() => decrease(currentItem?.id)}
+              >
+                <i className="ri-subtract-line"></i>
+              </motion.button>
+              <span className="counter-quantity">
+                {currentItem?.qty}
+              </span>
+              <motion.button
+                whileTap={{ scale: 0.75 }}
+                className="increase__btn"
+                onClick={() => {
+                  increase(currentItem?.id);
+                }}
+              >
+                <i className="ri-add-line"></i>
+              </motion.button>
+            </div>
+          </When>
           <div className="product__price-modal">
-            {price ? (
-              <span>QAR {price}</span>
-            ) : (
-              <small>Price on selction</small>
-            )}
+            <If condition={currentItem?.price || price}>
+              <Then>
+                <span>QAR {currentItem?.price || price}</span>
+              </Then>
+              <Else>
+                <small>Price on selction</small>
+              </Else>
+            </If>
           </div>
-          {/* </div> */}
-          {price || modalInfo?.price ? (
+          <When condition={currentItem?.price || price}>
             <div>
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 onClick={(e) => {
-                  // toggleActiveClass();
-
-                  addToCart({ ...modalInfo, price, selectedAddons: addons, selectedSize });
+                  toggleAddToCart({
+                    ...modalInfo,
+                    price,
+                    selectedAddons: selectedAddons,
+                    selectedSize,
+                  });
                   toggleActiveClass(e);
                 }}
-                className="cart_btn btn btn-primary"
+                className={`cart_btn btn btn-primary ${currentItem?.price ? 'active' : ''}`}
               >
                 <span className="add_to_cart">Add to cart</span>
                 <span className="added">Added!</span>
                 <IoCartSharp className="cart-shopping" />
-
                 <div className="dots"></div>
               </motion.button>
             </div>
-          ) : (
-            console.log("None")
-          )}
+          </When>
         </div>
       </ModalFooter>
     </Modal>
