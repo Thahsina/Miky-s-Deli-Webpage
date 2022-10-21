@@ -106,7 +106,8 @@ function OtherModal({ modal, toggle, modalInfo }) {
                 toggleAddToCart(modalInfo);
                 toggleActiveClass(e);
               }}
-              className="cart_btn btn btn-primary"
+              className={`cart_btn btn btn-primary ${currentItem?.price ? 'active' : ''}`}
+            // className="cart_btn btn btn-primary"
             >
               <span className="add_to_cart">Add to cart</span>
               <span className="added">Added!</span>

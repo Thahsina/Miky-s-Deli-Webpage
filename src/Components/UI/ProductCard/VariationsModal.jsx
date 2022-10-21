@@ -341,7 +341,7 @@ function VariationsModal({
                 </span>
               </Then>
               <Else>
-                <small>Price on selction</small>
+                <small>Price on selection</small>
               </Else>
             </If>
           </div>
