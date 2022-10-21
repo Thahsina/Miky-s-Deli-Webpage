@@ -1,0 +1,77 @@
+{
+    "variations": [
+        {
+            "addOns": [
+                {
+                    "addOn": "Chicken",
+                    "price": "12"
+                },
+                {
+                    "addOn": "Beef",
+                    "price": "20"
+                },
+                {
+                    "addOn": "Shrimp",
+                    "price": "20"
+                },
+                {
+                    "addOn": "Sausage",
+                    "price": "12"
+                },
+                {
+                    "price": "10",
+                    "addOn": "Vegetables"
+                },
+                {
+                    "price": "5",
+                    "addOn": "Mushrooms"
+                },
+                {
+                    "addOn": "Cheese",
+                    "price": "7"
+                },
+                {
+                    "addOn": "Halloumi Cheese",
+                    "price": "10"
+                },
+                {
+                    "price": "10",
+                    "addOn": "Feta Cheese"
+                },
+                {
+                    "price": "5",
+                    "addOn": "Jalapeno"
+                },
+                {
+                    "price": "5",
+                    "addOn": "Onion"
+                },
+                {
+                    "addOn": "BBQ Sauce",
+                    "price": "5"
+                }
+            ]
+        },
+        {
+            "sizes": [
+                {
+                    "price": "60",
+                    "size": "Regular"
+                },
+                {
+                    "size": "Family",
+                    "price": "90"
+                }
+            ]
+        }
+    ],
+    "category": "pizzas",
+    "qty": 1,
+    "id": "1664700689581",
+    "arabicDescription": null,
+    "title": "Miky's Special Pizza",
+    "description": "Pizza Sauce, Mozzarella, Beef , Chicken, French fries, Ranch sauce and Cheddar sauce.",
+    "arabicTitle": "بيتزا مايكيز الخاصة",
+    "imageURL": "https://firebasestorage.googleapis.com/v0/b/mikysdeli-73629.…ZZA.jpg?alt=media&token=6a216b46-874f-44e8-81c4-8b4f6f165c20",
+    "price": 92
+}
