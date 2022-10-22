@@ -325,8 +325,6 @@ const Header = () => {
                           </button>
                         ) : null}
 
-                        
-
                         <div className=" otpContainer mt-4 text-center">
                           {/* Enter OTP */}
                           <input

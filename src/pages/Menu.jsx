@@ -110,7 +110,7 @@ const Menu = () => {
       { id: 10, name: "Burgers" },
       { id: 11, name: "Cold Coffee" },
       { id: 12, name: "Hot Drinks" },
-      { id: 13, name: "Cold Drinks" },
+      { id: 13, name: "Beverages" },
       { id: 14, name: "Smoothies" },
       { id: 15, name: "Fresh Juices" },
       { id: 16, name: "Dessert" },
@@ -206,10 +206,7 @@ const Menu = () => {
       </section>
       <Container>
         <Row className="mb-4">
-          {/* <Col lg="12" className="text-center">
-            <div className="menuHead"> <h2>Our Menu</h2></div>
-           
-          </Col> */}
+         
           {wordEntered === "" && (
             <Col lg="14">
               <div className="menuCategory__carousel">
@@ -232,20 +229,7 @@ const Menu = () => {
                       </button>
                     </div>
                   ))}
-                  {/*
-                  <button className={`category === "quesadilla" ? "menuBtnActive" : ""`} onClick={setCategory("Quesadilla")}>Quesadilla</button>
-                </div> */}
-                  {/* <div>
-                  <button className={isActive?"menuBtnActive": " " } onClick={()=>handleClick()}>Burgers</button>
-                </div>
-                
-                
-               
-              
-                
-                <div>
-                  <button onClick={()=>handleClick()}>Hot Tea</button>
-                </div> */}
+                  
                 </Slider>
               </div>
             </Col>

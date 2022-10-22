@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col, UncontrolledCarousel } from "reactstrap";
+import React from "react";
+import { Container, Row} from "reactstrap";
 import CateringCard from "../Components/UI/CateringCard";
 import "../Components/styles/cateringPage.css";
+
 import { useStateValue } from "../context/StateProvider";
 import CateringImage1 from "../images/cateringImage(1).JPG";
 import CateringImage2 from "../images/cateringImage(2).jpeg";
 import CateringImage3 from "../images/cateringImage(3).JPG";
-import GreenBanner from "../images/greenBanner.jpg";
+
 import { Link } from "react-router-dom";
 
 const CateringPage = () => {
@@ -18,9 +19,6 @@ const CateringPage = () => {
         <Container className="cateringPage__container d-flex flex-wrap justify-content-around mb-4">
           <div className="cateringCard__title text-center">
             <h1 id="pageHeaderTitle">Catering Menu</h1>
-            {/* <Link to="/dropoffMenu">
-              <button className="btn btn-danger">Drop Off Menu</button>
-            </Link> */}
           </div>
           <Row
             lg="12"
