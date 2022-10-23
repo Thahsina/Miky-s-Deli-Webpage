@@ -34,10 +34,9 @@ const CateringCard = ({ data }) => {
                 <img
                   className="postcard__img"
                   src={image}
-                  alt="Image Title"
+                  alt="Title"
                   onClick={toggle}
                 />
-
                 <div className="postcard__text">
                   <div className="d-flex justify-content-between">
                     <h1 className="postcard__title green m-2" onClick={toggle}>
@@ -63,7 +62,6 @@ const CateringCard = ({ data }) => {
                       <div className="postcard__preview-txt">{i}</div>
                     ))}
                   </div>
-
                   <ul className="postcard__tagbox">
                     {item.category === "Hot Coffee . Iced Coffee . Dessert" &&
                       item.presentation?.map((eachItem) => (
@@ -95,14 +93,12 @@ const CateringCard = ({ data }) => {
                         <span>{eachHighlight}</span>
                       </li>
                     ))}
-
                     {item.location === "Doha Only" && (
                       <li className="tag__item notice d-flex justify-content-between">
                         <img src={Location} alt="Location Icon" />
                         <strong>{item.location}</strong>
                       </li>
                     )}
-
                     <li className="tag__item play green" onClick={toggle}>
                       <span>QAR {item.price}</span>
                     </li>
