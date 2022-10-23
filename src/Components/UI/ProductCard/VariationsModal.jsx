@@ -229,7 +229,6 @@ function VariationsModal({
       setSelectedAddons(selectedAddons.filter((a) => a.addOn !== option.addOn));
     }
   };
-  console.log({ modalInfo });
   return (
     <Modal size="lg" isOpen={modal} toggle={toggle}>
       <ModalHeader className="modalHeader" toggle={toggle}>
@@ -278,7 +277,7 @@ function VariationsModal({
                         <Case condition={Boolean(variation.meatOptions)}>
                           <MeatOptions
                             meatOptions={variation?.meatOptions || []}
-                            selectedMeatOption={selectedMeatOption}
+                            selectedMeatOption={currentItem?.selectedMeatOption || selectedMeatOption}
                             handleMeatOptionChange={(op) => handleMeatOptionChange(op)}
                             setArabicVariantDescription={setArabicVariantDescription}
                             setVariantDescription={setVariantDescription}

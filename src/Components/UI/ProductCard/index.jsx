@@ -11,8 +11,6 @@ const ProductCard = ({ data }) => {
   const toggle = () => {
     setModal(!modal);
   };
-  // console.log(data.filter((item) => Boolean(item.variations?.find(i => Boolean(i.meatOptions)))))
-  console.log(data?.filter((item) => !Boolean(item.variations)));
   return (
     <>
       {data &&
