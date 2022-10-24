@@ -1,9 +1,15 @@
-.table {
-  margin-top: 4rem;
-}
 
-th {
-  text-align: center;
+
+
+.orderCard {
+  flex: 0 0 48%;
+  padding: 1rem 1rem 5rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  margin: 0 0.5rem 1rem;
+  flex: 0 0 48%;
+  position: relative;
+  border: 1px solid #707070;
 }
 
 @media only screen and (max-width: 768px) {

@@ -5,28 +5,19 @@ import '../../Components/styles/ordersPage.css'
 
 const OrdersPage = () => {
   const [{ user, cart }] = useStateValue();
+
+
   return (
     <>
       <Container>
         <Row>
           <Col lg="12">
-          
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Customer ID</th>
-                  <th>Item Title</th>
-                  <th>Price</th>
-                  <th>Quantity</th>
-                  <th>Comments</th>
-                </tr>
-              </thead>
-              <tbody>
-                {/* {cartItems.map((item) => (
-                    <Tr item={item} key={item.id} />
-                  ))} */}
-              </tbody>
-            </table>
+          <div className="orderCard">
+
+          </div>
+          <div className="orderCard">
+
+</div>
 
             
           </Col>

@@ -15,3 +15,18 @@
 .orders__container h2{
     margin-top: 2rem;
 }
+
+.reorderBtn{
+    color: #139652;
+    border-radius: 3px;
+    padding: 0.5rem 1.5rem;
+    background-color: transparent;
+    border: 1px solid #139652;
+    cursor: pointer;
+}
+
+.reorderBtn:hover{
+    background-color: #139652;
+    color: #fff;
+}
+

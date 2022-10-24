@@ -48,6 +48,7 @@ const Routers = () => {
       <Route path="/admin" element={<Admin />}>
         <Route path="createItem" element={<CreateContainer />} />
         <Route path="orderspage" element={<OrdersPage />} />
+        <Route path="*" element={<> not found</>} />
       </Route>
 
       <Route path="/map" element={<Map />} />

@@ -29,7 +29,7 @@ const featureData = [
   },
 
   {
-    title: "Catering Services",
+    title: "Catering / Drop-Off",
     imgUrl: featureImg03,
     desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, doloremque.",
   },

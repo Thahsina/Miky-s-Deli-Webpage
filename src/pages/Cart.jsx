@@ -10,7 +10,7 @@ import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
 
 const Cart = ({ cartMenu, setCartMenu }) => {
-  console.log('cart')
+  console.log("cart");
   const [{ user, cartItems }, dispatch] = useStateValue();
   const [itemsCart, setItemsCart] = useState(cartItems);
   const [total, setTotal] = useState(0);
@@ -50,7 +50,7 @@ const Cart = ({ cartMenu, setCartMenu }) => {
           >
             <MdOutlineKeyboardTab
               style={{ fontSize: "1.5rem", color: "#686868" }}
-            // onClick={() => setCartMenu(false)}
+              // onClick={() => setCartMenu(false)}
             />
           </motion.div>
           <h6 className="cartTitle">Your Cart</h6>
@@ -96,27 +96,21 @@ const Cart = ({ cartMenu, setCartMenu }) => {
                 className="checkoutBtn"
                 whileTap={{ scale: 0.8 }}
                 onClick={() => setCartMenu(false)}
-                disabled={total === 0 ? true : false}
-
-              // disabled={cartItems !== null ? true : false}
+                // disabled={total === 0 ? true : false}
               >
-                {/* <button type="button" onClick={() => setCartMenu(false)}> */}
                 Checkout
-                {/* <Link to="/checkout"> Check Out</Link> */}
-                {/* </button> */}
               </motion.button>
-
             </Link>
           ) : (
             // <Link to="/">
-              <motion.button
-                type="button"
-                whileTap={{ scale: 0.8 }}
-                className="checkoutBtn"
-                onClick={() => setCartMenu(false)}
-              >
-                Sign In to Check Out
-              </motion.button>
+            <motion.button
+              type="button"
+              whileTap={{ scale: 0.8 }}
+              className="checkoutBtn"
+              onClick={() => setCartMenu(false)}
+            >
+              Sign In to Check Out
+            </motion.button>
             // </Link>
           )}
         </div>

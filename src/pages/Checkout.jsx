@@ -12,11 +12,16 @@ import "../Components/styles/checkout.css";
 import { Modal, ModalBody } from "reactstrap";
 import TickImg from "../images/tick.png";
 import Area from "../pages/Area";
+import { saveOrder } from "../firebaseFunctions";
 
 const Checkout = () => {
   const [{ cartItems, user }] = useStateValue();
-
+  const [specialRequest, setSpecialRequest] = useState("");
+  const [{ deliveryZone }] = useStateValue();
+  const [modalConfirm, setModalConfirm] = useState(false);
+  const [areaModal, setAreaModal] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
+
   const [address, setAddress] = useState({
     name: "",
     email: "",
@@ -25,15 +30,23 @@ const Checkout = () => {
     buildingNo: "",
     flatNo: "",
     nearestLandmark: "",
+    deliveryZone: deliveryZone,
+    latlng: "",
   });
 
-  const [specialRequest, setSpecialRequest] = useState("");
-  const [{ deliveryZone }] = useStateValue();
-  const [modalConfirm, setModalConfirm] = useState(false);
-  // const [deliveryArea, setDeliveryArea] = useState("Delivery Zone")
+  const saveOrderDetails = () => {
+    const orderData = {
+      user_id: `${user.uid}`,
+      address: address,
+      cartItems: cartItems,
+      specialRequests: specialRequest,
+    };
+
+    saveOrder(orderData);
+  };
 
   {
-    console.log("Name", address);
+    console.log("User Address", address);
   }
 
   const toggleConfirm = () => {
@@ -51,10 +64,10 @@ const Checkout = () => {
   const [zoom, setZoom] = useState(11);
 
   useEffect(() => {
-    const bounds = [
-      [51.531415650446405, 25.237558639201637], // Southwest coordinates
-      [51.46894450363408, 25.432925196559935], // Northeast coordinates
-    ];
+    // const bounds = [
+    //   [51.531415650446405, 25.237558639201637], // Southwest coordinates
+    //   [51.46894450363408, 25.432925196559935], // Northeast coordinates
+    // ];
 
     const map = new mapboxgl.Map({
       container: "map",
@@ -83,19 +96,28 @@ const Checkout = () => {
       })
     );
 
-    // Add geolocate(current Location) control to the map.
-    map.addControl(
-      new mapboxgl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true,
-        },
-        // When active the map will receive updates to the device's location as it changes.
-        trackUserLocation: true,
-        // Draw an arrow next to the location dot to indicate which direction the device is heading.
-        showUserHeading: true,
-        
-      })
-    );
+    let geolocate = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      // When active the map will receive updates to the device's location as it changes.
+      trackUserLocation: true,
+      // Draw an arrow next to the location dot to indicate which direction the device is heading.
+      showUserHeading: true,
+    });
+
+    map.addControl(geolocate);
+    geolocate.on("geolocate", locateUser);
+    function locateUser(e) {
+      setAddress((prevState) => ({
+        ...prevState,
+        latlng: (prevState.latlng = [
+          e.coords.longitude.toFixed(4),
+          e.coords.latitude.toFixed(4),
+        ]),
+      }));
+      marker.on("dragend", onDragEnd);
+    }
 
     const marker = new mapboxgl.Marker({ color: "green", draggable: true })
       .setLngLat([lng, lat])
@@ -108,6 +130,10 @@ const Checkout = () => {
       console.log(lngLat.lat);
       setLng(lngLat.lng);
       setLat(lngLat.lat);
+      setAddress((prevState) => ({
+        ...prevState,
+        latlng: (prevState.latlng = [lat, lng]),
+      }));
     }
 
     marker.on("dragend", onDragEnd);
@@ -120,7 +146,7 @@ const Checkout = () => {
         <Container>
           <Row className="d-flex justify-content-center checkoutRow">
             <Col lg="8" md="12">
-              <h3 className="text-center mb-4">Checkout & Payment</h3>
+              <h3 className="text-center m-4">Checkout & Payment</h3>
               <Form className="checkout__form">
                 <div className="form__group">
                   <input
@@ -177,13 +203,24 @@ const Checkout = () => {
                 </p>
                 {/* <Button>Add your current location</Button> */}
 
-                <div className="form__group">
+                <div
+                  className="form__group"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setAreaModal(!areaModal);
+                  }}
+                >
                   <div className=" my-4 deliveryZone">
-                    <h2>{deliveryZone}</h2>
+                    <h4>{deliveryZone ? deliveryZone : "Select delivery Area"}</h4>
                     <button
                       className="btnArea"
-                      // onClick={<Area />}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setAreaModal(true);
+                       
+                      }}
                     >
+                      {areaModal === true && <Area />}
                       <IoMdArrowDropdown />
                     </button>
                   </div>
@@ -317,7 +354,7 @@ const Checkout = () => {
                       defaultChecked
                     />
                     <label className="form-check-label">
-                      Cash On Delivery / Wireless payment
+                      Cash On Delivery
                     </label>
                   </div>
                   <div className="form-check mb-4 mt-4 mx-1">
@@ -351,6 +388,7 @@ const Checkout = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       toggleConfirm();
+                      saveOrderDetails();
                     }}
                     disabled={
                       address.name === "" ||

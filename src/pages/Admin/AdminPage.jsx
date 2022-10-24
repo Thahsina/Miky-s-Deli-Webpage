@@ -17,14 +17,24 @@ const routes = [
     icon: <FaHome />,
   },
   {
-    path: "createItem",
-    name: "Add New Product",
-    icon: <FaPlus />,
-  },
-  {
     path: "orderspage",
     name: "Orders",
     icon: <BsCartCheck />,
+  },
+  {
+    path: "cateringOrderspage",
+    name: "Catering Orders",
+    icon: <BsCartCheck />,
+  },
+  {
+    path: "dropOffOrderspage",
+    name: "Drop-Off Orders",
+    icon: <BsCartCheck />,
+  },
+  {
+    path: "createItem",
+    name: "Add New Product",
+    icon: <FaPlus />,
   },
 ];
 
@@ -108,7 +118,6 @@ const Admin = () => {
           </motion.div>
         </div>
 
-        
         {/* </Col> */}
         <div className="admin_outlet">
           <Outlet />

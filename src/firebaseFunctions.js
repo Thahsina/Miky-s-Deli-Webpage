@@ -11,6 +11,8 @@ import {
   where,
 } from "firebase/firestore";
 import { firestore } from "./firebase.config";
+import { useStateValue } from "./context/StateProvider";
+
 
 export const saveItem = async (data) => {
   await setDoc(doc(firestore, "menuItems", `${Date.now()}`), data, {
@@ -18,30 +20,79 @@ export const saveItem = async (data) => {
   });
 };
 
+
 export const saveReviewFS = async (reviewData) => {
   await setDoc(doc(firestore, "testimonials", `${Date.now()}`), reviewData, {
     merge: true,
   });
 };
 
-//get all menu items from firestore
 
+export const saveOrder = async (orderData) => {
+  await setDoc(doc(firestore, "orders", `${Date.now()}`), orderData, {
+    merge: true,
+  });
+};
+
+
+//get all reviews from firestore
 export const getAllReviews = async () => {
-  const reviews = await getDocs(query(collection(firestore, "testimonials"), orderBy("id","desc")));
+  const reviews = await getDocs(
+    query(collection(firestore, "testimonials"), orderBy("id", "desc"))
+  );
   return reviews.docs.map((doc) => doc.reviewData());
-}
+};
 
+
+//get all menu items from firestore
 export const getAllMenuItems = async () => {
-  const items = await getDocs(query(collection(firestore, "menuItems"), orderBy("id","desc")));
+  const items = await getDocs(
+    query(collection(firestore, "menuItems"), orderBy("id", "desc"))
+  );
   return items.docs.map((doc) => doc.data());
-}
+};
 
+
+//get all catering menu items from firestore
 export const getCateringMenuItems = async () => {
-  const cateringItems = await getDocs(query(collection(firestore, "cateringMenuItems")));
+  const cateringItems = await getDocs(
+    query(collection(firestore, "cateringMenuItems"))
+  );
   return cateringItems.docs.map((doc) => doc.data());
-}
+};
 
+
+//get all drop-off menu items from firestore
 export const getDropoffMenuItems = async () => {
-  const dropoffItems = await getDocs(query(collection(firestore, "dropoffMenuItems")));
+  const dropoffItems = await getDocs(
+    query(collection(firestore, "dropoffMenuItems"))
+  );
   return dropoffItems.docs.map((doc) => doc.data());
-}
+};
+
+
+//get all orders from firestore
+export const getAllOrders = async () => {
+  const orders = await getDocs(
+    query(collection(firestore, "orders"), orderBy("id", "desc"))
+  );
+  return orders.docs.map((doc) => doc.data());
+};
+
+// export const handleSaveOrder = (cartItems) => {
+//   const timestamps = new Date().toDateString();
+//   return new Promise((resolve, reject) => {
+//     firestore
+//       .collection("orders")
+//       .doc()
+//       .set(cartItems)
+//       .then(() => {
+//         resolve();
+//         // orderUserID : Auth.currentUser.uid,
+//         // orderCreated: timestamps,
+//       })
+//       .catch((err) => reject(err));
+//   });
+// };
+
+
