@@ -8,10 +8,6 @@ import { Radio, Checkbox, RadioGroup } from "@mui/material";
 import { IoCartSharp } from "react-icons/io5";
 import { useStateValue } from "../../../context/StateProvider";
 
-const toggleActiveClass = (event) => {
-  event.currentTarget.classList.toggle("active");
-};
-
 function Sizes({ selectedSize, sizes, handleChangeSize, setVariantDescription, setArabicVariantDescription }) {
   return (
     <div style={{ width: "100%" }}>
@@ -31,7 +27,7 @@ function Sizes({ selectedSize, sizes, handleChangeSize, setVariantDescription, s
         <RadioGroup
           aria-labelledby="demo-controlled-radio-buttons-group"
           name="radio-buttons"
-          value={selectedSize}
+          value={selectedSize?.size}
         >
           {sizes?.map((variant, index) => (
             <div className="sizeBtn" key={index}>
@@ -46,10 +42,7 @@ function Sizes({ selectedSize, sizes, handleChangeSize, setVariantDescription, s
                   setArabicVariantDescription(
                     variant?.variantDescriptionArabic
                   );
-                  handleChangeSize(
-                    variant?.size,
-                    variant?.price
-                  );
+                  handleChangeSize(variant);
                 }}
               />
               <div className="sizeDetails">
@@ -77,7 +70,7 @@ function Sizes({ selectedSize, sizes, handleChangeSize, setVariantDescription, s
   )
 }
 
-function MeatOptions({ meatOptions, setArabicVariantDescription, setVariantDescription }) {
+function MeatOptions({ meatOptions, selectedMeatOption, handleMeatOptionChange, setArabicVariantDescription, setVariantDescription }) {
   return (
     <div style={{ width: "100%" }}>
       <h6
@@ -103,6 +96,7 @@ function MeatOptions({ meatOptions, setArabicVariantDescription, setVariantDescr
                 color="success"
                 name="radio-buttons"
                 value={variant?.meatOption}
+                checked={selectedMeatOption?.meatOption === variant.meatOption}
                 onChange={(e) => {
                   setVariantDescription(
                     variant?.variantDescription
@@ -110,7 +104,7 @@ function MeatOptions({ meatOptions, setArabicVariantDescription, setVariantDescr
                   setArabicVariantDescription(
                     variant?.variantDescriptionArabic
                   );
-                  // handle the meatoption selection here
+                  handleMeatOptionChange(variant);
                 }}
               />
 
@@ -187,9 +181,9 @@ function Addons({ addOns, selectedAddons, handleAddonsChange }) {
   )
 }
 
-function calculatePrice(sizePrice, addOnsPrices, quantity) {
-  let val = Number(sizePrice);
-  addOnsPrices?.forEach((a) => val += Number(a.price));
+function calculatePrice({ sizePrice, addons, meatOptionPrice, quantity }) {
+  let val = Number(sizePrice || 0) + Number(meatOptionPrice || 0);
+  addons?.forEach((a) => val += Number(a.price));
   return val * Number(quantity);
 }
 
@@ -200,20 +194,23 @@ function VariationsModal({
 }) {
   const { cartItems, updateItem, toggleAddToCart, increase, decrease } = useStateValue()[2];
   // find this item in cartItems
+  // if item is already present in cart, display values from cart
   const currentItem = cartItems.find((i) => i.id === modalInfo.id);
   const [arabicVariantDescription, setArabicVariantDescription] = useState();
   const [variantDescription, setVariantDescription] = useState();
-  // if item is already present in cart, display values from cart
-  const [price, setPrice] = useState(0);
   const [selectedAddons, setSelectedAddons] = useState([]);
-  const [selectedSize, setSelectedSize] = React.useState('');
-  const handleChangeSize = (newSize, newPrice) => {
+  const [selectedMeatOption, setSelectedMeatOption] = useState();
+  const [selectedSize, setSelectedSize] = React.useState();
+  const handleChangeSize = (newSize) => {
     // if item is present in cart, update the values in cart
-    if (currentItem) updateItem(currentItem.id, { ...currentItem, price: newPrice, selectedSize: newSize, selectedAddons: [] });
+    if (currentItem) updateItem(currentItem.id, { ...currentItem, selectedSize: newSize, selectedAddons: [] });
     setSelectedSize(newSize);
-    setPrice(newPrice);
     setSelectedAddons([]);
   };
+  const handleMeatOptionChange = (option) => {
+    if (currentItem) updateItem(currentItem.id, { ...currentItem, selectedMeatOption: option });
+    setSelectedMeatOption(option);
+  }
   const handleAddonsChange = (option) => {
     if (currentItem) { // if item is present in cart, update the values in cart also
       const isPresent = currentItem.selectedAddons.find((a) => a.addOn === option.addOn);
@@ -226,9 +223,9 @@ function VariationsModal({
     // update local variables values
     const isPresent = selectedAddons.find((a) => a.addOn === option.addOn);
     if (!isPresent) {
-      // if already present, remove the addon
       setSelectedAddons([...selectedAddons, option]);
     } else {
+      // if already present, remove the addon
       setSelectedAddons(selectedAddons.filter((a) => a.addOn !== option.addOn));
     }
   };
@@ -272,14 +269,16 @@ function VariationsModal({
                           <Sizes
                             sizes={variation?.sizes || []}
                             selectedSize={currentItem?.selectedSize || selectedSize}
-                            handleChangeSize={handleChangeSize}
+                            handleChangeSize={(sz) => handleChangeSize(sz)}
                             setArabicVariantDescription={setArabicVariantDescription}
                             setVariantDescription={setVariantDescription}
                           />
                         </Case>
                         <Case condition={Boolean(variation.meatOptions)}>
                           <MeatOptions
-                            meatOptions={currentItem?.selectedMeatOptions || variation?.meatOption || []}
+                            meatOptions={variation?.meatOptions || []}
+                            selectedMeatOption={currentItem?.selectedMeatOption || selectedMeatOption}
+                            handleMeatOptionChange={(op) => handleMeatOptionChange(op)}
                             setArabicVariantDescription={setArabicVariantDescription}
                             setVariantDescription={setVariantDescription}
                           />
@@ -330,13 +329,27 @@ function VariationsModal({
             </div>
           </When>
           <div className="product__price-modal">
-            <If condition={currentItem?.price || price}>
+            <If condition={currentItem?.selectedSize?.price || selectedSize?.price || selectedMeatOption?.price || currentItem?.selectedMeatOption?.price}>
               <Then>
                 <span>QAR&nbsp;
                   <If condition={!currentItem}>
                     {/* If item is not present in cart show local state calculation, else show calculation according to cart */}
-                    <Then>{calculatePrice(price, selectedAddons, 1)}</Then>
-                    <Else>{calculatePrice(currentItem?.price, currentItem?.selectedAddons, currentItem?.qty)}</Else>
+                    <Then>
+                      {calculatePrice({
+                        sizePrice: selectedSize?.price,
+                        addons: selectedAddons,
+                        quantity: 1,
+                        meatOptionPrice: selectedMeatOption?.price
+                      })}
+                    </Then>
+                    <Else>
+                      {calculatePrice({
+                        sizePrice: currentItem?.selectedSize?.price,
+                        addons: currentItem?.selectedAddons,
+                        meatOptionPrice: currentItem?.selectedMeatOption?.price,
+                        quantity: currentItem?.qty
+                      })}
+                    </Else>
                   </If>
                 </span>
               </Then>
@@ -345,20 +358,19 @@ function VariationsModal({
               </Else>
             </If>
           </div>
-          <When condition={currentItem?.price || price}>
+          <When condition={currentItem?.selectedSize?.price || selectedSize?.price || selectedMeatOption?.price || currentItem?.selectedMeatOption?.price}>
             <div>
               <motion.button
                 whileTap={{ scale: 0.9 }}
-                onClick={(e) => {
+                onClick={() => {
                   toggleAddToCart({
                     ...modalInfo,
-                    price,
-                    selectedAddons: selectedAddons,
+                    selectedAddons,
                     selectedSize,
+                    selectedMeatOption,
                   });
-                  toggleActiveClass(e);
                 }}
-                className={`cart_btn btn btn-primary ${currentItem?.price ? 'active' : ''}`}
+                className={`cart_btn btn btn-primary ${currentItem ? 'active' : ''}`}
               >
                 <span className="add_to_cart">Add to cart</span>
                 <span className="added">Added!</span>

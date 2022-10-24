@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ListGroup } from "reactstrap";
 import { Link } from "react-router-dom";
 import CartItem from "../pages/CartItem";
@@ -7,32 +7,18 @@ import { motion } from "framer-motion";
 import { MdOutlineKeyboardTab } from "react-icons/md";
 import { RiRefreshFill } from "react-icons/ri";
 import { useStateValue } from "../context/StateProvider";
-import { actionType } from "../context/reducer";
+import { If, Else, Then } from "react-if";
 
 const Cart = ({ cartMenu, setCartMenu }) => {
-  console.log("cart");
-  const [{ user, cartItems }, dispatch] = useStateValue();
-  const [itemsCart, setItemsCart] = useState(cartItems);
-  const [total, setTotal] = useState(0);
+  console.log('cart')
+  const { user, cartItems, clearCart, calculateTotalPriceOfItem } = useStateValue()[2];
   const [flag, setFlag] = useState(1);
 
-  useEffect(() => {
-    let totalPrice = cartItems.reduce(function (accumulator, item) {
-      return accumulator + item.qty * item.price;
+  const calculateTotalPrice = () => {
+    return cartItems.reduce(function (accumulator, item) {
+      return accumulator + calculateTotalPriceOfItem(item.id);
     }, 0);
-    setTotal(totalPrice);
-    // console.log(total)
-  }, [total, flag]);
-
-  const clearCart = () => {
-    dispatch({
-      type: actionType.SET_CARTITEMS,
-      cartItems: [],
-    });
-    localStorage.setItem("cartItems", JSON.stringify([]));
-    setTotal(0);
-    setItemsCart(null);
-  };
+  }
 
   return (
     <motion.div
@@ -50,7 +36,6 @@ const Cart = ({ cartMenu, setCartMenu }) => {
           >
             <MdOutlineKeyboardTab
               style={{ fontSize: "1.5rem", color: "#686868" }}
-              // onClick={() => setCartMenu(false)}
             />
           </motion.div>
           <h6 className="cartTitle">Your Cart</h6>
@@ -62,9 +47,8 @@ const Cart = ({ cartMenu, setCartMenu }) => {
             Clear <RiRefreshFill />{" "}
           </motion.p>
         </div>
-
         <div className="cart__item-list">
-          {cartItems &&
+          {
             cartItems?.map((item) => (
               <CartItem
                 key={item.id}
@@ -72,13 +56,13 @@ const Cart = ({ cartMenu, setCartMenu }) => {
                 setFlag={setFlag}
                 flag={flag}
               />
-            ))}
+            ))
+          }
         </div>
-
         <div className="cartTotalContainer">
           <div className="cartSubTotal">
             <p>Sub Total</p>
-            <p>QAR {total}</p>
+            <p>QAR {calculateTotalPrice()}</p>
           </div>
           <div className="cartSubTotal">
             <p>Delivery</p>
@@ -87,51 +71,40 @@ const Cart = ({ cartMenu, setCartMenu }) => {
           <div className="divider"></div>
           <div className="cartTotal">
             <p>Total</p>
-            <p>QAR {total}</p>
+            <p>QAR {
+              calculateTotalPrice()
+            }</p>
           </div>
+          <If condition={Boolean(user)}>
+            <Then>
+              <Link to="/checkout">
+                <motion.button
+                  className="checkoutBtn"
+                  whileTap={{ scale: 0.8 }}
+                  onClick={() => setCartMenu(false)}
+                  disabled={calculateTotalPrice() === 0 ? true : false}
+                >
+                  Checkout
+                </motion.button>
 
-          {user ? (
-            <Link to="/checkout">
-              <motion.button
-                className="checkoutBtn"
-                whileTap={{ scale: 0.8 }}
-                onClick={() => setCartMenu(false)}
-                // disabled={total === 0 ? true : false}
-              >
-                Checkout
-              </motion.button>
-            </Link>
-          ) : (
-            // <Link to="/">
-            <motion.button
-              type="button"
-              whileTap={{ scale: 0.8 }}
-              className="checkoutBtn"
-              onClick={() => setCartMenu(false)}
-            >
-              Sign In to Check Out
-            </motion.button>
-            // </Link>
-          )}
-        </div>
-
-        {/* <div className="cart__bottom d-flex align-items-center justify-content-between">
-          <p>Sub Total</p>
-          <p>QAR 30</p>
-
-          <h6>
-            Delivery: <span>QAR 0</span>
-          </h6>
-          <h6>
-            Subtotal : <span>QAR 37</span>
-          </h6>
-
-          <button>
-            <Link to="/checkout">Checkout</Link>
-          </button>
-        </div> */}
-      </ListGroup>
-    </motion.div>
+              </Link >
+            </Then >
+            <Else>
+              <Link to="/">
+                <motion.button
+                  type="button"
+                  whileTap={{ scale: 0.8 }}
+                  className="checkoutBtn"
+                  onClick={() => setCartMenu(false)}
+                >
+                  Sign In to Check Out
+                </motion.button>
+              </Link>
+            </Else>
+          </If >
+        </div >
+      </ListGroup >
+    </motion.div >
   );
 };
 

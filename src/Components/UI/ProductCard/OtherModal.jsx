@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 import { useStateValue } from '../../../context/StateProvider';
 import { If, Then, Else, When } from 'react-if';
 
-const toggleActiveClass = (event) => {
-  event.currentTarget.classList.toggle("active");
-};
+function calculatePrice({ price, quantity }) {
+  return Number(price || 0) * Number(quantity || 0);
+}
 
 function OtherModal({ modal, toggle, modalInfo }) {
   const { cartItems, toggleAddToCart, increase, decrease } = useStateValue()[2];
@@ -96,7 +96,13 @@ function OtherModal({ modal, toggle, modalInfo }) {
           </When>
           <div className="product__price-modal">
             <span>
-              QAR {currentItem?.price || modalInfo?.price}
+              QAR&nbsp;
+              <If condition={!currentItem}>
+                <Then>{calculatePrice({ price: modalInfo?.price, quantity: 1 })}</Then>
+                <Else>
+                  {calculatePrice({ price: currentItem?.price, quantity: currentItem?.qty })}
+                </Else>
+              </If>
             </span>
           </div>
           <div>
@@ -104,10 +110,8 @@ function OtherModal({ modal, toggle, modalInfo }) {
               whileTap={{ scale: 0.9 }}
               onClick={(e) => {
                 toggleAddToCart(modalInfo);
-                toggleActiveClass(e);
               }}
-              className={`cart_btn btn btn-primary ${currentItem?.price ? 'active' : ''}`}
-            // className="cart_btn btn btn-primary"
+              className={`cart_btn btn btn-primary ${currentItem ? 'active' : ''}`}
             >
               <span className="add_to_cart">Add to cart</span>
               <span className="added">Added!</span>
