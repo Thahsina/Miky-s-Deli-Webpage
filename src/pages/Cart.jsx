@@ -11,7 +11,8 @@ import { If, Else, Then } from "react-if";
 
 const Cart = ({ cartMenu, setCartMenu }) => {
   console.log('cart')
-  const { user, cartItems, clearCart, calculateTotalPriceOfItem } = useStateValue()[2];
+  const [{ user}] = useStateValue();
+  const { cartItems, clearCart, calculateTotalPriceOfItem } = useStateValue()[2];
   const [flag, setFlag] = useState(1);
 
   const calculateTotalPrice = () => {

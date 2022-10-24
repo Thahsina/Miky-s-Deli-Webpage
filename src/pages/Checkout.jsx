@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import Helmet from "../Components/Helmet";
-import { Container, Row, Col, Button, Form } from "reactstrap";
+import { Container, Row, Col,Form } from "reactstrap";
 import { useStateValue } from "../context/StateProvider";
 import { Link } from "react-router-dom";
 import mapboxgl from "mapbox-gl";
@@ -15,7 +15,8 @@ import Area from "../pages/Area";
 import { saveOrder } from "../firebaseFunctions";
 
 const Checkout = () => {
-  const [{ cartItems, user }] = useStateValue();
+  const [{user }] = useStateValue();
+  const { cartItems, clearCart, calculateTotalPriceOfItem } = useStateValue()[2];
   const [specialRequest, setSpecialRequest] = useState("");
   const [{ deliveryZone }] = useStateValue();
   const [modalConfirm, setModalConfirm] = useState(false);
@@ -40,6 +41,8 @@ const Checkout = () => {
       address: address,
       cartItems: cartItems,
       specialRequests: specialRequest,
+      id: `${Date.now()}`,
+      orderNumber: `${Math.floor(100000 + Math.random() * 900000)}`,
     };
 
     saveOrder(orderData);
@@ -171,7 +174,7 @@ const Checkout = () => {
                     onChange={(e) =>
                       setAddress((prevState) => ({
                         ...prevState,
-                        name: (prevState.email = e.target.value),
+                        email: (prevState.email = e.target.value),
                       }))
                     }
                   />
@@ -211,13 +214,14 @@ const Checkout = () => {
                   }}
                 >
                   <div className=" my-4 deliveryZone">
-                    <h4>{deliveryZone ? deliveryZone : "Select delivery Area"}</h4>
+                    <h4>
+                      {deliveryZone ? deliveryZone : "Select delivery Area"}
+                    </h4>
                     <button
                       className="btnArea"
                       onClick={(e) => {
                         e.preventDefault();
                         setAreaModal(true);
-                       
                       }}
                     >
                       {areaModal === true && <Area />}
@@ -353,9 +357,7 @@ const Checkout = () => {
                       id="flexRadioDefault2"
                       defaultChecked
                     />
-                    <label className="form-check-label">
-                      Cash On Delivery
-                    </label>
+                    <label className="form-check-label">Cash On Delivery</label>
                   </div>
                   <div className="form-check mb-4 mt-4 mx-1">
                     <input

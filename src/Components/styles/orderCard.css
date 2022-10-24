@@ -1,0 +1,88 @@
+.orderCard {
+  padding: 1rem 1rem 3rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  margin: 0 0.5rem 1rem;
+  flex: 0 0 48%;
+  position: relative;
+  border: 1px solid #707070;
+}
+
+.orderCard_header {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+  /* border: 1px solid red; */
+}
+
+.orderNumber {
+  padding: 5px;
+  font-weight: 600;
+  border-radius: 4px;
+  background-color: #ffedf0;
+}
+
+.orderDate {
+  text-align: right;
+  vertical-align: center;
+}
+
+.orderPrice {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.orderTotal {
+  display: flex;
+  font-weight: 600;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.orderActionButtons {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.orderRejectBtn,
+.orderAcceptBtn {
+  border-radius: 4px;
+  padding: 0.5rem 1.5rem;
+  background-color: transparent;
+  margin: 0rem 0.5rem;
+}
+
+.orderRejectBtn {
+  color: #c8102e;
+  border: 1px solid #c8102e;
+}
+
+.orderRejectBtn:hover {
+  background-color: #c8102e;
+  color: #fff;
+}
+
+.orderAcceptBtn {
+  color: #139652;
+  border: 1px solid #139652;
+}
+
+.orderAcceptBtn:hover {
+  background-color: #139652;
+  color: #fff;
+}
+
+.orderAddress span {
+  font-weight: 600;
+}
+
+@media only screen and (max-width: 768px) {
+  th,
+  td {
+    font-size: 0.8rem;
+  }
+}
