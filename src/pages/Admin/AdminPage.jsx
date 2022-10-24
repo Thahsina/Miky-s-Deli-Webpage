@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-import Helmet from "../Components/Helmet";
+import Helmet from "../../Components/Helmet";
 import { AnimatePresence, motion } from "framer-motion";
 
-import "../Components/styles/admin.css";
+import "../../Components/styles/admin.css";
 import { MdAdd, MdKeyboardBackspace } from "react-icons/md";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { FaBars, FaHome, FaPlus } from "react-icons/fa";
@@ -17,14 +17,24 @@ const routes = [
     icon: <FaHome />,
   },
   {
-    path: "createItem",
-    name: "Add New Product",
-    icon: <FaPlus />,
-  },
-  {
     path: "orderspage",
     name: "Orders",
     icon: <BsCartCheck />,
+  },
+  {
+    path: "cateringOrderspage",
+    name: "Catering Orders",
+    icon: <BsCartCheck />,
+  },
+  {
+    path: "dropOffOrderspage",
+    name: "Drop-Off Orders",
+    icon: <BsCartCheck />,
+  },
+  {
+    path: "createItem",
+    name: "Add New Product",
+    icon: <FaPlus />,
   },
 ];
 
@@ -108,24 +118,6 @@ const Admin = () => {
           </motion.div>
         </div>
 
-        {/* <section>
-        <Container>
-          <Row>
-            <Col lg="2" md={{ span: 4, offset: 4 }}>
-              <div className="addItemContainer">
-                <Link to={"/createItem"}>
-                  <button className="mt-3 btn newItem">
-                    Add New Item to the Menu{" "}
-                    <span>
-                      <MdAdd />
-                    </span>
-                  </button>
-                </Link>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section> */}
         {/* </Col> */}
         <div className="admin_outlet">
           <Outlet />

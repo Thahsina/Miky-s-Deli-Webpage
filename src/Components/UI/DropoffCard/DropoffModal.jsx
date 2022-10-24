@@ -137,7 +137,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                           margin: "1rem",
                         }}
                       >
-                        (select 2 choices)
+                        (select 10 choices)
                       </span>
                     </div>
                     {cateringModalInfo.variations?.map((variant) =>
@@ -226,7 +226,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                           margin: "1rem",
                         }}
                       >
-                        (select 30 choices)
+                        (select 3 choices)
                       </span>
                     </div>
                     {cateringModalInfo.variations?.map((variant) =>

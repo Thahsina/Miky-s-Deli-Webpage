@@ -4,7 +4,7 @@ import { NavLink, Link } from "react-router-dom";
 import { FaBars, FaHome, FaUser } from "react-icons/fa";
 import { BsCartCheck } from "react-icons/bs";
 import { useState } from "react";
-import { MdKeyboardBackspace } from "react-icons/md";
+import { MdKeyboardBackspace,MdLocationOn,MdFoodBank } from "react-icons/md";
 
 import "../../Components/styles/sideBar.css";
 
@@ -21,36 +21,41 @@ const routes = [
   },
   {
     path: "myorders",
-    name: "Orders",
+    name: "Past Orders",
     icon: <BsCartCheck />,
   },
-  // {
-  //   path: "addresses",
-  //   name: "Addresses",
-  //   icon: <MdLocationOn />,
-  // },
+  {
+    path: "cateringorders",
+    name: "Catering Order",
+    icon: <MdFoodBank />,
+  },
+  {
+    path: "dropofforders",
+    name: "Drop Off Order",
+    icon: <MdFoodBank />,
+  },
 ];
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
-  const showAnimation = {
-    hidden: {
-      width: 0,
-      opacity: 0,
-      transition: {
-        duration: 0.3,
-      },
-    },
-    show: {
-      opacity: 1,
-      width: "auto",
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
+  // const showAnimation = {
+  //   hidden: {
+  //     width: 0,
+  //     opacity: 0,
+  //     transition: {
+  //       duration: 0.3,
+  //     },
+  //   },
+  //   show: {
+  //     opacity: 1,
+  //     width: "auto",
+  //     transition: {
+  //       duration: 0.3,
+  //     },
+  //   },
+  // };
 
   return (
     <>
@@ -59,11 +64,11 @@ const SideBar = () => {
           animate={{
             width: isOpen ? "200px" : "45px",
 
-            transition: {
-              duration: 0.3,
-              type: "spring",
-              damping: 8,
-            },
+            // transition: {
+            //   duration: 0.1,
+            //   type: "spring",
+            //   damping: 8,
+            // },
           }}
           className={`sidebar `}
         >

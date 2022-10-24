@@ -12,7 +12,6 @@ const DropoffPage = () => {
         <Container className="cateringPage__container d-flex flex-wrap justify-content-around mb-4">
           <div className="cateringCard__title text-center">
             <h1 id="pageHeaderTitle">Drop-Off Menu</h1>
-           
           </div>
           <Row
             lg="12"

@@ -19,5 +19,6 @@ export const initialState = {
     dropoffMenuItems:null,
     total: [],
     cartItems : cartInfo,
-    // quantity: 1,
+    // order: {},
+    orders:null
 }

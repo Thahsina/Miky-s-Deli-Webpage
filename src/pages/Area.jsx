@@ -47,24 +47,17 @@ const Area = () => {
   return (
     <div>
       {/* {!deliveryZone &&  */}
-        <Modal
+      <Modal
         className="select__area-modal"
         isOpen={modal}
         toggle={toggle}
         keyboard="false"
         backdrop="static"
-        >
+      >
         <ModalBody className="select__area-content text-center">
           <h2>Select your delivery area</h2>
           <div className="select-box" onClick={toggleActive}>
             <button className="options-container">
-              {/* {options.map((option, index) => {
-              <div className="option" onClick={toggleActive}>
-              <div for="Al Saad" onClick={selectOption}>
-               {option}
-              </div>
-            </div>
-            })} */}
               <div className="option" onClick={toggleActive}>
                 <div for="Al Saad" onClick={selectOption}>
                   Al Saad

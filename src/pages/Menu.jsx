@@ -5,6 +5,7 @@ import Helmet from "../Components/Helmet";
 import { Container, Row, Col } from "reactstrap";
 import Slider from "react-slick";
 import ProductCard from "../Components/UI/ProductCard";
+// import ProductCard from "./ProductCCard.jsx";
 import {
   BsFillArrowRightCircleFill,
   BsFillArrowLeftCircleFill,
@@ -109,7 +110,7 @@ const Menu = () => {
       { id: 10, name: "Burgers" },
       { id: 11, name: "Cold Coffee" },
       { id: 12, name: "Hot Drinks" },
-      { id: 13, name: "Cold Drinks" },
+      { id: 13, name: "Beverages" },
       { id: 14, name: "Smoothies" },
       { id: 15, name: "Fresh Juices" },
       { id: 16, name: "Dessert" },
@@ -150,39 +151,10 @@ const Menu = () => {
       );
   };
 
-  // const example = menuItems?.map((item) => {
-  //   item.variations?.map((i) => {
-  //     console.log(i.price, i.size);
-  //     console.log(i.addOns);
-  //     i.addOns?.map((hg) => {
-  //       console.log(hg.addOn, hg.price);
-  //     }); //////////////
-  //   });
-  // });
-
-  // i.addOns.forEach(it => console.log(it))
-  // Object.keys(i.addOns)?.forEach(function(key){
-  //   var val=i.addOns[key]
-  //   console.log(val)
-  // })
-  // console.log(item?.variants)
-  // Object.keys(item.variants).forEach(function (key){
-  //   var value= item.variants[key]
-  //   console.log(value)
-  // })
-
-  // console.log(item.title)
-  // item.variations?.map((eachVariant)=>
-  // Object.keys(eachVariant).forEach(function (key){
-  //   var value = eachVariant[key];
-  //   console.log(key)
-  //   console.log(value.forEach(i => i)
-  //    )
-  // })
-  // )
+  
 
   const clearInput = () => {
-    // setFilteredData([]);
+    
     setWordEntered("");
   };
 
@@ -234,10 +206,7 @@ const Menu = () => {
       </section>
       <Container>
         <Row className="mb-4">
-          {/* <Col lg="12" className="text-center">
-            <div className="menuHead"> <h2>Our Menu</h2></div>
-           
-          </Col> */}
+         
           {wordEntered === "" && (
             <Col lg="14">
               <div className="menuCategory__carousel">
@@ -260,20 +229,7 @@ const Menu = () => {
                       </button>
                     </div>
                   ))}
-                  {/*
-                  <button className={`category === "quesadilla" ? "menuBtnActive" : ""`} onClick={setCategory("Quesadilla")}>Quesadilla</button>
-                </div> */}
-                  {/* <div>
-                  <button className={isActive?"menuBtnActive": " " } onClick={()=>handleClick()}>Burgers</button>
-                </div>
-                
-                
-               
-              
-                
-                <div>
-                  <button onClick={()=>handleClick()}>Hot Tea</button>
-                </div> */}
+                  
                 </Slider>
               </div>
             </Col>

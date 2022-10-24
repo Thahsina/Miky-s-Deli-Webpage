@@ -8,7 +8,7 @@
   background: #fff;
   /* background: #ff4646; */
   position: fixed;
-  
+
   top: 0;
   left: 0;
   z-index: 101;
@@ -37,7 +37,6 @@
   color: #139652 !important;
 }
 
-
 .mobile__menu i {
   font-size: 1.3rem;
   /* color: #212245; */
@@ -47,8 +46,6 @@
 .cart__icon {
   position: relative;
 }
-
-
 
 .cart__badge {
   position: absolute;
@@ -78,7 +75,7 @@
   justify-content: center;
 }
 
-.signinBtn a{
+.signinBtn a {
   text-decoration: none;
   color: unset;
 }
@@ -96,10 +93,9 @@
   background-color: #139652 !important;
 }
 
-.signin:focus{
+.signin:focus {
   outline: none !important;
 }
-
 
 /* .nav__right{
     position: relative;
@@ -117,18 +113,13 @@
 }
 
 .logoutMenu {
-  max-width: 30rem;
-  min-height: 20rem;
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  flex-direction: column;
   position: absolute;
-  top: 100px;
-  left: 30%;
-  transition: 0.3s;
-  padding: 20px;
-  border-radius: 0.5rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 3px;
+  padding: 40px 40px;
+  /* padding: 70px 100px; */
   background: #ffffff;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -142,6 +133,13 @@
   top: -17.5px;
   right: -17.5px;
   color: #df2020;
+}
+
+.logoutMenu__header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .logoutMenu h5 {
@@ -195,16 +193,15 @@
   cursor: pointer;
 }
 
-.adminBtn{
+.adminBtn {
   color: #38383a;
   padding: 2px 5px;
 }
 
-.adminBtn img{
-  width: 35px ;
+.adminBtn img {
+  width: 35px;
   height: 35px;
 }
-
 
 .otpContainer {
   display: flex;
@@ -216,16 +213,33 @@
 }
 
 .otpContainer input {
-  margin-left: 10px;
+  /* margin-left: 10px;
   box-shadow: 5px 4px 10px 5px rgb(228, 228, 228) inset;
   border-radius: 5px;
   border: none;
   width: 10rem;
-  padding: 0px 10px;
+  padding: 0px 10px; */
+  display: block;
+  margin: 2em auto;
+  border: none;
+  padding: 0;
+  width: 8.4ch;
+  background: repeating-linear-gradient(
+      90deg,
+      dimgrey 0,
+      dimgrey 0.8ch,
+      transparent 0,
+      transparent 1.4ch
+    )
+    0 100%/8.4ch 2px no-repeat;
+  /* font: 4ch "RocknRoll One", sans-serif ; */
+  font: 4.1ch droid sans mono, consolas, monospace;
+  letter-spacing: 0.4ch;
 }
 
 .otpContainer input:focus {
   outline: none;
+  color: #139652;
 }
 
 .continue {
@@ -241,7 +255,7 @@
   .logo {
     width: calc(100% - 70%);
   }
-/* background overlay */
+  /* background overlay */
   .navigation {
     position: fixed;
     top: 0;
@@ -252,35 +266,6 @@
     z-index: 99;
     display: none;
   }
-
-  /* .overlay{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.425);
-    z-index: 99;
-    display: none;
-  }
-
-  .logoutMenu {
-    max-width: 30rem;
-    min-height: 20rem;
-    display: flex;
-    align-items: center;
-    justify-items: center;
-    flex-direction: column;
-    position: absolute;
-    top: 100px;
-    left: 30%;
-    transition: 0.3s;
-    padding: 20px;
-    border-radius: 0.5rem;
-    background: #ffffff;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-      0 8px 10px -6px rgb(0 0 0 / 0.1);
-  } */
 
   .menu {
     position: absolute;
@@ -323,17 +308,13 @@
   }
 
   .logo {
+    width: calc(100% - 30%);
     margin-top: 10px !important;
   }
   .cart__badge {
     position: absolute;
     top: 22px;
     right: -6px;
-  }
-
-  .logoutMenu {
-    position: absolute;
-    left: 12%;
   }
 
   .select-input-value {
@@ -355,45 +336,42 @@
     border: 1px lightgrey;
   }
 
-  .otpContainer input {
-    height: 1.8rem;
-    width: 8rem;
-  }
-
   .signin {
     flex-direction: row !important;
   }
 }
 
 @media only screen and (max-width: 576px) {
-  .logoutMenu {
-    position: absolute;
-    left: 18%;
+  .logo{
+    width: calc(100% - 20%);
+  }
+  .select-input-value input {
+    width: 15rem;
   }
 
   .otpContainer input {
-    height: 1.8rem;
-    width: 8rem;
+    height: 1.8rem !important;
+    /* width: 8rem; */
+  }
+  .next {
+    font-size: small;
+  }
+
+  .continue {
+    width: 7rem;
   }
 }
 
 @media only screen and (max-width: 360px) {
-  .logoutMenu {
-    width: 15rem;
-    font-size: small;
+  .logo{
+    width: calc(100% - 20%);
   }
-
   .select-input-value {
     width: 13rem;
   }
 
   .otpContainer {
     font-size: small;
-  }
-
-  .otpContainer input {
-    height: 1.5rem;
-    width: 6rem;
   }
 
   .next {
@@ -411,7 +389,7 @@
   padding: 0.5rem;
   border-radius: 0.5rem;
   text-align: center;
-  /* border: 1px solid red; */
+
   color: #ffffff;
 }
 
@@ -422,20 +400,3 @@
 .success {
   background-color: #139652;
 }
-
-/* .otpContainer{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 2rem;
-  font-family: inherit;
-}
-
-.otpContainer input{
-  margin-left: 10px;
-  box-shadow: 5px 4px 10px 5px rgb(228, 228, 228) inset;
-  border-radius: 5px;
-  border: none;
-  padding: 0px 10px;
-} */

@@ -87,8 +87,8 @@ const Cart = ({ cartMenu, setCartMenu }) => {
                   Checkout
                 </motion.button>
 
-              </Link>
-            </Then>
+              </Link >
+            </Then >
             <Else>
               <Link to="/">
                 <motion.button
@@ -101,10 +101,10 @@ const Cart = ({ cartMenu, setCartMenu }) => {
                 </motion.button>
               </Link>
             </Else>
-          </If>
-        </div>
-      </ListGroup>
-    </motion.div>
+          </If >
+        </div >
+      </ListGroup >
+    </motion.div >
   );
 };
 

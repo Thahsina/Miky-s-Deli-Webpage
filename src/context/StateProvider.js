@@ -33,12 +33,20 @@ export const StateProvider = ({ reducer, initialState, children }) => {
       { ...item, qty: 1 }
     ]);
   }
+
+
+
   function increase(id) {
     let itemIndex = cartItems.findIndex((i) => i.id === id);
     let item = cartItems[itemIndex];
     item = { ...item, qty: Number(item.qty) + 1 };
+    console.log("item", item)
+
     setCartItems([...cartItems.slice(0, itemIndex), item, ...cartItems.slice(itemIndex + 1)]);
   }
+
+  { console.log(cartItems) }
+
   function decrease(id) {
     let itemIndex = cartItems.findIndex((i) => i.id === id);
     let item = cartItems[itemIndex];
@@ -46,6 +54,9 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     item = { ...item, qty: Number(item.qty) - 1 };
     setCartItems([...cartItems.slice(0, itemIndex), item, ...cartItems.slice(itemIndex + 1)]);
   }
+
+
+
   function updateItem(id, updatedItem) {
     let itemIndex = cartItems.findIndex((i) => i.id === id);
     let item = cartItems[itemIndex];
@@ -57,6 +68,8 @@ export const StateProvider = ({ reducer, initialState, children }) => {
       ]
     );
   }
+
+
   console.log({ cartItems });
   const st = {
     cartItems,
