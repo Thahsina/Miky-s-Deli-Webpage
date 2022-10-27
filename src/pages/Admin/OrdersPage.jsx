@@ -2,14 +2,15 @@ import React from "react";
 import { Col, Container, Row } from "reactstrap";
 import { useStateValue } from "../../context/StateProvider";
 import "../../Components/styles/ordersPage.css";
-import OrderCard from "../../Components/UI/OrderCard";
+import OrderCardAdmin from "../../Components/UI/OrderCardAdmin";
 import { NavLink, Link } from "react-router-dom";
 
 const OrdersPage = () => {
-  const [{ user, cart }] = useStateValue();
+  const [{ user, cart, orders,menuItems }] = useStateValue();
 
   return (
     <>
+    {console.log("Orders",orders)}
       <Container>
         <Row>
           <Col lg="12">
@@ -21,7 +22,7 @@ const OrdersPage = () => {
               </div>
             </div>
             <div className="orderCards">
-              <OrderCard />
+              <OrderCardAdmin data={orders}/>
             </div>
           </Col>
         </Row>

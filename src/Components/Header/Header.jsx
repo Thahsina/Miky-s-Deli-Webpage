@@ -54,7 +54,8 @@ const Header = () => {
 
   const autoFocusRef = useRef(null);
 
-  const [{ user, cartItems }, dispatch] = useStateValue();
+  const [{ user}, dispatch] = useStateValue();
+  const { cartItems, clearCart, calculateTotalPriceOfItem } = useStateValue()[2];
   const [isLogoutMenu, setIsLogoutMenu] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("+974 ");
   const [OTP, setOTP] = useState("");

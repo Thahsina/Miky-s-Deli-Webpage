@@ -12,14 +12,14 @@ import { If, Else, Then } from "react-if";
 const Cart = ({ cartMenu, setCartMenu }) => {
   console.log('cart')
   const [{ user}] = useStateValue();
-  const { cartItems, clearCart, calculateTotalPriceOfItem } = useStateValue()[2];
+  const { cartItems, clearCart, calculateTotalPriceOfItem,  calculateTotalPrice} = useStateValue()[2];
   const [flag, setFlag] = useState(1);
 
-  const calculateTotalPrice = () => {
-    return cartItems.reduce(function (accumulator, item) {
-      return accumulator + calculateTotalPriceOfItem(item.id);
-    }, 0);
-  }
+  // const calculateTotalPrice = () => {
+  //   return cartItems.reduce(function (accumulator, item) {
+  //     return accumulator + calculateTotalPriceOfItem(item.id);
+  //   }, 0);
+  // }
 
   return (
     <motion.div

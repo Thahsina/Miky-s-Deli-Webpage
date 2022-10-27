@@ -1,6 +1,7 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Helmet from "../Components/Helmet";
-import { Container, Row, Col,Form } from "reactstrap";
+import { Container, Row, Col, Form } from "reactstrap";
 import { useStateValue } from "../context/StateProvider";
 import { Link } from "react-router-dom";
 import mapboxgl from "mapbox-gl";
@@ -13,16 +14,19 @@ import { Modal, ModalBody } from "reactstrap";
 import TickImg from "../images/tick.png";
 import Area from "../pages/Area";
 import { saveOrder } from "../firebaseFunctions";
+import { actionType } from "../context/reducer";
 
 const Checkout = () => {
-  const [{user }] = useStateValue();
-  const { cartItems, clearCart, calculateTotalPriceOfItem } = useStateValue()[2];
+  const [{ user, deliveryZone }, dispatch] = useStateValue();
+  const { cartItems, calculateTotalPrice, clearCart } = useStateValue()[2];
   const [specialRequest, setSpecialRequest] = useState("");
-  const [{ deliveryZone }] = useStateValue();
   const [modalConfirm, setModalConfirm] = useState(false);
   const [areaModal, setAreaModal] = useState(false);
-  const [orderPlaced, setOrderPlaced] = useState(false);
-
+  // const [orderPlaced, setOrderPlaced] = useState(false);
+  const navigate = useNavigate();
+  {
+    console.log(deliveryZone);
+  }
   const [address, setAddress] = useState({
     name: "",
     email: "",
@@ -31,18 +35,20 @@ const Checkout = () => {
     buildingNo: "",
     flatNo: "",
     nearestLandmark: "",
-    deliveryZone: deliveryZone,
+    // deliveryZone: deliveryZone,
     latlng: "",
   });
 
   const saveOrderDetails = () => {
     const orderData = {
       user_id: `${user.uid}`,
+      deliveryZone: deliveryZone,
       address: address,
       cartItems: cartItems,
       specialRequests: specialRequest,
       id: `${Date.now()}`,
       orderNumber: `${Math.floor(100000 + Math.random() * 900000)}`,
+      total: calculateTotalPrice(),
     };
 
     saveOrder(orderData);
@@ -53,9 +59,6 @@ const Checkout = () => {
   }
 
   const toggleConfirm = () => {
-    if (user && cartItems) {
-      setOrderPlaced(true);
-    }
     setModalConfirm(!modalConfirm);
   };
   // mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN;
@@ -149,7 +152,7 @@ const Checkout = () => {
         <Container>
           <Row className="d-flex justify-content-center checkoutRow">
             <Col lg="8" md="12">
-              <h3 className="text-center m-4">Checkout & Payment</h3>
+              <h3 className="text-center m-4 p-4">Checkout & Payment</h3>
               <Form className="checkout__form">
                 <div className="form__group">
                   <input
@@ -183,7 +186,6 @@ const Checkout = () => {
                 <div className="form__group">
                   <input
                     type="text"
-                    // {user ? (placeholder={user.uid}) : (placeholder="Enter Phone Number")}
                     placeholder={user.phoneNumber}
                     disabled
                     value={user.phoneNumber}
@@ -224,7 +226,7 @@ const Checkout = () => {
                         setAreaModal(true);
                       }}
                     >
-                      {areaModal === true && <Area />}
+                      {areaModal === true && <Area data={deliveryZone} />}
                       <IoMdArrowDropdown />
                     </button>
                   </div>
@@ -327,6 +329,7 @@ const Checkout = () => {
                             <td className="orderPrice">QAR {cartItem.price}</td>
                           </tr>
                         ))}
+                        <tr>Total: {calculateTotalPrice()}</tr>
                       </tbody>
                     </table>
                   </div>
@@ -389,35 +392,44 @@ const Checkout = () => {
                     className="button btn btn-primary mx-1"
                     onClick={(e) => {
                       e.preventDefault();
-                      toggleConfirm();
                       saveOrderDetails();
+                      clearCart();
+                      toggleConfirm();
+                      setTimeout(() => {
+                        navigate("/");
+                        dispatch({
+                          type: actionType.SET_USER,
+                          user: null,
+                        });
+                      }, 4000);
                     }}
                     disabled={
+                      // address.latlng === "" ||
                       address.name === "" ||
                       address.email === "" ||
                       address.street === "" ||
-                      address.buildingNo === ""
+                      address.buildingNo === "" ||
+                      calculateTotalPrice() === 0
                         ? true
-                        : false
+                        : false || deliveryZone === null
                     }
                   >
                     Place Order
                   </motion.button>
-
-                  <Modal
-                    className="checkout__modal"
-                    isOpen={modalConfirm}
-                    toggle={toggleConfirm}
-                  >
-                    <ModalBody className="checkout__modal-content text-center">
-                      <img src={TickImg} alt=" Green Tick" />
-                      <h2>Thank You!</h2>
-                      <p>Your order is Comfirmed</p>
-                      <h3>See you again at another mealtime.</h3>
-                    </ModalBody>
-                  </Modal>
                 </div>
               </Form>
+              <Modal
+                className="checkout__modal"
+                isOpen={modalConfirm}
+                toggle={toggleConfirm}
+              >
+                <ModalBody className="checkout__modal-content text-center">
+                  <img src={TickImg} alt=" Green Tick" />
+                  <h2>Thank You!</h2>
+                  <p>Your order is Comfirmed</p>
+                  <h3>See you again at another mealtime.</h3>
+                </ModalBody>
+              </Modal>
             </Col>
           </Row>
         </Container>
