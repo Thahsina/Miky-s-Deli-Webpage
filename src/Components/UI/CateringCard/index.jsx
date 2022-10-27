@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import "../../styles/cateringCard.css";
+import React, { useState } from 'react';
+import '../../styles/cateringCard.css';
 
-import { motion } from "framer-motion";
-import Barista from "../../../images/barista.png"
-import Server from "../../../images/server.png";
-import Location from "../../../images/location.png";
-import BookNow from "../../../images/bookNow.png";
-import image from "../../../images/crispy-sandwiches.png";
-import { IoCloseOutline } from "react-icons/io5";
-import { When } from "react-if";
-import CateringModal from "./CateringModal";
+import { motion } from 'framer-motion';
+import Barista from '../../../images/barista.png';
+import Server from '../../../images/server.png';
+import Location from '../../../images/location.png';
+import BookNow from '../../../images/bookNow.png';
+import image from '../../../images/crispy-sandwiches.png';
+import { IoCloseOutline } from 'react-icons/io5';
+import { When } from 'react-if';
+import CateringModal from './CateringModal';
 
 const CateringCard = ({ data }) => {
   const [modal, setModal] = useState(false);
@@ -20,8 +20,8 @@ const CateringCard = ({ data }) => {
   return (
     <>
       {data &&
-        data.map((item) => (
-          <div>
+        data.map((item, index) => (
+          <div key={index}>
             <div key={item.id} className="article__postcard">
               <article
                 key={item.id}
@@ -31,12 +31,7 @@ const CateringCard = ({ data }) => {
                   setCateringModalInfo(item);
                 }}
               >
-                <img
-                  className="postcard__img"
-                  src={image}
-                  alt="Title"
-                  onClick={toggle}
-                />
+                <img className="postcard__img" src={image} alt="Title" onClick={toggle} />
                 <div className="postcard__text">
                   <div className="d-flex justify-content-between">
                     <h1 className="postcard__title green m-2" onClick={toggle}>
@@ -46,16 +41,11 @@ const CateringCard = ({ data }) => {
                       <img src={BookNow} alt="bookNow icon" onClick={toggle} />
                     </motion.span>
                   </div>
-                  <div
-                    className="postcard__subtitle small m-2"
-                    style={{ color: "#139652" }}
-                  >
+                  <div className="postcard__subtitle small m-2" style={{ color: '#139652' }}>
                     <b>{item.category}</b>
                   </div>
 
-                  <div className="postcard__subtitle small">
-                    {item.arabicTitle}
-                  </div>
+                  <div className="postcard__subtitle small">{item.arabicTitle}</div>
                   <div className="postcard__bar" />
                   <div>
                     {item.descriptions?.map((i) => (
@@ -63,7 +53,7 @@ const CateringCard = ({ data }) => {
                     ))}
                   </div>
                   <ul className="postcard__tagbox">
-                    {item.category === "Hot Coffee . Iced Coffee . Dessert" &&
+                    {item.category === 'Hot Coffee . Iced Coffee . Dessert' &&
                       item.presentation?.map((eachItem) => (
                         <li className="tag__item">
                           <strong className="align-self-center text-center">
@@ -72,7 +62,7 @@ const CateringCard = ({ data }) => {
                           <IoCloseOutline />
                           <img
                             src={Barista}
-                            style={{ width: "35px", height: "33px" }}
+                            style={{ width: '35px', height: '33px' }}
                             alt="Barista Icon"
                           />
                         </li>
@@ -83,7 +73,7 @@ const CateringCard = ({ data }) => {
                         <IoCloseOutline />
                         <img
                           src={Server}
-                          style={{ width: "35px", height: "33px" }}
+                          style={{ width: '35px', height: '33px' }}
                           alt="Server Icon"
                         />
                       </li>
@@ -93,7 +83,7 @@ const CateringCard = ({ data }) => {
                         <span>{eachHighlight}</span>
                       </li>
                     ))}
-                    {item.location === "Doha Only" && (
+                    {item.location === 'Doha Only' && (
                       <li className="tag__item notice d-flex justify-content-between">
                         <img src={Location} alt="Location Icon" />
                         <strong>{item.location}</strong>
