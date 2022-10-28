@@ -106,7 +106,6 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
       .filter((op) => op.type === type) // filtering out current type options
       .map((op) => op.quantity) // getting only selected quantities
       .reduce((sum, current) => (sum += current), 0); // summing up all the quantities
-    console.log({ typeMaxChoices, type, totalSelectedQuantityOfCurrentType });
     // if already present, increment quantity
     const foundIndex = selectedOptions.findIndex(
       (option) => option.name === name && option.type === type,
