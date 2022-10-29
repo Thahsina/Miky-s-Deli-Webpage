@@ -13,13 +13,11 @@ import {
 import { firestore } from "./firebase.config";
 import { useStateValue } from "./context/StateProvider";
 
-
 export const saveItem = async (data) => {
   await setDoc(doc(firestore, "menuItems", `${Date.now()}`), data, {
     merge: true,
   });
 };
-
 
 export const saveReviewFS = async (reviewData) => {
   await setDoc(doc(firestore, "testimonials", `${Date.now()}`), reviewData, {
@@ -27,13 +25,11 @@ export const saveReviewFS = async (reviewData) => {
   });
 };
 
-
 export const saveOrder = async (orderData) => {
   await setDoc(doc(firestore, "orders", `${Date.now()}`), orderData, {
     merge: true,
   });
 };
-
 
 //get all reviews from firestore
 export const getAllReviews = async () => {
@@ -43,7 +39,6 @@ export const getAllReviews = async () => {
   return reviews.docs.map((doc) => doc.reviewData());
 };
 
-
 //get all menu items from firestore
 export const getAllMenuItems = async () => {
   const items = await getDocs(
@@ -51,7 +46,6 @@ export const getAllMenuItems = async () => {
   );
   return items.docs.map((doc) => doc.data());
 };
-
 
 //get all catering menu items from firestore
 export const getCateringMenuItems = async () => {
@@ -61,7 +55,6 @@ export const getCateringMenuItems = async () => {
   return cateringItems.docs.map((doc) => doc.data());
 };
 
-
 //get all drop-off menu items from firestore
 export const getDropoffMenuItems = async () => {
   const dropoffItems = await getDocs(
@@ -69,7 +62,6 @@ export const getDropoffMenuItems = async () => {
   );
   return dropoffItems.docs.map((doc) => doc.data());
 };
-
 
 //get all orders from firestore
 export const getAllOrders = async () => {
@@ -79,20 +71,13 @@ export const getAllOrders = async () => {
   return orders.docs.map((doc) => doc.data());
 };
 
-// export const handleSaveOrder = (cartItems) => {
-//   const timestamps = new Date().toDateString();
-//   return new Promise((resolve, reject) => {
-//     firestore
-//       .collection("orders")
-//       .doc()
-//       .set(cartItems)
-//       .then(() => {
-//         resolve();
-//         // orderUserID : Auth.currentUser.uid,
-//         // orderCreated: timestamps,
-//       })
-//       .catch((err) => reject(err));
-//   });
+export const acceptOrders = async (selectedOrder) => {
+  await setDoc(doc(firestore, "prevOrders", selectedOrder.id), selectedOrder, {
+    merge: true,
+  });
+  deleteDoc(doc(firestore, "orders", selectedOrder.id));
+};
+
+// export const removeAcceptedOrders = async (id) => {
+//   await deleteDoc(doc(firestore, "orders", id));
 // };
-
-

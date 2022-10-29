@@ -1,0 +1,17 @@
+.orderCard__user {
+  width: 23rem;
+  margin-inline-end: 16px;
+  align-items: flex-start;
+  min-height: 140px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 3px 8px 0px;
+  border-radius: 8px;
+  background: rgb(255, 255, 255);
+  /* border: 1px solid #707070; */
+  padding: 1rem 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+

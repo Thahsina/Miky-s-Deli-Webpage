@@ -45,7 +45,7 @@ const Home = () => {
           <Row>
             <Col lg="12" md="12">
               <div className="hero__content">
-                <h5 className="mb-3">Quick Fast Gourmet</h5>
+                <h5 className="mb-3">Quick Fresh Gourmet</h5>
                 <h1 className="mb-4 hero__title">
                   <span>Serving </span>lip-smacking <br /> food
                   <span> is our passion.</span>

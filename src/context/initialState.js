@@ -14,6 +14,7 @@ import {
 export const initialState = {
     user: userInfo,
     deliveryZone: deliveryZone,
+    // deliveryZone: null,
     menuItems: null,
     cateringMenuItems:null,
     dropoffMenuItems:null,

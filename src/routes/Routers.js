@@ -15,15 +15,19 @@ import Admin from "../pages/Admin/AdminPage";
 import OrdersPage from "../pages/Admin/OrdersPage";
 import CreateContainer from "../pages/Admin/CreateContainer";
 import MyOrders from "../pages/UserProfile/Orders";
+import CateringOrders from "../pages/UserProfile/CateringOrders";
+import DropoffOrders from "../pages/UserProfile/DropoffOrders";
 import Dashboard from "../pages/UserProfile/Dashboard";
 import ProfileInfo from "../pages/UserProfile/ProfileInfo";
 import Map from "../Components/UI/Map";
+import NotFoundPage from "../Components/UI/notFoundPage"
 import CardSkeleton from "../Components/UI/CardSkeleton";
 const LazyMenu = React.lazy(() => import("../pages/Menu"));
 
 const Routers = () => {
   return (
     <Routes>
+      <Route path="*" element={<NotFoundPage/>} />
       <Route path="/" element={<Navigate to="/home" />} />
       <Route path="/home" element={<Home />} />
       {/* <Route path="/profile" element={<UserProfile />} /> */}
@@ -48,7 +52,7 @@ const Routers = () => {
       <Route path="/admin" element={<Admin />}>
         <Route path="createItem" element={<CreateContainer />} />
         <Route path="orderspage" element={<OrdersPage />} />
-        <Route path="*" element={<> not found</>} />
+        <Route path="*" element={<NotFoundPage/>} />
       </Route>
 
       <Route path="/map" element={<Map />} />
@@ -56,7 +60,9 @@ const Routers = () => {
       <Route path="/dashboard" element={<Dashboard />}>
         <Route path="profileInfo" element={<ProfileInfo />} />
         <Route path="myorders" element={<MyOrders />} />
-        <Route path="*" element={<> not found</>} />
+        <Route path="cateringorders" element={<CateringOrders />} />
+        <Route path="dropofforders" element={<DropoffOrders />} />
+        <Route path="*" element={<NotFoundPage/>} />
       </Route>
     </Routes>
   );

@@ -6,9 +6,7 @@ export const actionType = {
   SET_DROPOFFMENU_ITEMS: "SET_DROPOFFMENU_ITEMS",
   SET_CARTITEMS: "SET_CARTITEMS",
   // Order Types
-  SET_ORDER_HISTORY_START: "SET_ORDER_HISTORY_START",
-  GET_USER_ORDER_HISTORY: "GET_USER_ORDER_HISTORY",
-  SET_USER_ORDER_HISTORY: "SET_USER_ORDER_HISTORY",
+  SET_ORDERS: "SET_ORDERS",
 };
 
 const reducer = (state, action) => {
@@ -44,27 +42,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         cartItems: action.cartItems,
-        // quantity: state.cartItems?.map((cartItem) => cartItem.qty),
       };
-    case actionType.SET_TOTAL:
+    //orders
+    case actionType.SET_ORDERS:
       return {
         ...state,
-        total: state.cartItems.map((item) => item.price),
-      };
-    case actionType.SET_ORDER_HISTORY_START:
-      return {
-        ...state,
-        order: action.order,
-      };
-    case actionType.GET_ORDER_HISTORY:
-      return {
-        ...state,
-        uid: action.user.uid,
-      };
-    case actionType.SET_USER_ORDER_HISTORY:
-      return {
-        ...state,
-        history: action.history,
+        orders: action.orders,
       };
 
     default:

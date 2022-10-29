@@ -12,6 +12,7 @@ const Area = () => {
     setModal(!modal);
   };
   const [value, setValue] = useState("Select area for delivery");
+  
 
   const setDeliveryZone = () => {
     dispatch({
@@ -30,11 +31,13 @@ const Area = () => {
     e.currentTarget.parent.classList.remove("active");
   };
 
-  const options = [
+  const areaOptions = [
     "Al Saad",
     "Al Bidda",
     "The Pearl",
     "Khairayat",
+    "Al Duhail North",
+    "Al Duhail South",
     "Al Duhail",
     "Al Garafa",
     "Al Markhiya",
@@ -42,11 +45,48 @@ const Area = () => {
     "Al Mamoura",
     "Abu Hamour",
     "Dafna",
+    "Al Shamal",
+    "Al Ruwais",
+    "Al Zubara",
+    "Ain Sinan",
+    "Abu Dhalouf",
+    "Madinat Al Kaaban",
+    "Al Jasrah",
+    "Al Luqta",
+    "New Al Mirqab",
+    "Al Asiri",
+    "Al Maamoura",
+    "Al Nuaija",
+    "Bin Omran",
+    "Fereej Bin Mohammed",
+    "Ain Khaled",
+    "Mesiameer",
+    "Al Hilal",
+    "Al Nasr",
+    "Al Soudan",
+    "Al Hitmi",
+    "Musheireb",
+    "New Al Hitmi",
+    "Al Khulaifat",
+    "Fereej Al Ali",
+    "Old Salata",
+    "Wadi Al Banat",
+    "Dahl Al Hamam",
+    "Onaiza",
+    "Qatar University",
+    "Wadi Al Sail",
+    "West Bay",
+    "Legtafiya",
+    "Lusail",
+    "Al Kheesa",
+    "Al Ebb",
+    "Al Qassar",
+    "Hazm Almarkiyah",
+    "Al Rayyan",
   ];
 
   return (
     <div>
-      {/* {!deliveryZone &&  */}
       <Modal
         className="select__area-modal"
         isOpen={modal}
@@ -58,64 +98,13 @@ const Area = () => {
           <h2>Select your delivery area</h2>
           <div className="select-box" onClick={toggleActive}>
             <button className="options-container">
-              <div className="option" onClick={toggleActive}>
-                <div for="Al Saad" onClick={selectOption}>
-                  Al Saad
+              {areaOptions.map((areaOption) => (
+                <div className="option" onClick={toggleActive}>
+                  <div onClick={selectOption}>
+                    {areaOption}
+                  </div>
                 </div>
-              </div>
-
-              <div className="option" onClick={toggleActive}>
-                <div for="Al Bidda" onClick={selectOption}>
-                  Al Bidda
-                </div>
-              </div>
-
-              <div className="option" onClick={toggleActive}>
-                <div for="The Pearl" onClick={selectOption}>
-                  The Pearl
-                </div>
-              </div>
-
-              <div className="option" onClick={toggleActive}>
-                <div for="Khairatyat" onClick={selectOption}>
-                  Khairatyat
-                </div>
-              </div>
-
-              <div className="option" onClick={toggleActive}>
-                <div for="Al Duhail" onClick={selectOption}>
-                  Al Duhail
-                </div>
-              </div>
-
-              <div className="option" onClick={toggleActive}>
-                <div for="Al Garafa" onClick={selectOption}>
-                  Al Garafa
-                </div>
-              </div>
-
-              <div className="option" onClick={toggleActive}>
-                <div for="news">Al Markhiya</div>
-              </div>
-
-              <div className="option" onClick={toggleActive}>
-                <div for="Katara" onClick={selectOption}>
-                  Katara
-                </div>
-              </div>
-              <div className="option" onClick={toggleActive}>
-                <div for="Al Mamoura">Al Mamoura</div>
-              </div>
-              <div className="option" onClick={toggleActive}>
-                <div for="Abu Hamour" onClick={selectOption}>
-                  Abu Hamour
-                </div>
-              </div>
-              <div className="option" onClick={toggleActive}>
-                <div for="Dafna" onClick={selectOption}>
-                  Dafna
-                </div>
-              </div>
+              ))}
             </button>
 
             <div className="selected" onChange={selectOption}>
