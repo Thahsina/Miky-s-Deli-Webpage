@@ -1,8 +1,9 @@
 .orderCards {
-  padding: 0 5rem;
+  /* padding: 0 5rem; */
   display: flex;
   flex-wrap: wrap;
   /* flex: 0 0 50%; */
+  margin-bottom: 5rem;
 }
 
 .orderMenu__container {
@@ -36,7 +37,7 @@
   border-bottom: 2px solid #c8102e;
 }
 
-.orderMenu__container .active {
+.orderMenu__container .activeMenu {
   color: #139652;
   border-bottom: 2px solid #c8102e;
 }

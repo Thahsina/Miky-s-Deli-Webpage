@@ -31,7 +31,7 @@ const OrdersPage = () => {
                       to={route.path}
                       key={index}
                       className="orderMenuItem"
-                      activeclassname="active"
+                      activeclassname="activeMenu"
                     >
                       <div className="orderMenuItem_text">{route.name}</div>
                     </NavLink>

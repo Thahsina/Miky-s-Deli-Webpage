@@ -18,7 +18,7 @@ import { actionType } from "../context/reducer";
 
 const Checkout = () => {
   const [{ user, deliveryZone, orders }, dispatch] = useStateValue();
-  const { cartItems, calculateTotalPrice, clearCart } = useStateValue()[2];
+  const { cartItems, calculateTotalPriceOfItem, clearCart } = useStateValue()[2];
   const [specialRequest, setSpecialRequest] = useState("");
   const [modalConfirm, setModalConfirm] = useState(false);
   const [areaModal, setAreaModal] = useState(false);
@@ -27,11 +27,13 @@ const Checkout = () => {
   let date = new Date();
   const options = { month: "long" };
   let month = new Intl.DateTimeFormat("en-US", options).format(date);
-  console.log(new Intl.DateTimeFormat("en-US", options).format(date));
-  console.log(date.getDate(), month, date.getFullYear());
-  {
-    console.log(deliveryZone);
-  }
+  
+  const calculateTotalPrice = () => {
+    return cartItems.reduce(function (accumulator, item) {
+      return accumulator + calculateTotalPriceOfItem(item.cartItemId);
+    }, 0);
+  };
+
   const [address, setAddress] = useState({
     name: "",
     email: "",
@@ -54,7 +56,7 @@ const Checkout = () => {
       specialRequests: specialRequest,
       id: `${Date.now()}`,
       orderNumber: `${Math.floor(100000 + Math.random() * 900000)}`,
-      total: calculateTotalPrice(),
+      total: calculateTotalPriceOfItem(),
     };
 
     saveOrder(orderData);
@@ -328,10 +330,10 @@ const Checkout = () => {
                               </p>
                             </td>
                             <td className="orderQuantity">{cartItem.qty}</td>
-                            <td className="orderPrice">QAR {cartItem.price}</td>
+                            <td className="orderPrice">QAR {calculateTotalPriceOfItem(cartItem.cartItemId)}</td>
                           </tr>
                         ))}
-                        <tr>Total: {calculateTotalPrice()}</tr>
+                        <tr>Total: QAR {calculateTotalPrice()}</tr>
                       </tbody>
                     </table>
                   </div>
@@ -412,7 +414,7 @@ const Checkout = () => {
                       address.email === "" ||
                       address.street === "" ||
                       address.buildingNo === "" ||
-                      calculateTotalPrice() === 0
+                      calculateTotalPriceOfItem() === 0
                         ? true
                         : false || deliveryZone === null
                     }
