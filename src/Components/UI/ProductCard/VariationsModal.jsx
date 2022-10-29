@@ -171,7 +171,6 @@ function VariationsModal({ modal, toggle, modalInfo }) {
   // if item is already present in cart, display values from cart
   const [cartItemId, setCartItemId] = useState();
   const currentItem = cartItems.find((i) => i.cartItemId === cartItemId);
-
   const [arabicVariantDescription, setArabicVariantDescription] = useState();
   const [variantDescription, setVariantDescription] = useState();
   const [selectedAddons, setSelectedAddons] = useState([]);
@@ -221,7 +220,7 @@ function VariationsModal({ modal, toggle, modalInfo }) {
   };
   // If item is not present in cart show local state calculation, else show calculation according to cart
   const calculatedPrice = calculatePrice({
-    sizePrice: currentItem?.selectedSize?.price || selectedSize?.price,
+    sizePrice: currentItem?.selectedSize?.price || selectedSize?.price || modalInfo.price,
     addons: currentItem?.selectedAddons || selectedAddons,
     meatOptionPrice: currentItem?.selectedMeatOption?.price || selectedMeatOption?.price,
     quantity: currentItem?.qty || 1,

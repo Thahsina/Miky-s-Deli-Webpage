@@ -1,8 +1,8 @@
 import React from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { Container, Row, Col } from "reactstrap";
-import { IoCartSharp } from "react-icons/io5"
-import { motion } from "framer-motion";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
+import { IoCartSharp } from 'react-icons/io5';
+import { motion } from 'framer-motion';
 import { useStateValue } from '../../../context/StateProvider';
 import { If, Then, Else, When } from 'react-if';
 
@@ -11,18 +11,14 @@ function calculatePrice({ price, quantity }) {
 }
 
 function OtherModal({ modal, toggle, modalInfo }) {
-  const { cartItems, toggleAddToCart, increase, decrease } = useStateValue()[2];
+  const { cartItems, addToCart, deleteItem, increase, decrease } = useStateValue()[2];
   // find this item in cartItems
-  const currentItem = cartItems.find((i) => i.id === modalInfo.id);
+  const [cartItemId, setCartItemId] = React.useState();
+  const currentItem = cartItems.find((i) => i.cartItemId === cartItemId);
   return (
     <Modal size="md" isOpen={modal} toggle={toggle}>
       <ModalHeader className="modalHeader" toggle={toggle}>
-        <button
-          onClick={toggle}
-          type="button"
-          className="close"
-          data-dismiss="modal"
-        >
+        <button onClick={toggle} type="button" className="close" data-dismiss="modal">
           <span aria-hidden="true" className="modal_button">
             &times;
           </span>
@@ -38,13 +34,13 @@ function OtherModal({ modal, toggle, modalInfo }) {
                 <Then>
                   <div
                     style={{
-                      minHeight: "13rem",
-                      maxHeight: "28rem",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      overflow: "hidden",
-                      transition: "all 0.2s ease",
+                      minHeight: '13rem',
+                      maxHeight: '28rem',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      overflow: 'hidden',
+                      transition: 'all 0.2s ease',
                     }}
                   >
                     <img alt="" src={modalInfo?.imageURL} />
@@ -52,19 +48,12 @@ function OtherModal({ modal, toggle, modalInfo }) {
                 </Then>
                 <Else>
                   <div className="imgContainer">
-                    <img
-                      alt=""
-                      src={modalInfo?.imageURL}
-                    />
+                    <img alt="" src={modalInfo?.imageURL} />
                   </div>
                 </Else>
               </If>
-              <p style={{ marginTop: "0.5rem" }}>
-                {modalInfo?.description}
-              </p>
-              <p style={{ marginTop: "0.5rem" }}>
-                {modalInfo?.arabicDescription}
-              </p>
+              <p style={{ marginTop: '0.5rem' }}>{modalInfo?.description}</p>
+              <p style={{ marginTop: '0.5rem' }}>{modalInfo?.arabicDescription}</p>
             </Col>
           </Row>
         </Container>
@@ -76,18 +65,16 @@ function OtherModal({ modal, toggle, modalInfo }) {
               <motion.button
                 whileTap={{ scale: 0.75 }}
                 className="decrease__btn"
-                onClick={() => decrease(currentItem?.id)}
+                onClick={() => decrease(currentItem?.cartItemId)}
               >
                 <i className="ri-subtract-line"></i>
               </motion.button>
-              <span className="counter-quantity">
-                {currentItem?.qty}
-              </span>
+              <span className="counter-quantity">{currentItem?.qty}</span>
               <motion.button
                 whileTap={{ scale: 0.75 }}
                 className="increase__btn"
                 onClick={() => {
-                  increase(currentItem?.id);
+                  increase(currentItem?.cartItemId);
                 }}
               >
                 <i className="ri-add-line"></i>
@@ -97,19 +84,26 @@ function OtherModal({ modal, toggle, modalInfo }) {
           <div className="product__price-modal">
             <span>
               QAR&nbsp;
-              <If condition={!currentItem}>
-                <Then>{calculatePrice({ price: modalInfo?.price, quantity: 1 })}</Then>
-                <Else>
-                  {calculatePrice({ price: currentItem?.price, quantity: currentItem?.qty })}
-                </Else>
-              </If>
+              {calculatePrice({
+                price: currentItem?.price || modalInfo.price,
+                quantity: currentItem?.qty || 1,
+              })}
             </span>
           </div>
           <div>
             <motion.button
               whileTap={{ scale: 0.9 }}
-              onClick={(e) => {
-                toggleAddToCart(modalInfo);
+              onClick={() => {
+                // if already present, remove from cart
+                if (currentItem) {
+                  deleteItem(currentItem.cartItemId);
+                  setCartItemId(undefined);
+                } else {
+                  // when added to cart, returns cartItemId
+                  const cartItemId = addToCart(modalInfo);
+                  // set current item to cart item currently handled
+                  setCartItemId(cartItemId);
+                }
               }}
               className={`cart_btn btn btn-primary ${currentItem ? 'active' : ''}`}
             >
@@ -122,7 +116,7 @@ function OtherModal({ modal, toggle, modalInfo }) {
         </div>
       </ModalFooter>
     </Modal>
-  )
+  );
 }
 
 export default React.memo(OtherModal);
