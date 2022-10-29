@@ -1,28 +1,47 @@
 import React from "react";
 import { Col, Container, Row } from "reactstrap";
-import { useStateValue } from "../../context/StateProvider";
+
 import "../../Components/styles/ordersPage.css";
-import OrderCardAdmin from "../../Components/UI/OrderCardAdmin";
-import { NavLink, Link } from "react-router-dom";
+
+import { NavLink, Outlet } from "react-router-dom";
 
 const OrdersPage = () => {
-  const [{ user, cart, orders,menuItems }] = useStateValue();
+  const routes = [
+    {
+      path: "currentOrders",
+      name: "Current Orders",
+    },
+    {
+      path: "acceptedOrders",
+      name: "Accepted Orders",
+    },
+  ];
 
   return (
     <>
-    {console.log("Orders",orders)}
       <Container>
         <Row>
           <Col lg="12">
             {/* <h2>Customer Orders</h2> */}
             <div class="orderMenu__container">
               <div class="orderMenu">
-                <a href="/">Current Orders</a>
-                <a href="/">Accepted Orders</a>
+                {routes.map((route, index) => {
+                  return (
+                    <NavLink
+                      to={route.path}
+                      key={index}
+                      className="orderMenuItem"
+                      activeclassname="activeMenu"
+                    >
+                      <div className="orderMenuItem_text">{route.name}</div>
+                    </NavLink>
+                  );
+                })}
               </div>
             </div>
             <div className="orderCards">
-              <OrderCardAdmin data={orders}/>
+              <Outlet />
+              {/* <OrderCardAdmin data={orders} /> */}
             </div>
           </Col>
         </Row>

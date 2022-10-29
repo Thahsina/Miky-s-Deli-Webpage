@@ -12,8 +12,14 @@
     width: 100%;
 }
 
-.orders__container h2{
-    margin-top: 2rem;
+.myOrders__title {
+    margin: 2rem;
+    color: #139652;
+}
+
+.orderCards__container{
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .reorderBtn{

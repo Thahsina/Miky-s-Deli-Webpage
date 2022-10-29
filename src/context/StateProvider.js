@@ -1,11 +1,16 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer } from "react";
+import { getAllOrders } from "../firebaseFunctions";
+import { actionType } from "./reducer";
 
 export const StateContext = createContext();
 
 export const StateProvider = ({ reducer, initialState, children }) => {
   const [cartItems, setCartItems] = React.useState([]);
   const [bookedItems, setBookedItems] = React.useState([]);
-
+  {
+    console.log(bookedItems);
+    console.log(cartItems)
+  }
   const bookItem = (item) => {
     // every booked item has a bookingId which is separate from product id
     const bookingId = Date.now() * Math.ceil(Math.random() * 1000);
@@ -24,7 +29,8 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     if (item.variations) {
       let totalPrice = 0;
       totalPrice +=
-        Number(item?.selectedSize?.price || 0) + Number(item?.selectedMeatOption?.price || 0);
+        Number(item?.selectedSize?.price || 0) +
+        Number(item?.selectedMeatOption?.price || 0);
       item.selectedAddons?.forEach((a) => (totalPrice += Number(a.price)));
       return totalPrice * Number(item.qty);
     } else {
@@ -45,7 +51,11 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     let itemIndex = cartItems.findIndex((i) => i.cartItemId === cartItemId);
     let item = cartItems[itemIndex];
     item = { ...item, qty: Number(item.qty) + 1 };
-    setCartItems([...cartItems.slice(0, itemIndex), item, ...cartItems.slice(itemIndex + 1)]);
+    setCartItems([
+      ...cartItems.slice(0, itemIndex),
+      item,
+      ...cartItems.slice(itemIndex + 1),
+    ]);
   };
 
   const decrease = (cartItemId) => {
@@ -53,7 +63,11 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     let item = cartItems[itemIndex];
     if (item.qty <= 1) return; // quantity can not be a negative number or zero
     item = { ...item, qty: Number(item.qty) - 1 };
-    setCartItems([...cartItems.slice(0, itemIndex), item, ...cartItems.slice(itemIndex + 1)]);
+    setCartItems([
+      ...cartItems.slice(0, itemIndex),
+      item,
+      ...cartItems.slice(itemIndex + 1),
+    ]);
   };
 
   const updateItem = (cartItemId, updatedItem) => {
@@ -65,15 +79,29 @@ export const StateProvider = ({ reducer, initialState, children }) => {
       ...cartItems.slice(itemIndex + 1),
     ]);
   };
+
+  const fetchAllOrders = async () => {
+    await getAllOrders().then((orderData) => {
+      // console.log(data);
+      dispatchEvent({
+        type: actionType.SET_ORDERS,
+        orders: orderData,
+      });
+    });
+  };
+
+  // console.log({ cartItems }, calculateTotalPrice());
   const st = {
     cartItems,
     clearCart,
+    setCartItems,
     deleteItem,
     calculateTotalPriceOfItem,
     updateItem,
     addToCart,
     increase,
     decrease,
+    fetchAllOrders,
     bookItem,
   };
   return (

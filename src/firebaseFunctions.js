@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { firestore } from "./firebase.config";
 import { useStateValue } from "./context/StateProvider";
+import { actionType } from "./context/reducer";
 
 export const saveItem = async (data) => {
   await setDoc(doc(firestore, "menuItems", `${Date.now()}`), data, {
@@ -26,7 +27,7 @@ export const saveReviewFS = async (reviewData) => {
 };
 
 export const saveOrder = async (orderData) => {
-  await setDoc(doc(firestore, "orders", `${Date.now()}`), orderData, {
+  await setDoc(doc(firestore, "orders", orderData.id), orderData, {
     merge: true,
   });
 };
@@ -78,6 +79,34 @@ export const acceptOrders = async (selectedOrder) => {
   deleteDoc(doc(firestore, "orders", selectedOrder.id));
 };
 
+export const getAcceptedOrders = async () => {
+  const acceptedOrders = await getDocs(
+    query(collection(firestore, "prevOrders"), orderBy("id", "desc"))
+  );
+  return acceptedOrders.docs.map((doc) => doc.data());
+};
+
 // export const removeAcceptedOrders = async (id) => {
 //   await deleteDoc(doc(firestore, "orders", id));
+// };
+
+export const fetchAllOrders = async () => {
+  await getAllOrders().then((orderData) => {
+    const [dispatch] = useStateValue();
+    // console.log(data);
+    dispatch({
+      type: actionType.SET_ORDERS,
+      orders: orderData,
+    });
+  });
+};
+
+// export const fetchAcceptedOrders = async () => {
+//   await getAcceptedOrders().then((acceptedOrderData) => {
+//     const [dispatch] = useStateValue();
+//     dispatch({
+//       type: actionType.SET_ACCEPTEDORDERS,
+//       acceptedOrders: acceptedOrderData,
+//     });
+//   });
 // };

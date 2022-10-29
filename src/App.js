@@ -1,8 +1,6 @@
-// import { AnimatePresence} from 'framer-motion'
-
 import Layout from "./Components/Layout";
 import "./App.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Area from "./pages/Area";
 import { useStateValue } from "./context/StateProvider";
 import {
@@ -10,12 +8,14 @@ import {
   getCateringMenuItems,
   getDropoffMenuItems,
   getAllOrders,
+  getAcceptedOrders,
 } from "./firebaseFunctions";
 import { actionType } from "./context/reducer";
 import { SkeletonTheme } from "react-loading-skeleton";
 
 function App() {
-  const [{ menuItems }, dispatch] = useStateValue();
+  const [{ menuItems,acceptedOrders,user }, dispatch] = useStateValue();
+  
 
   const fetchMenuItems = async () => {
     await getAllMenuItems().then((data) => {
@@ -57,11 +57,25 @@ function App() {
     });
   };
 
+  const fetchAcceptedOrders = async () => {
+    await getAcceptedOrders().then((acceptedOrderData) => {
+      // console.log(data);
+      dispatch({
+        type: actionType.SET_ACCEPTEDORDERS,
+        acceptedOrders: acceptedOrderData,
+      });
+    });
+  };
+
+  
+
   useEffect(() => {
     fetchDropoffMenuItems();
     fetchCateringMenuItems();
     fetchMenuItems();
     fetchAllOrders();
+    fetchAcceptedOrders();
+    
   }, []);
   //  useEffect(()=>{<Area/>},[])
   return (
@@ -69,10 +83,6 @@ function App() {
       <Layout />
     </SkeletonTheme>
   );
-
-  
-
 }
-
 
 export default App;

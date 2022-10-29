@@ -361,7 +361,7 @@ const Header = () => {
             {user && user.phoneNumber === "+97430271700" && (
               <span className="adminBtn">
                 {/* Admin Panel{" "} */}
-                <Link to="/admin/orderspage">
+                <Link to="/admin/orderspage/currentOrders">
                   <img src={adminUser} alt="Admin User" />
                 </Link>
               </span>

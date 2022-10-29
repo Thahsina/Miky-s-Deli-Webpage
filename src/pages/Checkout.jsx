@@ -13,20 +13,27 @@ import "../Components/styles/checkout.css";
 import { Modal, ModalBody } from "reactstrap";
 import TickImg from "../images/tick.png";
 import Area from "../pages/Area";
-import { saveOrder } from "../firebaseFunctions";
+import { saveOrder, getAllOrders, fetchAllOrders } from "../firebaseFunctions";
 import { actionType } from "../context/reducer";
 
 const Checkout = () => {
-  const [{ user, deliveryZone }, dispatch] = useStateValue();
-  const { cartItems, calculateTotalPrice, clearCart } = useStateValue()[2];
+  const [{ user, deliveryZone, orders }, dispatch] = useStateValue();
+  const { cartItems, calculateTotalPriceOfItem, clearCart } = useStateValue()[2];
   const [specialRequest, setSpecialRequest] = useState("");
   const [modalConfirm, setModalConfirm] = useState(false);
   const [areaModal, setAreaModal] = useState(false);
-  // const [orderPlaced, setOrderPlaced] = useState(false);
+
   const navigate = useNavigate();
-  {
-    console.log(deliveryZone);
-  }
+  let date = new Date();
+  const options = { month: "long" };
+  let month = new Intl.DateTimeFormat("en-US", options).format(date);
+  
+  const calculateTotalPrice = () => {
+    return cartItems.reduce(function (accumulator, item) {
+      return accumulator + calculateTotalPriceOfItem(item.cartItemId);
+    }, 0);
+  };
+
   const [address, setAddress] = useState({
     name: "",
     email: "",
@@ -43,20 +50,17 @@ const Checkout = () => {
     const orderData = {
       user_id: `${user.uid}`,
       deliveryZone: deliveryZone,
+      orderDate: `${new Date()}`,
       address: address,
       cartItems: cartItems,
       specialRequests: specialRequest,
       id: `${Date.now()}`,
       orderNumber: `${Math.floor(100000 + Math.random() * 900000)}`,
-      total: calculateTotalPrice(),
+      total: calculateTotalPriceOfItem(),
     };
 
     saveOrder(orderData);
   };
-
-  {
-    console.log("User Address", address);
-  }
 
   const toggleConfirm = () => {
     setModalConfirm(!modalConfirm);
@@ -302,7 +306,7 @@ const Checkout = () => {
                 <div className="form-group specialRequests mb-4">
                   <h6>Order Summary</h6>
                   <div className="specialRequests__tbl-header">
-                    <table cellpadding="0" cellspacing="0" border="0">
+                    <table cellPadding="0" cellSpacing="0" border="0">
                       <thead>
                         <tr>
                           <th style={{ width: "50%" }}>Item (s)</th>
@@ -326,10 +330,10 @@ const Checkout = () => {
                               </p>
                             </td>
                             <td className="orderQuantity">{cartItem.qty}</td>
-                            <td className="orderPrice">QAR {cartItem.price}</td>
+                            <td className="orderPrice">QAR {calculateTotalPriceOfItem(cartItem.cartItemId)}</td>
                           </tr>
                         ))}
-                        <tr>Total: {calculateTotalPrice()}</tr>
+                        <tr>Total: QAR {calculateTotalPrice()}</tr>
                       </tbody>
                     </table>
                   </div>
@@ -393,15 +397,16 @@ const Checkout = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       saveOrderDetails();
-                      clearCart();
+                      // clearCart();
                       toggleConfirm();
-                      setTimeout(() => {
-                        navigate("/");
-                        dispatch({
-                          type: actionType.SET_USER,
-                          user: null,
-                        });
-                      }, 4000);
+                      fetchAllOrders();
+                      // setTimeout(() => {
+                      //   navigate("/");
+                      //   dispatch({
+                      //     type: actionType.SET_USER,
+                      //     user: null,
+                      //   });
+                      // }, 4000);
                     }}
                     disabled={
                       // address.latlng === "" ||
@@ -409,7 +414,7 @@ const Checkout = () => {
                       address.email === "" ||
                       address.street === "" ||
                       address.buildingNo === "" ||
-                      calculateTotalPrice() === 0
+                      calculateTotalPriceOfItem() === 0
                         ? true
                         : false || deliveryZone === null
                     }

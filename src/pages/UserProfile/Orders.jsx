@@ -1,20 +1,44 @@
-import React from "react";
-import { Table } from "reactstrap";
+import React, { useEffect, useState } from "react";
+import { Col, Container, Row, Table } from "reactstrap";
 import "../../Components/styles/orders.css";
 import OrderCardUser from "../../Components/UI/OrderCardUser";
-// import { Pagination, PaginationItem, PaginationLink,Container } from "reactstrap";
+import { useStateValue } from "../../context/StateProvider";
 
 const Orders = () => {
+  const [{ acceptedOrders, user }] = useStateValue();
+  const [userOrder, setUserOrder] = useState();
+
+  const fetchUserOrders = async (user) => {
+    const filteredUserOrders = await acceptedOrders?.filter((currOrder) => {
+      if (currOrder.user_id === user.uid) return currOrder;
+    });
+
+    setUserOrder(filteredUserOrders);
+    console.log(userOrder);
+  };
+
+  useEffect(() => {
+    fetchUserOrders(user);
+  }, []);
+
   return (
-    <div className="orders__page">
-      <div className="orders__container mb-4">
-        <h2>Order Again !!</h2>
-        <div className="d-flex">
-          <OrderCardUser />
-          <OrderCardUser />
-        </div>
-      </div>
-    </div>
+    <>
+      <Container>
+        <Row>
+          <Col lg="12">
+            <h2
+              className="myOrders__title"
+              onClick={() => fetchUserOrders(user)}
+            >
+              Order Again !!
+            </h2>
+            <div className="orderCards">
+              <OrderCardUser data={userOrder} />
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 

@@ -17,7 +17,7 @@ const routes = [
     icon: <FaHome />,
   },
   {
-    path: "orderspage",
+    path: "orderspage/currentOrders",
     name: "Orders",
     icon: <BsCartCheck />,
   },
@@ -95,7 +95,7 @@ const Admin = () => {
                     to={route.path}
                     key={index}
                     className="link"
-                    activeclassname="active"
+                    activeclassname="activeLink"
                   >
                     <div className="icon">{route.icon}</div>
                     <AnimatePresence>

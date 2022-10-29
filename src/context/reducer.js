@@ -7,6 +7,7 @@ export const actionType = {
   SET_CARTITEMS: "SET_CARTITEMS",
   // Order Types
   SET_ORDERS: "SET_ORDERS",
+  SET_ACCEPTEDORDERS:"SET_ACCEPTEDORDERS"
 };
 
 const reducer = (state, action) => {
@@ -48,6 +49,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         orders: action.orders,
+      };
+
+    case actionType.SET_ACCEPTEDORDERS:
+      return {
+        ...state,
+        acceptedOrders: action.acceptedOrders,
       };
 
     default:

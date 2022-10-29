@@ -3,13 +3,16 @@ import { Col, Row } from "reactstrap";
 import "../styles/orderCardAdmin.css";
 import {
   acceptOrders,
-  removeAcceptedOrders,
   getAllOrders,
+  fetchAllOrders,
+  fetchAcceptedOrders,
+  getAcceptedOrders,
 } from "../../firebaseFunctions";
 import { actionType } from "../../context/reducer";
 import { useStateValue } from "../../context/StateProvider";
 
 const OrderCard = ({ data }) => {
+  const [{ user, deliveryZone, orders }, dispatch] = useStateValue();
   return (
     <>
       {data &&
@@ -23,7 +26,7 @@ const OrderCard = ({ data }) => {
               </Col>
               <Col sm="6">
                 <div className="orderDate">
-                  Date :<span>13 Aug 2022</span>
+                  Date : <span>{eachOrder.orderDate?.substr(3, 12)}</span>
                 </div>
               </Col>
             </Row>
@@ -42,6 +45,8 @@ const OrderCard = ({ data }) => {
                   </Col>
                   <Col sm="3" md="4">
                     <div className="orderPrice">{orderItem.price}</div>
+                    {/* {console.log(orderItem.selectedAddons)} */}
+                    {/* {console.log(orderItem.selectedSize)} */}
                   </Col>
                   <Col md="12" sm="12">
                     <div style={{ marginLeft: "0.8rem" }}>- Addons </div>
@@ -108,9 +113,20 @@ const OrderCard = ({ data }) => {
               </button>
               <button
                 className="orderAcceptBtn"
-                onClick={() => {
+                onClick={async () => {
                   acceptOrders(eachOrder);
-                  // removeAcceptedOrders(eachOrder.id);
+                  await getAllOrders().then((orderData) => {
+                    dispatch({
+                      type: actionType.SET_ORDERS,
+                      orders: orderData,
+                    });
+                  });
+                  await getAcceptedOrders().then((acceptedOrderData) => {
+                    dispatch({
+                      type: actionType.SET_ACCEPTEDORDERS,
+                      acceptedOrders: acceptedOrderData,
+                    });
+                  });
                 }}
               >
                 Accept Order
