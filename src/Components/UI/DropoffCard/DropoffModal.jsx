@@ -3,6 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { motion } from 'framer-motion';
 import { BiMinus, BiPlus } from 'react-icons/bi';
 import { When } from 'react-if';
+import { useStateValue } from '../../../context/StateProvider';
 
 function ChoiceItem({ choice, subtitle, quantity, increment, decrement }) {
   return (
@@ -57,6 +58,8 @@ function calculatePrice({ addons, drinkAddons, defaultPrice }) {
 }
 
 export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
+  const { bookItem } = useStateValue()[2];
+
   const [selectedAddons, setSelectedAddons] = React.useState([]);
   const [selectedDrinkAddons, setSelectedDrinkAddons] = React.useState([]);
   const [selectedOptions, setSelectedOptions] = React.useState([]);
@@ -196,7 +199,6 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
       }
     }
   };
-  console.log({ cateringModalInfo, selectedOptions });
   return (
     <Modal
       isOpen={modal}
@@ -482,6 +484,14 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
             type="button"
             className="booknowBtn"
             data-dismiss="modal"
+            onTap={() =>
+              bookItem({
+                ...cateringModalInfo,
+                selectedAddons,
+                selectedDrinkAddons,
+                selectedOptions,
+              })
+            }
           >
             <span>Book Now</span>
             <span>

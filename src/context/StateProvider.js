@@ -4,11 +4,21 @@ export const StateContext = createContext();
 
 export const StateProvider = ({ reducer, initialState, children }) => {
   const [cartItems, setCartItems] = React.useState([]);
+  const [bookedItems, setBookedItems] = React.useState([]);
+
+  const bookItem = (item) => {
+    // every booked item has a bookingId which is separate from product id
+    const bookingId = Date.now() * Math.ceil(Math.random() * 1000);
+    setBookedItems([...bookedItems, { ...item, bookingId }]);
+  };
 
   const clearCart = () => setCartItems([]);
-  const deleteItem = (itemId) => setCartItems(cartItems.filter((i) => i.id !== itemId));
-  const calculateTotalPriceOfItem = (itemId) => {
-    const item = cartItems.find((i) => i.id === itemId);
+
+  const deleteItem = (cartItemId) =>
+    setCartItems(cartItems.filter((i) => i.cartItemId !== cartItemId));
+
+  const calculateTotalPriceOfItem = (cartItemId) => {
+    const item = cartItems.find((i) => i.cartItemId === cartItemId);
     if (!item) return 0;
     // if item has variations like addons, sizes, meatoptions etc
     if (item.variations) {
@@ -22,54 +32,49 @@ export const StateProvider = ({ reducer, initialState, children }) => {
       return Number(item.price) * Number(item.qty);
     }
   };
-  function toggleAddToCart(item) {
-    // remove the item from cart if already present in cart
-    const itemIndex = cartItems.findIndex((i) => i.id === item.id);
-    if (itemIndex !== -1)
-      setCartItems([...cartItems.slice(0, itemIndex), ...cartItems.slice(itemIndex + 1)]);
-    // while adding to cart, the initial quantity is 1
-    else setCartItems([...cartItems, { ...item, qty: 1 }]);
-  }
 
-  function increase(id) {
-    let itemIndex = cartItems.findIndex((i) => i.id === id);
+  const addToCart = (item) => {
+    // every cart item has a cartItemId which is separate from product id
+    const cartItemId = Date.now() * Math.ceil(Math.random() * 1000);
+    // while adding to cart, the initial quantity is 1
+    setCartItems([...cartItems, { ...item, qty: 1, cartItemId }]);
+    return cartItemId;
+  };
+
+  const increase = (cartItemId) => {
+    let itemIndex = cartItems.findIndex((i) => i.cartItemId === cartItemId);
     let item = cartItems[itemIndex];
     item = { ...item, qty: Number(item.qty) + 1 };
-    console.log('item', item);
-
     setCartItems([...cartItems.slice(0, itemIndex), item, ...cartItems.slice(itemIndex + 1)]);
-  }
+  };
 
-  console.log(cartItems);
-
-  function decrease(id) {
-    let itemIndex = cartItems.findIndex((i) => i.id === id);
+  const decrease = (cartItemId) => {
+    let itemIndex = cartItems.findIndex((i) => i.cartItemId === cartItemId);
     let item = cartItems[itemIndex];
     if (item.qty <= 1) return; // quantity can not be a negative number or zero
     item = { ...item, qty: Number(item.qty) - 1 };
     setCartItems([...cartItems.slice(0, itemIndex), item, ...cartItems.slice(itemIndex + 1)]);
-  }
+  };
 
-  function updateItem(id, updatedItem) {
-    let itemIndex = cartItems.findIndex((i) => i.id === id);
+  const updateItem = (cartItemId, updatedItem) => {
+    let itemIndex = cartItems.findIndex((i) => i.cartItemId === cartItemId);
     let item = cartItems[itemIndex];
     setCartItems(() => [
       ...cartItems.slice(0, itemIndex),
       { ...item, ...updatedItem },
       ...cartItems.slice(itemIndex + 1),
     ]);
-  }
-
-  console.log({ cartItems });
+  };
   const st = {
     cartItems,
     clearCart,
     deleteItem,
     calculateTotalPriceOfItem,
     updateItem,
-    toggleAddToCart,
+    addToCart,
     increase,
     decrease,
+    bookItem,
   };
   return (
     <StateContext.Provider value={[...useReducer(reducer, initialState), st]}>

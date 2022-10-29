@@ -1,24 +1,23 @@
-import React, { useState } from "react";
-import { ListGroup } from "reactstrap";
-import { Link } from "react-router-dom";
-import CartItem from "../pages/CartItem";
-import "../Components/styles/cart.css";
-import { motion } from "framer-motion";
-import { MdOutlineKeyboardTab } from "react-icons/md";
-import { RiRefreshFill } from "react-icons/ri";
-import { useStateValue } from "../context/StateProvider";
-import { If, Else, Then } from "react-if";
+import React, { useState } from 'react';
+import { ListGroup } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import CartItem from '../pages/CartItem';
+import '../Components/styles/cart.css';
+import { motion } from 'framer-motion';
+import { MdOutlineKeyboardTab } from 'react-icons/md';
+import { RiRefreshFill } from 'react-icons/ri';
+import { useStateValue } from '../context/StateProvider';
+import { If, Else, Then } from 'react-if';
 
 const Cart = ({ cartMenu, setCartMenu }) => {
-  console.log('cart')
   const { user, cartItems, clearCart, calculateTotalPriceOfItem } = useStateValue()[2];
   const [flag, setFlag] = useState(1);
 
   const calculateTotalPrice = () => {
     return cartItems.reduce(function (accumulator, item) {
-      return accumulator + calculateTotalPriceOfItem(item.id);
+      return accumulator + calculateTotalPriceOfItem(item.cartItemId);
     }, 0);
-  }
+  };
 
   return (
     <motion.div
@@ -34,30 +33,17 @@ const Cart = ({ cartMenu, setCartMenu }) => {
             onClick={() => setCartMenu(false)}
             whileTap={{ scale: 0.75 }}
           >
-            <MdOutlineKeyboardTab
-              style={{ fontSize: "1.5rem", color: "#686868" }}
-            />
+            <MdOutlineKeyboardTab style={{ fontSize: '1.5rem', color: '#686868' }} />
           </motion.div>
           <h6 className="cartTitle">Your Cart</h6>
-          <motion.p
-            whileTap={{ scale: 0.75 }}
-            className="clearBtn"
-            onClick={clearCart}
-          >
-            Clear <RiRefreshFill />{" "}
+          <motion.p whileTap={{ scale: 0.75 }} className="clearBtn" onClick={clearCart}>
+            Clear <RiRefreshFill />{' '}
           </motion.p>
         </div>
         <div className="cart__item-list">
-          {
-            cartItems?.map((item) => (
-              <CartItem
-                key={item.id}
-                cartItem={item}
-                setFlag={setFlag}
-                flag={flag}
-              />
-            ))
-          }
+          {cartItems?.map((item) => (
+            <CartItem key={item.id} cartItem={item} setFlag={setFlag} flag={flag} />
+          ))}
         </div>
         <div className="cartTotalContainer">
           <div className="cartSubTotal">
@@ -71,9 +57,7 @@ const Cart = ({ cartMenu, setCartMenu }) => {
           <div className="divider"></div>
           <div className="cartTotal">
             <p>Total</p>
-            <p>QAR {
-              calculateTotalPrice()
-            }</p>
+            <p>QAR {calculateTotalPrice()}</p>
           </div>
           <If condition={Boolean(user)}>
             <Then>
@@ -86,9 +70,8 @@ const Cart = ({ cartMenu, setCartMenu }) => {
                 >
                   Checkout
                 </motion.button>
-
-              </Link >
-            </Then >
+              </Link>
+            </Then>
             <Else>
               <Link to="/">
                 <motion.button
@@ -101,10 +84,10 @@ const Cart = ({ cartMenu, setCartMenu }) => {
                 </motion.button>
               </Link>
             </Else>
-          </If >
-        </div >
-      </ListGroup >
-    </motion.div >
+          </If>
+        </div>
+      </ListGroup>
+    </motion.div>
   );
 };
 

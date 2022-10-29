@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Checkbox } from '@mui/material';
 import { When } from 'react-if';
@@ -9,6 +9,7 @@ import StopWatch from '../../../images/stopwatch.png';
 import FemaleServer from '../../../images/femaleServer.png';
 import { FaClock } from 'react-icons/fa';
 import { BiMinus, BiPlus } from 'react-icons/bi';
+import { useStateValue } from '../../../context/StateProvider';
 
 function ChoiceItem({ choice, subtitle, quantity, increment, decrement }) {
   return (
@@ -93,6 +94,8 @@ function calculatePrice({ addons, isExtraServer, serves, unitPrice, defaultPrice
 }
 
 const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
+  const { bookItem } = useStateValue()[2];
+
   const [selectedOptions, setSelectedOptions] = React.useState([]);
   const [selectedAddons, setSelectedAddons] = React.useState([]);
   const [isExtraMaleServer, setExtraMaleServer] = React.useState(false);
@@ -621,6 +624,16 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
           type="button"
           className="booknowBtn"
           data-dismiss="modal"
+          onTap={() =>
+            bookItem({
+              ...cateringModalInfo,
+              selectedAddons,
+              selectedOptions,
+              isExtraFemaleServer,
+              isExtraMaleServer,
+              extraServes,
+            })
+          }
         >
           <span>Book Now</span>
           <span>
