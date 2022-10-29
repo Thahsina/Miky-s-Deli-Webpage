@@ -17,7 +17,7 @@ const routes = [
     icon: <FaHome />,
   },
   {
-    path: "orderspage",
+    path: "orderspage/currentOrders",
     name: "Orders",
     icon: <BsCartCheck />,
   },

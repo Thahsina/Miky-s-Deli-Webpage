@@ -15,3 +15,18 @@
   margin-top: 1rem;
 }
 
+
+.userOrderTotal {
+  display: flex;
+  font-weight: 600;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.showMoreLessBtn {
+  font-weight: 600;
+  color: gray;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}

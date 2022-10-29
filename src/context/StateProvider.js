@@ -6,6 +6,7 @@ export const StateContext = createContext();
 
 export const StateProvider = ({ reducer, initialState, children }) => {
   const [cartItems, setCartItems] = React.useState([]);
+  // const [{ menuItems }, dispatch] = useStateValue();
 
   const clearCart = () => setCartItems([]);
   const deleteItem = (itemId) =>
@@ -81,6 +82,16 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     }, 0);
   };
 
+  const fetchAllOrders = async () => {
+    await getAllOrders().then((orderData) => {
+      // console.log(data);
+      dispatchEvent({
+        type: actionType.SET_ORDERS,
+        orders: orderData,
+      });
+    });
+  };
+
   console.log({ cartItems }, calculateTotalPrice());
   const st = {
     cartItems,
@@ -92,6 +103,7 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     toggleAddToCart,
     increase,
     decrease,
+    fetchAllOrders
   };
   return (
     <StateContext.Provider value={[...useReducer(reducer, initialState), st]}>

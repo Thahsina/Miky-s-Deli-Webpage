@@ -21,5 +21,6 @@ export const initialState = {
     total: [],
     cartItems : cartInfo,
     // order: {},
-    orders:null
+    orders:null,
+    acceptedOrders: null
 }
