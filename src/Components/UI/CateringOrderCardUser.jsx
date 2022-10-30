@@ -7,8 +7,12 @@ const CateringOrderCardUser = () => {
     <>
       <div className="cateringOrderCard__user">
         <Row className="cateringOrderCard__userHeader">
-          
-          <Col sm="12">
+        <Col sm="6">
+            <div className="cateringOrderCard__userTime">
+              <span>Time : 4:30pm</span>
+            </div>
+          </Col>
+          <Col sm="6">
             <div className="cateringOrderCard__userDate">
               Date : <span> 23 Jan 2022</span>
             </div>

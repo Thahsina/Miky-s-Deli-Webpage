@@ -26,3 +26,10 @@
 .cateringOrderCard__userDetails{
     margin: 1rem;
 }
+
+.cateringOrderCard__userTime{
+  padding: 5px;
+  font-weight: 600;
+  border-radius: 4px;
+  background-color: #edfff4;
+}
