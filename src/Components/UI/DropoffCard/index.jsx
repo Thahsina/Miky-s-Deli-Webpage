@@ -62,12 +62,12 @@ const DropoffCard = ({ data }) => {
                         <span>{eachHighlight}</span>
                       </li>
                     ))}
-                    {item.location === "Doha Only" && (
+                    {/* {item.location === "Doha Only" && (
                       <li className="tag__item notice d-flex justify-content-between">
                         <img src={Location} alt="Location Icon" />
                         <strong>{item.location}</strong>
                       </li>
-                    )}
+                    )} */}
                     <li className="tag__item play green" onClick={toggle}>
                       <span>QAR {item.price}</span>
                     </li>

@@ -137,7 +137,7 @@ const Footer = () => {
         </Row>
       </Container>
       <div className=" text-center copyrightContainer">
-        <p>© 2022 Yum! III (UK) Ltd. All rights reserved.</p>
+        <p></p>
       </div>
     </footer>
   );

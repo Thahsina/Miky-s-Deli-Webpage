@@ -484,7 +484,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
             type="button"
             className="booknowBtn"
             data-dismiss="modal"
-            onTap={() =>
+            onClick={() =>
               bookItem({
                 ...cateringModalInfo,
                 selectedAddons,

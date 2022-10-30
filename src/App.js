@@ -2,6 +2,8 @@ import Layout from "./Components/Layout";
 import "./App.css";
 import { useEffect, useState } from "react";
 import Area from "./pages/Area";
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { useStateValue } from "./context/StateProvider";
 import {
   getAllMenuItems,
@@ -14,8 +16,7 @@ import { actionType } from "./context/reducer";
 import { SkeletonTheme } from "react-loading-skeleton";
 
 function App() {
-  const [{ menuItems,acceptedOrders,user }, dispatch] = useStateValue();
-  
+  const [{ menuItems, acceptedOrders, user }, dispatch] = useStateValue();
 
   const fetchMenuItems = async () => {
     await getAllMenuItems().then((data) => {
@@ -67,20 +68,19 @@ function App() {
     });
   };
 
-  
-
   useEffect(() => {
     fetchDropoffMenuItems();
     fetchCateringMenuItems();
     fetchMenuItems();
     fetchAllOrders();
     fetchAcceptedOrders();
-    
   }, []);
   //  useEffect(()=>{<Area/>},[])
   return (
     <SkeletonTheme duration={2} baseColor="#666464" highlightColor="#525252">
-      <Layout />
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <Layout />
+      </LocalizationProvider>
     </SkeletonTheme>
   );
 }

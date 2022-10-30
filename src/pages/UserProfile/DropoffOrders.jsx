@@ -6,7 +6,7 @@ const DropoffOrders = () => {
     <>
       <div className="orders__page">
         <div className="orders__container mb-4">
-          <h2>Drop Off Orders</h2>
+          <h2>Previous Drop Off Orders</h2>
           <div className="d-flex">
             <OrderCardUser />
           </div>

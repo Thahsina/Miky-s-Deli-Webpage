@@ -8,6 +8,12 @@
   width: 30%;
 }
 
+.dateTimePicker__container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media only screen and (max-width: 768px) {
   .catering__card {
     display: flex;

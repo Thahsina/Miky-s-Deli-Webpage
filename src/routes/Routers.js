@@ -19,6 +19,8 @@ import CreateContainer from "../pages/Admin/CreateContainer";
 import MyOrders from "../pages/UserProfile/Orders";
 import CateringOrders from "../pages/UserProfile/CateringOrders";
 import DropoffOrders from "../pages/UserProfile/DropoffOrders";
+import CateringOrdersAdmin from "../pages/Admin/CateringOrdersAdmin";
+import DropoffOrdersAdmin from "../pages/Admin/DropoffOrdersAdmin";
 import Dashboard from "../pages/UserProfile/Dashboard";
 import ProfileInfo from "../pages/UserProfile/ProfileInfo";
 import Map from "../Components/UI/Map";
@@ -53,6 +55,8 @@ const Routers = () => {
 
       <Route path="/admin" element={<Admin />}>
         <Route path="createItem" element={<CreateContainer />} />
+        <Route path="cateringOrderspage" element={<CateringOrdersAdmin />} />
+        <Route path="dropOffOrderspage" element={<DropoffOrdersAdmin />} />
         <Route path="orderspage" element={<OrdersPage />}>
           <Route path="currentOrders" element={<CurrentOrdersPage />} />
           <Route path="acceptedOrders" element={<AcceptedOrdersPage />} />

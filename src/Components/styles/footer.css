@@ -5,7 +5,8 @@
   margin-bottom: 0rem;
   background: #e01f25;
   color: #fff;
-  height: 100%;
+  min-height: 25rem;
+  max-height: 25rem;
   overflow: hidden;
   min-width: 100vw;
   cursor: pointer;
