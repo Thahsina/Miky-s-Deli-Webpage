@@ -428,7 +428,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
       navigate("/");
     }, 4000);
   };
-  console.log({ currentItem, cateringModalInfo });
+  // console.log({ currentItem, cateringModalInfo });
 
   return (
     <>
