@@ -7,7 +7,7 @@ export const StateContext = createContext();
 export const StateProvider = ({ reducer, initialState, children }) => {
   const [cartItems, setCartItems] = React.useState([]);
   const [bookedItems, setBookedItems] = React.useState([]);
-  console.log({ bookedItems });
+  // console.log({ bookedItems });
 
   const bookItem = (item) => {
     // every booked item has a bookingId which is separate from product id

@@ -359,18 +359,16 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
       }
     }
   };
-  console.log({ cateringModalInfo, currentItem });
+  // console.log({ cateringModalInfo, currentItem });
 
   const [bookNowModal, setBookNowModal] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(false);
-  const [dateAndTime, setDateAndTime] = useState();
+  const [dateAndTime, setDateAndTime] = useState({});
   const bookNowToggle = () => setBookNowModal(!bookNowModal);
   const confirmationToggle = () => {
     setConfirmationModal(!confirmationModal);
   };
 
-  const getDateTime = (dateAndTime) => setDateAndTime(dateAndTime);
-  console.log("dateAndTime State", dateAndTime);
   return (
     <>
       <Modal
@@ -895,9 +893,11 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
         </ModalHeader>
         <ModalBody className="dateTimePicker__container">
           <DateTimePicker
-            getDateTime={(e) => {
-              setDateAndTime(e);
-            }}
+            setDateAndTime={setDateAndTime}
+          // getDateTime={(e) => {
+          //   setDateAndTime(() => e);
+          //   console.log(e.toString())
+          // }}
           />
 
           <Button
@@ -920,9 +920,9 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
       >
         <ModalBody className="dateTimePicker__container">
           Your order for catering service is confirmed on{" "}
-          <h4>{dateAndTime} date an time</h4>
+          <h4>{dateAndTime?.toString()}</h4>
           {/* <h4>Fri 23 June 2022 4:30pm</h4> */}
-          
+
         </ModalBody>
       </Modal>
     </>
