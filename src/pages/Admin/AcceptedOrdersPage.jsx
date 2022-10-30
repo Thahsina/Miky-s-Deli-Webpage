@@ -1,13 +1,13 @@
 import React from 'react'
 import { useStateValue } from '../../context/StateProvider';
-import OrderCardAdmin from "../../Components/UI/OrderCardAdmin";
+import AcceptedOrderCardAdmin from "../../Components/UI/AcceptedOrderCardAdmin";
 
 const AcceptedOrdersPage = () => {
   const [{ acceptedOrders }] = useStateValue();
   return (
     <>
     {console.log("AcceptedOrders",acceptedOrders)}
-    <OrderCardAdmin data={acceptedOrders} />
+    <AcceptedOrderCardAdmin data={acceptedOrders} />
     </>
   )
 }

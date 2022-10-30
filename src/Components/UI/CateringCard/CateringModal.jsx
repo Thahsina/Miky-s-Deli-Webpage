@@ -225,9 +225,15 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
   console.log({ cateringModalInfo });
 
   const [bookNowModal, setBookNowModal] = useState(false);
-
+  const [confirmationModal, setConfirmationModal] = useState(false);
+  const [dateAndTime, setDateAndTime] = useState();
   const bookNowToggle = () => setBookNowModal(!bookNowModal);
+  const confirmationToggle = () => {
+    setConfirmationModal(!confirmationModal);
+  };
 
+  const getDateTime = (dateAndTime) => setDateAndTime(dateAndTime);
+  console.log("dateAndTime State", dateAndTime);
   return (
     <>
       <Modal
@@ -730,8 +736,9 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                 isExtraFemaleServer,
                 isExtraMaleServer,
                 extraServes,
+                dateAndTime
               });
-              <DateTimePicker/>
+
               bookNowToggle();
             }}
           >
@@ -756,19 +763,41 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
         keyboard="false"
         backdrop="static"
         className="bookNowModal"
-        style={{ cursor: "pointer", padding:"1rem" }}
-      
+        style={{ cursor: "pointer", padding: "1rem" }}
       >
-        <ModalHeader toggle={bookNowToggle}>When do you want to book this order ?</ModalHeader>
+        <ModalHeader toggle={bookNowToggle}>
+          When do you want to book this order ?
+        </ModalHeader>
         <ModalBody className="dateTimePicker__container">
-          
-          <DateTimePicker/>
-         <Button onClick={()=>{
-          bookNowToggle();
-          toggle();
-         }}>Done</Button>
+          <DateTimePicker
+            getDateTime={(e) => {
+              setDateAndTime(e);
+            }}
+          />
+
+          <Button
+            color="success"
+            className="m-4"
+            onClick={() => {
+              bookNowToggle();
+              confirmationToggle();
+            }}
+          >
+            Confirm !
+          </Button>
         </ModalBody>
-        
+      </Modal>
+
+      <Modal
+        isOpen={confirmationModal}
+        toggle={confirmationToggle}
+        style={{ cursor: "pointer", padding: "1rem" }}
+      >
+        <ModalBody className="dateTimePicker__container">
+          Your order for catering service is confirmed on{" "}
+          <h4>{dateAndTime} date an time</h4>
+          {/* <h4>Fri 23 June 2022 4:30pm</h4> */}
+        </ModalBody>
       </Modal>
     </>
   );

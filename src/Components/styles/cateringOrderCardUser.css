@@ -1,0 +1,28 @@
+.cateringOrderCard__user {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 4px #0000001a;
+  width: max-content;
+  padding: 2rem;
+  margin: 1rem;
+}
+
+.cateringOrderCard__userHeader {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+  margin-bottom: 0.9rem;
+}
+
+.cateringOrderCard__userDate{
+    text-align: right;
+  vertical-align: center;
+  font-weight: 500;
+  color: grey;
+}
+
+.cateringOrderCard__userDetails{
+    margin: 1rem;
+}

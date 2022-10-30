@@ -11,13 +11,14 @@ import {
 import { actionType } from "../../context/reducer";
 import { useStateValue } from "../../context/StateProvider";
 
-const OrderCard = ({ data }) => {
+const AcceptedOrderCard = ({ data }) => {
   const [{ user, deliveryZone, orders }, dispatch] = useStateValue();
   return (
     <>
       {data &&
         data.map((eachOrder) => (
           <div className="orderCard">
+            <Row><Col lg='12' md="12"><div className="text-center m-4"><span>🎊🎉Accepted Order🎊🎉</span></div></Col></Row>
             <Row className="orderCard_header">
               <Col sm="6">
                 <div className="orderNumber">
@@ -44,7 +45,9 @@ const OrderCard = ({ data }) => {
                     x{orderItem.qty}
                   </Col>
                   <Col sm="3" md="4">
-                    <div className="orderPrice">QAR&nbsp;&nbsp;{orderItem.price}</div>
+                    <div className="orderPrice">
+                      QAR&nbsp;&nbsp;{orderItem.price}
+                    </div>
                     {/* {console.log(orderItem.selectedAddons)} */}
                     {/* {console.log(orderItem.selectedSize)} */}
                   </Col>
@@ -104,38 +107,10 @@ const OrderCard = ({ data }) => {
                 </div>
               </Col>
             </div>
-            <div className="orderActionButtons">
-              <button
-                className="orderRejectBtn"
-                onClick={() => console.log("clicked")}
-              >
-                Reject Order
-              </button>
-              <button
-                className="orderAcceptBtn"
-                onClick={async () => {
-                  acceptOrders(eachOrder);
-                  await getAllOrders().then((orderData) => {
-                    dispatch({
-                      type: actionType.SET_ORDERS,
-                      orders: orderData,
-                    });
-                  });
-                  await getAcceptedOrders().then((acceptedOrderData) => {
-                    dispatch({
-                      type: actionType.SET_ACCEPTEDORDERS,
-                      acceptedOrders: acceptedOrderData,
-                    });
-                  });
-                }}
-              >
-                Accept Order
-              </button>
-            </div>
           </div>
         ))}
     </>
   );
 };
 
-export default OrderCard;
+export default AcceptedOrderCard;

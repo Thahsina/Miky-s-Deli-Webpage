@@ -1,6 +1,23 @@
 .cateringOrdersAdmin__page{
-    width: 100%;
+    width: 80%;
+    margin: 0.5rem 3rem 3rem 3rem;
+}
+
+
+
+
+.cateringOrdersAdmin__container{
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    margin-top: 2rem;
+}
+.cateringOrderCard{
+    width: 100%;
+    border: 1px solid rgb(223, 223, 223);
+    padding: 1rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px #0000001a;
+    
 }

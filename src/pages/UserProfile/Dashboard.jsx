@@ -10,7 +10,7 @@ const Dashboard = () => {
     <>
       <header>
         <Container className="dashboard__banner banner py-8">
-          <h3>Dashboard</h3>
+          <h3>My Dashboard</h3>
         </Container>
       </header>
       <section className="mt-4">

@@ -1,15 +1,22 @@
-import React from 'react'
+import React from "react";
 import { useStateValue } from "../../context/StateProvider";
 import OrderCardAdmin from "../../Components/UI/OrderCardAdmin";
+import NoOrderImg from "../../images/NoOrders.svg";
 
 const CurrentOrdersPage = () => {
-    const [{ user, cart, orders, menuItems }] = useStateValue();
+  const [{ user, cart, orders, menuItems }] = useStateValue();
   return (
     <>
-     {console.log("Orders", orders)}
-    <OrderCardAdmin data={orders} />
+      {orders ? (
+        <OrderCardAdmin data={orders} />
+      ) : (
+        <div className="noOrdersMsg">
+          <img src={NoOrderImg} alt="" />
+          <h4>No Orders Yet !</h4>
+        </div>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default CurrentOrdersPage
+export default CurrentOrdersPage;

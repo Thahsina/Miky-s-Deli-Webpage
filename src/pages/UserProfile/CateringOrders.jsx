@@ -1,5 +1,6 @@
 import React from "react";
-import OrderCardUser from "../../Components/UI/OrderCardUser";
+// import OrderCardUser from "../../Components/UI/OrderCardUser";
+import CateringOrderCardUser from "../../Components/UI/CateringOrderCardUser";
 
 const CateringOrders = () => {
   return (
@@ -8,7 +9,7 @@ const CateringOrders = () => {
         <div className="orders__container mb-4">
           <h2>Previous Catering Orders</h2>
           <div className="d-flex">
-            <OrderCardUser />
+            <CateringOrderCardUser />
           </div>
         </div>
       </div>

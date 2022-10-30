@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Location from "../../../images/location.png";
 import BookNow from "../../../images/bookNow.png";
-import image from "../../../images/crispy-sandwiches.png";
+
 import { When } from "react-if";
 
 import DropoffModal from "./DropoffModal";
@@ -28,7 +28,7 @@ const DropoffCard = ({ data }) => {
               >
                 <img
                   className="postcard__img"
-                  src={image}
+                  src={item.imageURL}
                   onClick={toggle}
                   alt="Title"
                 />

@@ -210,7 +210,7 @@ const Checkout = () => {
                   Drag the marker to exact delivery location or click on the top
                   left corner for current location.
                 </p>
-                {/* <Button>Add your current location</Button> */}
+                
 
                 <div
                   className="form__group"
@@ -410,13 +410,15 @@ const Checkout = () => {
                     }}
                     disabled={
                       // address.latlng === "" ||
+                      deliveryZone === null || 
                       address.name === "" ||
                       address.email === "" ||
                       address.street === "" ||
-                      address.buildingNo === "" ||
-                      calculateTotalPriceOfItem() === 0
+                      address.buildingNo === "" 
+                      
+                      // calculateTotalPriceOfItem() === 0
                         ? true
-                        : false || deliveryZone === null
+                        : false 
                     }
                   >
                     Place Order
