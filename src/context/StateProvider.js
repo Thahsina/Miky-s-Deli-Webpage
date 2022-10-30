@@ -1,26 +1,38 @@
-import React, { createContext, useContext, useReducer } from "react";
-import { getAllOrders } from "../firebaseFunctions";
-import { actionType } from "./reducer";
+import React, { createContext, useContext, useReducer } from 'react';
+import { getAllOrders } from '../firebaseFunctions';
+import { actionType } from './reducer';
 
 export const StateContext = createContext();
 
 export const StateProvider = ({ reducer, initialState, children }) => {
   const [cartItems, setCartItems] = React.useState([]);
   const [bookedItems, setBookedItems] = React.useState([]);
-  {
-    console.log(bookedItems);
-    console.log(cartItems)
-  }
+  console.log({ bookedItems });
+
   const bookItem = (item) => {
     // every booked item has a bookingId which is separate from product id
     const bookingId = Date.now() * Math.ceil(Math.random() * 1000);
     setBookedItems([...bookedItems, { ...item, bookingId }]);
+    return bookingId;
   };
+
+  const deleteBookedItem = (bookingId) =>
+    setBookedItems(bookedItems.filter((i) => i.bookingId !== bookingId));
 
   const clearCart = () => setCartItems([]);
 
   const deleteItem = (cartItemId) =>
     setCartItems(cartItems.filter((i) => i.cartItemId !== cartItemId));
+
+  const updateBookedItem = (bookingId, updatedItem) => {
+    let itemIndex = bookedItems.findIndex((i) => i.bookingId === bookingId);
+    let item = bookedItems[itemIndex];
+    setBookedItems(() => [
+      ...bookedItems.slice(0, itemIndex),
+      { ...item, ...updatedItem },
+      ...bookedItems.slice(itemIndex + 1),
+    ]);
+  };
 
   const calculateTotalPriceOfItem = (cartItemId) => {
     const item = cartItems.find((i) => i.cartItemId === cartItemId);
@@ -29,8 +41,7 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     if (item.variations) {
       let totalPrice = 0;
       totalPrice +=
-        Number(item?.selectedSize?.price || 0) +
-        Number(item?.selectedMeatOption?.price || 0);
+        Number(item?.selectedSize?.price || 0) + Number(item?.selectedMeatOption?.price || 0);
       item.selectedAddons?.forEach((a) => (totalPrice += Number(a.price)));
       return totalPrice * Number(item.qty);
     } else {
@@ -51,11 +62,7 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     let itemIndex = cartItems.findIndex((i) => i.cartItemId === cartItemId);
     let item = cartItems[itemIndex];
     item = { ...item, qty: Number(item.qty) + 1 };
-    setCartItems([
-      ...cartItems.slice(0, itemIndex),
-      item,
-      ...cartItems.slice(itemIndex + 1),
-    ]);
+    setCartItems([...cartItems.slice(0, itemIndex), item, ...cartItems.slice(itemIndex + 1)]);
   };
 
   const decrease = (cartItemId) => {
@@ -63,11 +70,7 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     let item = cartItems[itemIndex];
     if (item.qty <= 1) return; // quantity can not be a negative number or zero
     item = { ...item, qty: Number(item.qty) - 1 };
-    setCartItems([
-      ...cartItems.slice(0, itemIndex),
-      item,
-      ...cartItems.slice(itemIndex + 1),
-    ]);
+    setCartItems([...cartItems.slice(0, itemIndex), item, ...cartItems.slice(itemIndex + 1)]);
   };
 
   const updateItem = (cartItemId, updatedItem) => {
@@ -93,6 +96,7 @@ export const StateProvider = ({ reducer, initialState, children }) => {
   // console.log({ cartItems }, calculateTotalPrice());
   const st = {
     cartItems,
+    bookedItems,
     clearCart,
     setCartItems,
     deleteItem,
@@ -103,6 +107,8 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     decrease,
     fetchAllOrders,
     bookItem,
+    deleteBookedItem,
+    updateBookedItem,
   };
   return (
     <StateContext.Provider value={[...useReducer(reducer, initialState), st]}>
