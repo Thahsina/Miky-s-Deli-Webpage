@@ -4,7 +4,7 @@ import OrderCardAdmin from "../../Components/UI/OrderCardAdmin";
 import NoOrderImg from "../../images/NoOrders.svg";
 
 const CurrentOrdersPage = () => {
-  const [{ user, cart, orders, menuItems }] = useStateValue();
+  const [{ orders }] = useStateValue();
   return (
     <>
       {orders ? (
