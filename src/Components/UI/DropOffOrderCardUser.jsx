@@ -2,21 +2,21 @@ import React from "react";
 import { Col, Row } from "reactstrap";
 import "../styles/cateringOrderCardUser.css";
 
-const CateringOrderCardUser = ({ data }) => {
+const DropOffOrderCardUser = ({ data }) => {
   return (
     <>
       {data &&
         data.map((eachDropOffOrder) => (
           <div className="cateringOrderCard__user">
             <Row className="cateringOrderCard__userHeader">
-              <Col sm="6">
+              {/* <Col sm="6">
                 <div className="cateringOrderCard__userTime">
                   <span>Time : 4:30pm</span>
                 </div>
-              </Col>
-              <Col sm="6">
+              </Col> */}
+              <Col sm="12">
                 <div className="cateringOrderCard__userDate">
-                  Date : <span> 23 Jan 2022</span>
+                  Date : <span>{eachDropOffOrder.dropOffOrderDate.substr(0, 16)}</span>
                 </div>
               </Col>
             </Row>
@@ -42,4 +42,4 @@ const CateringOrderCardUser = ({ data }) => {
   );
 };
 
-export default CateringOrderCardUser;
+export default DropOffOrderCardUser;

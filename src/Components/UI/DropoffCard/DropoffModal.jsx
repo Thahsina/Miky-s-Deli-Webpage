@@ -5,6 +5,7 @@ import { BiMinus, BiPlus } from "react-icons/bi";
 import { When } from "react-if";
 import { useStateValue } from "../../../context/StateProvider";
 import { useNavigate } from "react-router-dom";
+import { saveDropOffOrder } from "../../../firebaseFunctions";
 
 function ChoiceItem({ choice, subtitle, quantity, increment, decrement }) {
   return (
@@ -420,6 +421,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
     }
   };
 
+  const [{ user }] = useStateValue();
   const [confirmationModal, setConfirmationModal] = useState(false);
   const navigate = useNavigate();
   const confirmationToggle = () => {
@@ -429,6 +431,19 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
     }, 4000);
   };
   // console.log({ currentItem, cateringModalInfo });
+
+  const saveDropOffOrderDetails = () => {
+    const dropOffOrderData = {
+      user_id: `${user.uid}`,
+      dropOffOrderDate: `${new Date()}`,
+      // orderDateTime: dateAndTime?.toString(),
+      dropoffOrder: bookedItems,
+      id: `${Date.now()}`,
+      orderNumber: `${Math.floor(100000 + Math.random() * 900000)}`,
+    };
+
+    saveDropOffOrder(dropOffOrderData);
+  };
 
   return (
     <>
@@ -808,6 +823,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                 setBookingId(id);
               }
               confirmationToggle();
+              saveDropOffOrderDetails();
             }}
           >
             <span>Book Now</span>

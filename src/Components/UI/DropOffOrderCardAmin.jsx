@@ -4,7 +4,7 @@ import { Container, Col, Row } from "reactstrap";
 import { actionType } from "../../context/reducer";
 import { useStateValue } from "../../context/StateProvider";
 
-const CateringOrderCardAdmin = ({ data }) => {
+const DropOffOrderCardAdmin= ({ data }) => {
   console.log(data);
   return (
     <>
@@ -14,13 +14,13 @@ const CateringOrderCardAdmin = ({ data }) => {
             <Row className="orderCard_header">
               <Col sm="6">
                 <div className="orderNumber">
-                  <span>Catering Order #{eachCateringOrder.orderNumber}</span>
+                  <span>Drop-off Order #{eachCateringOrder.orderNumber}</span>
                 </div>
               </Col>
               <Col sm="6">
                 <div className="orderDate">
-                  <b>Date & Time</b> :{" "}
-                  <span>{eachCateringOrder.orderDateTime?.substr(0, 21)}</span>
+                  <b>Date</b> :{" "}
+                  <span>{eachCateringOrder.orderDate?.substr(0, 16)}</span>
                 </div>
               </Col>
             </Row>
@@ -89,4 +89,4 @@ const CateringOrderCardAdmin = ({ data }) => {
   );
 };
 
-export default CateringOrderCardAdmin;
+export default DropOffOrderCardAdmin;

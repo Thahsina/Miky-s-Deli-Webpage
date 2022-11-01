@@ -8,6 +8,7 @@ export const StateProvider = ({ reducer, initialState, children }) => {
   const [cartItems, setCartItems] = React.useState([]);
   const [bookedItems, setBookedItems] = React.useState([]);
   // console.log({ bookedItems });
+  // console.log(cartItems)
 
   const bookItem = (item) => {
     // every booked item has a bookingId which is separate from product id
@@ -44,10 +45,12 @@ export const StateProvider = ({ reducer, initialState, children }) => {
         Number(item?.selectedSize?.price || 0) + Number(item?.selectedMeatOption?.price || 0);
       item.selectedAddons?.forEach((a) => (totalPrice += Number(a.price)));
       return totalPrice * Number(item.qty);
+      // setCartItems([...cartItems, { ...item, price: totalPrice * Number(item.qty), cartItemId }]);
     } else {
       // if item does not have any variations
       return Number(item.price) * Number(item.qty);
     }
+    
   };
 
   const addToCart = (item) => {

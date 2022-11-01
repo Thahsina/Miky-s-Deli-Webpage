@@ -44,7 +44,7 @@ const Footer = () => {
 
               <Row>
                 {/* <Col sm={{ size: "auto", offset: 1 }} > */}
-                  <Col lg="4" md="6" sm="6"> 
+                <Col lg="4" md="6" sm="6">
                   {" "}
                   <TreeView
                     aria-label="file system navigator"
@@ -61,6 +61,7 @@ const Footer = () => {
                       <TreeItem nodeId="1" label="44410990" />
                       <TreeItem nodeId="2" label="55251120" />
                     </TreeItem>
+
                     <TreeItem
                       nodeId="3"
                       sx={{ pb: 1.5 }}
@@ -68,14 +69,6 @@ const Footer = () => {
                     >
                       <TreeItem nodeId="4" label="66992879" />
                     </TreeItem>
-                    {/* <TreeItem
-                      nodeId="11"
-                      sx={{ pb: 2,pt:2, mt:2 }}
-                      label="ASAS Twin Towers"
-                    >
-                      <TreeItem nodeId="12" label="44410993" />
-                      
-                    </TreeItem> */}
                   </TreeView>
                 </Col>
                 {/* <Col sm={{ size: "auto", offset: 1 }}> */}
@@ -85,7 +78,7 @@ const Footer = () => {
                     defaultCollapseIcon={<ExpandMoreIcon />}
                     defaultExpandIcon={<ChevronRightIcon />}
                     sx={{
-                      height: 80,
+                      height: 100,
                       flexGrow: 1,
                       maxWidth: 400,
                       // overflowY: "auto",
@@ -93,9 +86,8 @@ const Footer = () => {
                   >
                     <TreeItem
                       nodeId="5"
-                      sx={{ pb: 1.5}}
+                      sx={{ pb: 1.5 }}
                       label="Duhail Destination Box"
-                      
                     >
                       <TreeItem nodeId="6" label="33267460" />
                     </TreeItem>
@@ -104,6 +96,9 @@ const Footer = () => {
                       sx={{ pb: 1.5 }}
                       label="Qatar Sports Club"
                     >
+                      <TreeItem nodeId="8" label="55999674" />
+                    </TreeItem>
+                    <TreeItem nodeId="14" sx={{ pb: 1.5 }} label="ASAS">
                       <TreeItem nodeId="8" label="55999674" />
                     </TreeItem>
                   </TreeView>
@@ -129,7 +124,6 @@ const Footer = () => {
                       <TreeItem nodeId="8" label="55999674" />
                     </TreeItem>
                   </TreeView>
-                  
                 </Col>
               </Row>
             </Container>

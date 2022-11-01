@@ -13,8 +13,7 @@ import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import Area from "../../pages/Area";
 import PhoneInput from "react-phone-number-input/input";
 import "react-phone-number-input/style.css";
-import { NavLink, Link } from "react-router-dom";
-
+import { NavLink, Link, Navigate, useNavigate } from "react-router-dom";
 import {
   getAuth,
   RecaptchaVerifier,
@@ -27,6 +26,7 @@ import { actionType } from "../../context/reducer";
 
 import logo from "../../images/mikyslogo.png";
 import "../styles/header.css";
+import { saveUser } from "../../firebaseFunctions";
 
 const nav__links = [
   {
@@ -54,18 +54,30 @@ const Header = () => {
 
   const autoFocusRef = useRef(null);
 
-  const [{ user}, dispatch] = useStateValue();
-  const { cartItems, clearCart, calculateTotalPriceOfItem } = useStateValue()[2];
+  const [{ user }, dispatch] = useStateValue();
+  const { cartItems, clearCart, calculateTotalPriceOfItem } =
+    useStateValue()[2];
   const [isLogoutMenu, setIsLogoutMenu] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("+974 ");
   const [OTP, setOTP] = useState("");
   const [expandForm, setExpandForm] = useState(false);
   const [cartMenu, setCartMenu] = useState(false);
-
+  const [userRole, setUserRole] = useState();
   const [error, setError] = useState(null);
   const [loginStatus, setLoginStatus] = useState("");
   const [fields, setFields] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
+  const navigate = useNavigate();
+  const saveUserDetails = () => {
+    // setIsLoading(true);
+    const userData = {
+      id: `${Date.now()}`,
+      createdUserDate: `${new Date()}`,
+      user_id: `${user.uid}`,
+      userRole: `${user.uid === "+97430271700" ? "Admin" : "User"}`,
+    };
+    saveUser(userData);
+  };
 
   const open = Boolean(anchorEl);
 
@@ -153,6 +165,7 @@ const Header = () => {
           setIsLogoutMenu(false);
           setFields(true);
           setError("Signed in successfully");
+          saveUserDetails();
           setLoginStatus("success");
           setTimeout(() => {
             setFields(false);
@@ -237,7 +250,7 @@ const Header = () => {
                       "aria-labelledby": "basic-button",
                     }}
                     anchorReference="anchorPosition"
-                    anchorPosition={{ top: 60, left: 1150 }}
+                    anchorPosition={{ top: 60, left: 930 }}
                     anchorOrigin={{
                       vertical: "top",
                       horizontal: "center",
@@ -268,6 +281,7 @@ const Header = () => {
                       onClick={() => {
                         handleClose();
                         logout();
+                        navigate("/");
                       }}
                     >
                       Sign out

@@ -173,7 +173,7 @@ const TestimonialSlider = () => {
               onChange={(e) => setReviewName(e.target.value)}
             />
 
-            <label for="email">Email</label>
+            <label htmlFor="email">Email</label>
             <input
               type="email"
               required

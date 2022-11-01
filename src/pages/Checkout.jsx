@@ -18,16 +18,18 @@ import { actionType } from "../context/reducer";
 
 const Checkout = () => {
   const [{ user, deliveryZone, orders }, dispatch] = useStateValue();
-  const { cartItems, calculateTotalPriceOfItem, clearCart } = useStateValue()[2];
+  const { cartItems, calculateTotalPriceOfItem, clearCart } =
+    useStateValue()[2];
   const [specialRequest, setSpecialRequest] = useState("");
   const [modalConfirm, setModalConfirm] = useState(false);
   const [areaModal, setAreaModal] = useState(false);
 
+  console.log(cartItems);
   const navigate = useNavigate();
   let date = new Date();
   const options = { month: "long" };
   let month = new Intl.DateTimeFormat("en-US", options).format(date);
-  
+
   const calculateTotalPrice = () => {
     return cartItems.reduce(function (accumulator, item) {
       return accumulator + calculateTotalPriceOfItem(item.cartItemId);
@@ -210,7 +212,6 @@ const Checkout = () => {
                   Drag the marker to exact delivery location or click on the top
                   left corner for current location.
                 </p>
-                
 
                 <div
                   className="form__group"
@@ -324,13 +325,39 @@ const Checkout = () => {
                           <tr key={cartItem.id}>
                             <td style={{ width: "50%" }}>
                               <b>{cartItem.title}</b>
-                              <p>
-                                Fries, Fried Onions, Pickles & Mushrooms
-                                {/* {cartItem.variations} */}
-                              </p>
+
+                              <div className="d-flex">
+                                {cartItem.selectedMeatOption && (
+                                  <p>
+                                    {"MeatOption: "}
+                                    {cartItem.selectedMeatOption?.meatOption}
+                                    {","}
+                                  </p>
+                                )}
+                                {cartItem.selectedSize && (
+                                  <p>
+                                    {"Size: "}
+                                    {cartItem.selectedSize?.size}
+                                    {","}
+                                  </p>
+                                )}
+                                {cartItem.selectedAddons?.map(
+                                  (selectedAddon) => (
+                                    // console.log(selectedAddon.addOn)
+                                    <p>
+                                      {selectedAddon.addOn}
+                                      {","}
+                                    </p>
+                                  )
+                                )}
+                              </div>
+                              {/* <p>Fries, Fried Onions, Pickles & Mushrooms</p> */}
                             </td>
                             <td className="orderQuantity">{cartItem.qty}</td>
-                            <td className="orderPrice">QAR {calculateTotalPriceOfItem(cartItem.cartItemId)}</td>
+                            <td className="orderPrice">
+                              QAR{" "}
+                              {calculateTotalPriceOfItem(cartItem.cartItemId)}
+                            </td>
                           </tr>
                         ))}
                         <tr>Total: QAR {calculateTotalPrice()}</tr>
@@ -410,15 +437,14 @@ const Checkout = () => {
                     }}
                     disabled={
                       // address.latlng === "" ||
-                      deliveryZone === null || 
+                      deliveryZone === null ||
                       address.name === "" ||
                       address.email === "" ||
                       address.street === "" ||
-                      address.buildingNo === "" 
-                      
-                      // calculateTotalPriceOfItem() === 0
-                        ? true
-                        : false 
+                      address.buildingNo === ""
+                        ? // calculateTotalPriceOfItem() === 0
+                          true
+                        : false
                     }
                   >
                     Place Order

@@ -11,6 +11,7 @@ import { FaClock } from 'react-icons/fa';
 import { BiMinus, BiPlus } from 'react-icons/bi';
 import { useStateValue } from '../../../context/StateProvider';
 import DateTimePicker from './../DateTimePicker';
+import { saveCateringOrder } from '../../../firebaseFunctions';
 
 function ChoiceItem({ choice, subtitle, quantity, increment, decrement }) {
   return (
@@ -360,7 +361,7 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
     }
   };
   // console.log({ cateringModalInfo, currentItem });
-
+  const [{ user }] = useStateValue();
   const [bookNowModal, setBookNowModal] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(false);
   const [dateAndTime, setDateAndTime] = useState({});
@@ -368,6 +369,18 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
   const confirmationToggle = () => {
     setConfirmationModal(!confirmationModal);
   };
+
+  const saveCateringOrderDetails = () => {
+    const cateringOrderData = {
+      user_id: `${user.uid}`,
+      orderDateTime: dateAndTime?.toString(),
+      cateringOrder: bookedItems,
+      id: `${Date.now()}`,
+      orderNumber: `${Math.floor(100000 + Math.random() * 900000)}`,
+    }
+
+    saveCateringOrder(cateringOrderData)
+  }
 
   return (
     <>
@@ -883,8 +896,8 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
         isOpen={bookNowModal}
         // size="md"
         toggle={bookNowToggle}
-        keyboard="false"
-        backdrop="static"
+        // keyboard="false"
+        // backdrop="static"
         className="bookNowModal"
         style={{ cursor: 'pointer', padding: '1rem' }}
       >
@@ -906,6 +919,7 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
             onClick={() => {
               bookNowToggle();
               confirmationToggle();
+              saveCateringOrderDetails();
             }}
           >
             Confirm !

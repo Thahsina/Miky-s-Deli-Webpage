@@ -1,6 +1,6 @@
 import {
   fetchCart,
-  fetchTotal,
+  // fetchTotal,
   fetchUser,
   fetchDeliveryZone,
 } from "../Utils/fetchLocalStorageData";
@@ -8,7 +8,7 @@ import {
 const userInfo = fetchUser();
 const deliveryZone = fetchDeliveryZone();
 const cartInfo = fetchCart();
-const total = fetchTotal();
+// const total = fetchTotal();
 
 export const initialState = {
   user: userInfo,
@@ -18,7 +18,8 @@ export const initialState = {
   cateringMenuItems: null,
   dropoffMenuItems: null,
   cartItems: cartInfo,
-  // order: {},
   orders: null,
   acceptedOrders: null,
+  dropOffOrders: null,
+  cateringOrders: null
 };

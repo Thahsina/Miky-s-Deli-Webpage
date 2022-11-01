@@ -11,6 +11,8 @@ import {
   getDropoffMenuItems,
   getAllOrders,
   getAcceptedOrders,
+  getAllCateringOrders,
+  getAllDropOffOrders,
 } from "./firebaseFunctions";
 import { actionType } from "./context/reducer";
 import { SkeletonTheme } from "react-loading-skeleton";
@@ -68,12 +70,35 @@ function App() {
     });
   };
 
+
+  const fetchAllCateringOrders = async () => {
+    await getAllCateringOrders().then((cateringOrderData) => {
+      // console.log(data);
+      dispatch({
+        type: actionType.SET_CATERING_ORDERS,
+        cateringOrders: cateringOrderData,
+      });
+    });
+  };
+
+  const fetchAllDropOffOrders = async () => {
+    await getAllDropOffOrders().then((dropOffOrderData) => {
+      // console.log(data);
+      dispatch({
+        type: actionType.SET_DROPOFF_ORDERS,
+        dropOffOrders: dropOffOrderData,
+      });
+    });
+  };
+
   useEffect(() => {
     fetchDropoffMenuItems();
     fetchCateringMenuItems();
     fetchMenuItems();
     fetchAllOrders();
     fetchAcceptedOrders();
+    fetchAllCateringOrders();
+    fetchAllDropOffOrders()
   }, []);
   //  useEffect(()=>{<Area/>},[])
   return (
