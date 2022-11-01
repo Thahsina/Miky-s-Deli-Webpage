@@ -11,8 +11,26 @@ import { If, Else, Then } from 'react-if';
 
 const Cart = ({ cartMenu, setCartMenu }) => {
   const [{ user }] = useStateValue();
-  const { cartItems, clearCart, calculateTotalPriceOfItem } = useStateValue()[2];
+  const { cartItems, clearCart, calculateTotalPriceOfItem, setCartItems } = useStateValue()[2];
   const [flag, setFlag] = useState(1);
+  console.log("cart")
+
+
+  const updatedCartItems = cartItems.map((cartItem) => {
+    if (cartItem.variations) {
+      const price = calculateTotalPriceOfItem(cartItem.cartItemId);
+      const updatedCartItem = { ...cartItem, price };
+      return updatedCartItem;
+    }
+    return cartItem;
+  })
+
+  //function calls when clicking on Total
+  const updateCartItems = () => {
+    console.log({ updatedCartItems })
+    setCartItems(() => updatedCartItems)
+    console.log("updating cart items")
+  }
 
   const calculateTotalPrice = () => {
     return cartItems.reduce(function (accumulator, item) {
@@ -57,7 +75,7 @@ const Cart = ({ cartMenu, setCartMenu }) => {
           </div>
           <div className="divider"></div>
           <div className="cartTotal">
-            <p>Total</p>
+            <p onClick={updateCartItems} >Total</p>
             <p>QAR {calculateTotalPrice()}</p>
           </div>
           <If condition={Boolean(user)}>

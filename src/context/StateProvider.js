@@ -10,6 +10,8 @@ export const StateProvider = ({ reducer, initialState, children }) => {
   // console.log({ bookedItems });
   // console.log(cartItems)
 
+  console.log({ cartItems });
+
   const bookItem = (item) => {
     // every booked item has a bookingId which is separate from product id
     const bookingId = Date.now() * Math.ceil(Math.random() * 1000);
@@ -62,6 +64,7 @@ export const StateProvider = ({ reducer, initialState, children }) => {
   };
 
   const increase = (cartItemId) => {
+    console.log("increase")
     let itemIndex = cartItems.findIndex((i) => i.cartItemId === cartItemId);
     let item = cartItems[itemIndex];
     item = { ...item, qty: Number(item.qty) + 1 };
@@ -79,6 +82,7 @@ export const StateProvider = ({ reducer, initialState, children }) => {
   const updateItem = (cartItemId, updatedItem) => {
     let itemIndex = cartItems.findIndex((i) => i.cartItemId === cartItemId);
     let item = cartItems[itemIndex];
+    console.log({ item })
     setCartItems(() => [
       ...cartItems.slice(0, itemIndex),
       { ...item, ...updatedItem },
