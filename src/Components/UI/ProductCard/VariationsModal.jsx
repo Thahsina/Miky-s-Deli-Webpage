@@ -171,6 +171,8 @@ function VariationsModal({ modal, toggle, modalInfo }) {
   // if item is already present in cart, display values from cart
   const [cartItemId, setCartItemId] = useState();
   const currentItem = cartItems.find((i) => i.cartItemId === cartItemId);
+  // console.log({ modalInfo })
+  // console.log({ currentItem })
   const [arabicVariantDescription, setArabicVariantDescription] = useState();
   const [variantDescription, setVariantDescription] = useState();
   const [selectedAddons, setSelectedAddons] = useState([]);
