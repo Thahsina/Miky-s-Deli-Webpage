@@ -6,6 +6,7 @@ import { When } from "react-if";
 import { useStateValue } from "../../../context/StateProvider";
 import { useNavigate } from "react-router-dom";
 import { saveDropOffOrder } from "../../../firebaseFunctions";
+import LocationMadal from "../LocationMadal";
 
 function ChoiceItem({ choice, subtitle, quantity, increment, decrement }) {
   return (
@@ -35,7 +36,7 @@ function ChoiceItem({ choice, subtitle, quantity, increment, decrement }) {
             <BiMinus style={{ fontSize: "1rem" }} />
           </motion.button>
           <input
-            class="counterQuantity"
+            className="counterQuantity"
             name="product-qty"
             min="0"
             max="10"
@@ -72,7 +73,8 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
     useStateValue()[2];
   const [bookingId, setBookingId] = React.useState();
   const currentItem = bookedItems.find((i) => i.bookingId === bookingId);
-
+  const [dropoffLng, setDropoffLng] = useState({});
+  const [dropoffLat, setDropoffLat] = useState({});
   const [selectedAddons, setSelectedAddons] = React.useState([]);
   const [selectedDrinkAddons, setSelectedDrinkAddons] = React.useState([]);
   const [selectedOptions, setSelectedOptions] = React.useState([]);
@@ -423,14 +425,13 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
 
   const [{ user }] = useStateValue();
   const [confirmationModal, setConfirmationModal] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const confirmationToggle = () => {
     setConfirmationModal(!confirmationModal);
-    setTimeout(() => {
-      navigate("/");
-    }, 4000);
+    // setTimeout(() => {
+    //   navigate("/");
+    // }, 4000);
   };
-  // console.log({ currentItem, cateringModalInfo });
 
   const saveDropOffOrderDetails = () => {
     const dropOffOrderData = {
@@ -440,6 +441,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
       dropoffOrder: bookedItems,
       id: `${Date.now()}`,
       orderNumber: `${Math.floor(100000 + Math.random() * 900000)}`,
+      location: [dropoffLng, dropoffLat],
     };
 
     saveDropOffOrder(dropOffOrderData);
@@ -574,19 +576,19 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                               ).find(
                                 (op) =>
                                   op.name === eachChoice &&
-                                  op.type === "meatOptions"
+                                  op.type === "meatChoices"
                               )?.quantity || 0
                             }
                             increment={() =>
                               increaseOption({
                                 name: eachChoice,
-                                type: "meatOptions",
+                                type: "meatChoices",
                               })
                             }
                             decrement={() =>
                               decreaseOption({
                                 name: eachChoice,
-                                type: "meatOptions",
+                                type: "meatChoices",
                               })
                             }
                           />
@@ -823,7 +825,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                 setBookingId(id);
               }
               confirmationToggle();
-              saveDropOffOrderDetails();
+              // saveDropOffOrderDetails();
             }}
           >
             <span>Book Now</span>
@@ -847,13 +849,20 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
         style={{ cursor: "pointer", padding: "1rem" }}
       >
         <ModalBody className="dateTimePicker__container">
-          <h4>Your order for drop-off service is confirmed</h4>
-          <span>
-            You will recieve a call soon from our us for your location details.
-          </span>
+          <h4>Delivery Address</h4>
+          <LocationMadal
+            setDropoffLat={setDropoffLat}
+            setDropoffLng={setDropoffLng}
+          />
+          {console.log(dropoffLat, dropoffLng, "latlng from dropoodd")}
+          <Button
+            className="dropoff__confirmBtn"
+            onClick={saveDropOffOrderDetails}
+          >
+            Confrim & Place Order
+          </Button>
         </ModalBody>
       </Modal>
-      ;
     </>
   );
 }

@@ -69,7 +69,6 @@
 }
 
 .signinBtn {
-  /* border: 2px solid black; */
   width: 8rem;
   display: flex;
   justify-content: center;
@@ -81,9 +80,6 @@
 }
 
 .signout {
-  /* max-width: 5rem; */
-  /* min-height: 2rem; */
-  /* color: #ffff; */
   background-color: #df2020 !important;
   border: none !important;
 }
@@ -96,10 +92,6 @@
 .signin:focus {
   outline: none !important;
 }
-
-/* .nav__right{
-    position: relative;
-  } */
 
 .overlay {
   position: fixed;
@@ -119,7 +111,6 @@
   transform: translate(-50%, -50%);
   border-radius: 3px;
   padding: 40px 40px;
-  /* padding: 70px 100px; */
   background: #ffffff;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -152,8 +143,6 @@
 
 .input-group {
   display: flex;
-  /* align-items: center; */
-  /* justify-content: center; */
   flex-direction: row;
   width: 100%;
   min-height: 1rem;
@@ -167,7 +156,6 @@
   width: 25rem;
   padding: 10px;
   margin-top: 1rem;
-  /* margin-left: auto; */
   border: 0.8px lightgrey;
   border-radius: 5px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.137);
@@ -342,7 +330,7 @@
 }
 
 @media only screen and (max-width: 576px) {
-  .logo{
+  .logo {
     width: calc(100% - 20%);
   }
   .select-input-value input {
@@ -363,7 +351,7 @@
 }
 
 @media only screen and (max-width: 360px) {
-  .logo{
+  .logo {
     width: calc(100% - 20%);
   }
   .select-input-value {

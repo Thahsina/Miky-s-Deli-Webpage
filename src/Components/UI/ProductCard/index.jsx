@@ -48,6 +48,7 @@ const ProductCard = ({ data }) => {
           </Then>
           <Else>
             <VariationsModal
+            key={modalInfo.id}
               modal={modal}
               toggle={toggle}
               modalInfo={modalInfo}

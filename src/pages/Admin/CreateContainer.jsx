@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "reactstrap";
-import Helmet from "../../Components/Helmet";
 import "../../Components/styles/createItem.css";
 import { AnimatePresence, motion } from "framer-motion";
 import Loader from "../../Components/UI/Loader";
@@ -247,7 +246,7 @@ const CreateContainer = () => {
   };
 
   return (
-    <Helmet tittle="CreateContainer">
+    <>
       <section className="createContainer d-flex flex-column align-items-center">
         <h3>Add new items to the Menu</h3>
         {/* <Container> */}
@@ -402,7 +401,7 @@ const CreateContainer = () => {
           </AnimatePresence>
         </Col>
       </section>
-    </Helmet>
+    </>
   );
 };
 

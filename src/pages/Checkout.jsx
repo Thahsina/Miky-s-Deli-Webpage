@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Helmet from "../Components/Helmet";
+import { Helmet } from "react-helmet-async";
 import { Container, Row, Col, Form } from "reactstrap";
 import { useStateValue } from "../context/StateProvider";
 import { Link } from "react-router-dom";
@@ -15,6 +15,7 @@ import TickImg from "../images/tick.png";
 import Area from "../pages/Area";
 import { saveOrder, getAllOrders, fetchAllOrders } from "../firebaseFunctions";
 import { actionType } from "../context/reducer";
+
 
 const Checkout = () => {
   const [{ user, deliveryZone, orders }, dispatch] = useStateValue();
@@ -67,7 +68,7 @@ const Checkout = () => {
   const toggleConfirm = () => {
     setModalConfirm(!modalConfirm);
   };
-  // mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN;
+  mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN;
   mapboxgl.accessToken =
     "pk.eyJ1IjoibWlreXNkZWxpIiwiYSI6ImNsN3pzeWlqYzAzdXozeHVpdGdrN2ZyMHcifQ.AxHbECPE8dfa1cpxVV-UuA";
 
@@ -152,7 +153,12 @@ const Checkout = () => {
   }, []);
 
   return (
-    <Helmet title="Checkout">
+    <>
+      <Helmet>
+        <title>Miky's Deli - Checkout</title>
+        <meta name="description" content="Miky's Deli Checkout page" />
+        <link rel="canonical" href="/checkout" />
+      </Helmet>
       <section></section>
       <section>
         <Container>
@@ -200,6 +206,7 @@ const Checkout = () => {
 
                 <h4 className="mt-4 mb-4">Add Address</h4>
                 {/* <div> */}
+                {/* <LocationMadal/> */}
                 <div id="map" className="mb-2 checkout__map"></div>
                 {/* </div> */}
                 <p
@@ -467,7 +474,7 @@ const Checkout = () => {
           </Row>
         </Container>
       </section>
-    </Helmet>
+    </>
   );
 };
 

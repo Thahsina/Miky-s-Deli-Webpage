@@ -18,6 +18,8 @@ export default function MaterialUIPickers({ setDateAndTime }) {
         }}
         label="Pick Date and Time"
         onError={console.log}
+        required
+        disablePast
         renderInput={(params) => <TextField {...params} />}
       />
     </LocalizationProvider>

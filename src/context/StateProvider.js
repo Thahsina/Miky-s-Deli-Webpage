@@ -1,16 +1,13 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import { getAllOrders } from '../firebaseFunctions';
 import { actionType } from './reducer';
-
 export const StateContext = createContext();
-
 export const StateProvider = ({ reducer, initialState, children }) => {
   const [cartItems, setCartItems] = React.useState([]);
   const [bookedItems, setBookedItems] = React.useState([]);
-  // console.log({ bookedItems });
-  // console.log(cartItems)
+  console.log({ bookedItems });
 
-  console.log({ cartItems });
+  // console.log({ cartItems });
 
   const bookItem = (item) => {
     // every booked item has a bookingId which is separate from product id
@@ -18,15 +15,11 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     setBookedItems([...bookedItems, { ...item, bookingId }]);
     return bookingId;
   };
-
   const deleteBookedItem = (bookingId) =>
     setBookedItems(bookedItems.filter((i) => i.bookingId !== bookingId));
-
   const clearCart = () => setCartItems([]);
-
   const deleteItem = (cartItemId) =>
     setCartItems(cartItems.filter((i) => i.cartItemId !== cartItemId));
-
   const updateBookedItem = (bookingId, updatedItem) => {
     let itemIndex = bookedItems.findIndex((i) => i.bookingId === bookingId);
     let item = bookedItems[itemIndex];
@@ -36,7 +29,6 @@ export const StateProvider = ({ reducer, initialState, children }) => {
       ...bookedItems.slice(itemIndex + 1),
     ]);
   };
-
   const calculateTotalPriceOfItem = (cartItemId) => {
     const item = cartItems.find((i) => i.cartItemId === cartItemId);
     if (!item) return 0;
@@ -47,14 +39,11 @@ export const StateProvider = ({ reducer, initialState, children }) => {
         Number(item?.selectedSize?.price || 0) + Number(item?.selectedMeatOption?.price || 0);
       item.selectedAddons?.forEach((a) => (totalPrice += Number(a.price)));
       return totalPrice * Number(item.qty);
-      // setCartItems([...cartItems, { ...item, price: totalPrice * Number(item.qty), cartItemId }]);
     } else {
       // if item does not have any variations
       return Number(item.price) * Number(item.qty);
     }
-    
   };
-
   const addToCart = (item) => {
     // every cart item has a cartItemId which is separate from product id
     const cartItemId = Date.now() * Math.ceil(Math.random() * 1000);
@@ -70,7 +59,6 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     item = { ...item, qty: Number(item.qty) + 1 };
     setCartItems([...cartItems.slice(0, itemIndex), item, ...cartItems.slice(itemIndex + 1)]);
   };
-
   const decrease = (cartItemId) => {
     let itemIndex = cartItems.findIndex((i) => i.cartItemId === cartItemId);
     let item = cartItems[itemIndex];
@@ -78,7 +66,6 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     item = { ...item, qty: Number(item.qty) - 1 };
     setCartItems([...cartItems.slice(0, itemIndex), item, ...cartItems.slice(itemIndex + 1)]);
   };
-
   const updateItem = (cartItemId, updatedItem) => {
     let itemIndex = cartItems.findIndex((i) => i.cartItemId === cartItemId);
     let item = cartItems[itemIndex];
@@ -89,17 +76,15 @@ export const StateProvider = ({ reducer, initialState, children }) => {
       ...cartItems.slice(itemIndex + 1),
     ]);
   };
-
-  const fetchAllOrders = async () => {
-    await getAllOrders().then((orderData) => {
-      // console.log(data);
-      dispatchEvent({
-        type: actionType.SET_ORDERS,
-        orders: orderData,
-      });
-    });
-  };
-
+  // const fetchAllOrders = async () => {
+  //   await getAllOrders().then((orderData) => {
+  //     // console.log(data);
+  //     dispatchEvent({
+  //       type: actionType.SET_ORDERS,
+  //       orders: orderData,
+  //     });
+  //   });
+  // };
   // console.log({ cartItems }, calculateTotalPrice());
   const st = {
     cartItems,
@@ -112,7 +97,7 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     addToCart,
     increase,
     decrease,
-    fetchAllOrders,
+    // fetchAllOrders,
     bookItem,
     deleteBookedItem,
     updateBookedItem,
@@ -123,5 +108,4 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     </StateContext.Provider>
   );
 };
-
 export const useStateValue = () => useContext(StateContext);

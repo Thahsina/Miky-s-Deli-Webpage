@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router } from "react-router-dom";
 import { StateProvider } from "./context/StateProvider";
 
@@ -17,10 +18,12 @@ import { initialState } from "./context/initialState";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Router>
-      <StateProvider initialState={initialState} reducer={reducer}>
-        <App />
-      </StateProvider>
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <StateProvider initialState={initialState} reducer={reducer}>
+          <App />
+        </StateProvider>
+      </Router>
+    </HelmetProvider>
   </React.StrictMode>
 );

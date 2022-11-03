@@ -37,7 +37,7 @@ function ChoiceItem({ choice, subtitle, quantity, increment, decrement }) {
             <BiMinus style={{ fontSize: '1rem' }} />
           </motion.button>
           <input
-            class="counterQuantity"
+            className="counterQuantity"
             name="product-qty"
             min="0"
             max="10"
@@ -907,6 +907,7 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
         <ModalBody className="dateTimePicker__container">
           <DateTimePicker
             setDateAndTime={setDateAndTime}
+            disablePast
           // getDateTime={(e) => {
           //   setDateAndTime(() => e);
           //   console.log(e.toString())

@@ -1,5 +1,6 @@
 import React from "react";
 import SideBar from "../UserProfile/SideBar";
+import { Helmet } from "react-helmet-async";
 import { Outlet } from "react-router-dom";
 import "../../Components/styles/dashboard.css";
 import { Container, Row, Col } from "reactstrap";
@@ -8,6 +9,14 @@ import { Container, Row, Col } from "reactstrap";
 const Dashboard = () => {
   return (
     <>
+    <Helmet>
+        <title>Miky's Deli - User Dashboard</title>
+        <meta
+          name="description"
+          content="Mikys Deli Qatar."
+        />
+        <link rel="canonical" href="/dashboard" />
+      </Helmet>
       <header>
         <Container className="dashboard__banner banner py-8">
           <h3>My Dashboard</h3>

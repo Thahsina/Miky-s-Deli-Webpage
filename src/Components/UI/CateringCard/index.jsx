@@ -4,7 +4,7 @@ import '../../styles/cateringCard.css';
 import { motion } from 'framer-motion';
 import Barista from '../../../images/barista.png';
 import Server from '../../../images/server.png';
-import Location from '../../../images/location.png';
+
 import BookNow from '../../../images/bookNow.png';
 
 import { IoCloseOutline } from 'react-icons/io5';
@@ -34,9 +34,9 @@ const CateringCard = ({ data }) => {
                 <img className="postcard__img" src={item.imageURL} alt="Title" onClick={toggle} />
                 <div className="postcard__text">
                   <div className="d-flex justify-content-between">
-                    <h1 className="postcard__title green m-2" onClick={toggle}>
+                    <h3 className="postcard__title green m-2" onClick={toggle}>
                       {item.title}
-                    </h1>
+                    </h3>
                     <motion.span whileTap={{ scale: 0.5 }}>
                       <img src={BookNow} alt="bookNow icon" onClick={toggle} />
                     </motion.span>
@@ -99,7 +99,7 @@ const CateringCard = ({ data }) => {
           </div>
         ))}
       <When condition={modal && cateringModalInfo}>
-        <CateringModal modal={modal} toggle={toggle} cateringModalInfo={cateringModalInfo} />
+        <CateringModal key={cateringModalInfo.id} modal={modal} toggle={toggle} cateringModalInfo={cateringModalInfo} />
       </When>
     </>
   );

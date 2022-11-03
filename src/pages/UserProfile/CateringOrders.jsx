@@ -13,7 +13,7 @@ const CateringOrders = () => {
     });
 
     setUserCateringOrder(filteredUserCateringOrders);
-    console.log(userCateringOrder);
+    console.log(userCateringOrder,"userCateringOrder");
     console.log(user.uid)
   };
 

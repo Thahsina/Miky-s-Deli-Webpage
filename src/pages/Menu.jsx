@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { MdSearch, MdClose } from "react-icons/md";
 import "../Components/styles/menu.css";
-import Helmet from "../Components/Helmet";
+import { Helmet } from "react-helmet-async";
 import { Container, Row, Col } from "reactstrap";
 import Slider from "react-slick";
 import ProductCard from "../Components/UI/ProductCard";
-// import ProductCard from "./ProductCCard.jsx";
 import {
   BsFillArrowRightCircleFill,
   BsFillArrowLeftCircleFill,
@@ -151,10 +150,7 @@ const Menu = () => {
       );
   };
 
-  
-
   const clearInput = () => {
-    
     setWordEntered("");
   };
 
@@ -165,7 +161,16 @@ const Menu = () => {
   }, [changeAppstate]);
 
   return (
-    <Helmet title="Menu">
+    <>
+      <Helmet title="Menu">
+        <title>Miky's Deli - Menu</title>
+        <meta
+          name="description"
+          content="Indulge in a wide variety of gourmet cuisine"
+        />
+        <link rel="canonical" href="/menu" />
+      </Helmet>
+
       <section className="menu__banner">
         <Container>
           <Row>
@@ -206,7 +211,6 @@ const Menu = () => {
       </section>
       <Container>
         <Row className="mb-4">
-         
           {wordEntered === "" && (
             <Col lg="14">
               <div className="menuCategory__carousel">
@@ -229,7 +233,6 @@ const Menu = () => {
                       </button>
                     </div>
                   ))}
-                  
                 </Slider>
               </div>
             </Col>
@@ -257,7 +260,7 @@ const Menu = () => {
           {/* {wordEntered === "" && <ProductCard data={items} />} */}
         </Row>
       </Container>
-    </Helmet>
+    </>
   );
 };
 

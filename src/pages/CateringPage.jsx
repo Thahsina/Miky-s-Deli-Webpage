@@ -1,20 +1,23 @@
 import React from "react";
-import { Container, Row} from "reactstrap";
+import { Container, Row } from "reactstrap";
 import CateringCard from "../Components/UI/CateringCard";
 import "../Components/styles/cateringPage.css";
-
 import { useStateValue } from "../context/StateProvider";
-import CateringImage1 from "../images/cateringImage(1).JPG";
-import CateringImage2 from "../images/cateringImage(2).jpeg";
-import CateringImage3 from "../images/cateringImage(3).JPG";
-
-import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const CateringPage = () => {
   const [{ cateringMenuItems }, dispatch] = useStateValue();
 
   return (
     <>
+      <Helmet>
+        <title>Miky's Deli - Catering Services</title>
+        <meta
+          name="description"
+          content="We also offer catering services for your special occasions, with free delivery across Doha."
+        />
+        <link rel="canonical" href="/services" />
+      </Helmet>
       <section>
         <Container className="cateringPage__container d-flex flex-wrap justify-content-around mb-4">
           <div className="cateringCard__title text-center">
