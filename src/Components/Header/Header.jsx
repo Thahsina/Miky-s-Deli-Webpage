@@ -6,7 +6,17 @@ import IconButton from "@mui/material/IconButton";
 import { PersonOutline } from "@mui/icons-material";
 import Cart from "../../pages/Cart";
 import adminUser from "../../images/adminUser.png";
-import { Container, Button } from "reactstrap";
+import {
+  Container,
+  Button,
+  Modal,
+  Collapse,
+  DropdownItem,
+  DropdownMenu,
+  UncontrolledDropdown,
+  DropdownToggle,
+  NavbarToggler,
+} from "reactstrap";
 import { IoIosCloseCircle } from "react-icons/io";
 import { IoCartSharp } from "react-icons/io5";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
@@ -64,6 +74,7 @@ const Header = () => {
   const [cartMenu, setCartMenu] = useState(false);
   const [userRole, setUserRole] = useState();
   const [error, setError] = useState(null);
+  const [collapsed, setCollapsed] = useState(true);
   const [loginStatus, setLoginStatus] = useState("");
   const [fields, setFields] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
@@ -79,6 +90,7 @@ const Header = () => {
     saveUser(userData);
   };
 
+  const toggleCollapsed = () => setCollapsed(!collapsed);
   const open = Boolean(anchorEl);
 
   const firebaseAuth = getAuth(app);
@@ -222,7 +234,6 @@ const Header = () => {
             </span>
 
             <div className="signinBtn">
-              {/* <div className='overlay'></div> */}
               {!user ? (
                 <Button
                   style={{ display: "flex" }}
@@ -233,61 +244,127 @@ const Header = () => {
                   Sign In
                 </Button>
               ) : (
+                <>
+                  <NavbarToggler onClick={toggleCollapsed} className="mr-2" />
+                  <Collapse isOpen={toggleCollapsed}>
+                    <UncontrolledDropdown>
+                      <DropdownToggle nav>
+                        <Box
+                          component={IconButton}
+                          p={1.25}
+                          bgcolor="grey.200"
+                          onClick={toggleCollapsed}
+                        >
+                          <PersonOutline aria-haspopup="true" />
+                        </Box>
+                      </DropdownToggle>
+                      <DropdownMenu right>
+                        <DropdownItem onClick={toggleCollapsed}>
+                          <Link
+                            style={{
+                              textDecoration: "none",
+                              color: "unset",
+                              paddingX: "2rem",
+                            }}
+                            to="/dashboard/profileInfo"
+                          >
+                            Dashboard
+                          </Link>
+                        </DropdownItem>
+                        <DropdownItem
+                          onClick={() => {
+                            toggleCollapsed();
+                            logout();
+                            navigate("/");
+                          }}
+                        >
+                          Sign Out
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </UncontrolledDropdown>
+                  </Collapse>
+                </>
+
                 // <div>
-                <Box
-                  component={IconButton}
-                  p={1.25}
-                  bgcolor="grey.200"
-                  onClick={handleClick}
-                >
-                  <PersonOutline aria-haspopup="true" />
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
-                    }}
-                    anchorReference="anchorPosition"
-                    anchorPosition={{ top: 60, left: 930 }}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "center",
-                    }}
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "center",
-                    }}
-                  >
-                    <Link
-                      style={{
-                        textDecoration: "none",
-                        color: "unset",
-                        paddingX: "2rem",
-                      }}
-                      to="/dashboard/profileInfo"
-                    >
-                      <MenuItem
-                        onClick={() => {
-                          handleClose();
-                        }}
-                      >
-                        Dashboard
-                      </MenuItem>
-                    </Link>
-                    {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
-                    <MenuItem
-                      onClick={() => {
-                        handleClose();
-                        logout();
-                        navigate("/");
-                      }}
-                    >
-                      Sign out
-                    </MenuItem>
-                  </Menu>
-                </Box>
+                // <Box
+                //   component={IconButton}
+                //   p={1.25}
+                //   bgcolor="grey.200"
+                //   onClick={handleClick}
+                // >
+                //   <PersonOutline
+                //     aria-controls={open ? "account-menu" : undefined}
+                //     aria-haspopup="true"
+                //     aria-expanded={open ? "true" : undefined}
+                //   />
+                //   <Menu
+                //     anchorEl={anchorEl}
+                //     id="account-menu"
+                //     open={open}
+                //     getContentAnchorEl={null}
+                //     onClose={handleClose}
+                //     onClick={handleClose}
+                //     PaperProps={{
+                //       style: {
+                //         left: '50%',
+                //         transform: 'translateX(30rem) translateY(32%)',
+                //       },
+                //       elevation: 0,
+                //       sx: {
+                //         overflow: "visible",
+                //         filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                //         mt: 1.5,
+                //         "& .MuiAvatar-root": {
+                //           width: 32,
+                //           height: 32,
+                //           ml: -2.5,
+                //           mr: 1,
+                //         },
+                //         "&:before": {
+                //           content: '""',
+                //           display: "block",
+                //           position: "absolute",
+                //           top: 0,
+                //           right: 14,
+                //           width: 10,
+                //           height: 10,
+                //           bgcolor: "background.paper",
+                //           transform: "translateY(-50%) rotate(45deg)",
+                //           zIndex: 0,
+                //         },
+                //       },
+                //     }}
+                //     anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                //     transformOrigin={{ vertical: "top", horizontal: "center" }}
+                //   >
+                //     <Link
+                //       style={{
+                //         textDecoration: "none",
+                //         color: "unset",
+                //         paddingX: "2rem",
+                //       }}
+                //       to="/dashboard/profileInfo"
+                //     >
+                //       <MenuItem
+                //         onClick={() => {
+                //           handleClose();
+                //         }}
+                //       >
+                //         Dashboard
+                //       </MenuItem>
+                //     </Link>
+
+                //     <MenuItem
+                //       onClick={() => {
+                //         handleClose();
+                //         logout();
+                //         navigate("/");
+                //       }}
+                //     >
+                //       Sign out
+                //     </MenuItem>
+                //   </Menu>
+                // </Box>
               )}
 
               {isLogoutMenu && (

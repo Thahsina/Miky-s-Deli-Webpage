@@ -618,3 +618,18 @@
     display: none;
   }
 } */
+
+
+.dropoff__confirmBtn{
+  margin: 0.5rem;
+  color: #df2020
+}
+
+.dropoff__confirmBtn:hover{
+  color: #139652;
+}
+
+.dropoff__locationContainer{
+  display: flex;
+  flex-direction: column;
+}

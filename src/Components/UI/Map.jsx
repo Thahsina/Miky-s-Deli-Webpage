@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import mapboxgl from "mapbox-gl";
 import "../styles/map.css";
 import geoJson from "./miky's-stores.json";
@@ -91,11 +92,20 @@ const Map = () => {
   }, []);
 
   return (
-    <section className="mapbox__map">
-      <div className="map-container" ref={mapContainerRef} />
-    </section>
+    <>
+      <Helmet>
+        <title>Miky's Deli - Find Us</title>
+        <meta
+          name="description"
+          content="Dine-in at any of our 8 outlets across qatar."
+        />
+        <link rel="canonical" href="/map" />
+      </Helmet>
+      <section className="mapbox__map">
+        <div className="map-container" ref={mapContainerRef} />
+      </section>
+    </>
   );
 };
 
 export default Map;
-

@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
-import { ListGroup } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import CartItem from '../pages/CartItem';
-import '../Components/styles/cart.css';
-import { motion } from 'framer-motion';
-import { MdOutlineKeyboardTab } from 'react-icons/md';
-import { RiRefreshFill } from 'react-icons/ri';
-import { useStateValue } from '../context/StateProvider';
-import { If, Else, Then } from 'react-if';
+import React, { useState } from "react";
+import { ListGroup } from "reactstrap";
+import { Link } from "react-router-dom";
+import CartItem from "../pages/CartItem";
+import "../Components/styles/cart.css";
+import { motion } from "framer-motion";
+import { MdOutlineKeyboardTab } from "react-icons/md";
+import { RiRefreshFill } from "react-icons/ri";
+import { useStateValue } from "../context/StateProvider";
+import { If, Else, Then } from "react-if";
 
 const Cart = ({ cartMenu, setCartMenu }) => {
   const [{ user }] = useStateValue();
-  const { cartItems, clearCart, calculateTotalPriceOfItem, setCartItems } = useStateValue()[2];
+  const { cartItems, clearCart, calculateTotalPriceOfItem, setCartItems } =
+    useStateValue()[2];
   const [flag, setFlag] = useState(1);
-  console.log("cart")
-
 
   const updatedCartItems = cartItems.map((cartItem) => {
     const calcPrice = calculateTotalPriceOfItem(cartItem.cartItemId);
@@ -22,19 +21,18 @@ const Cart = ({ cartMenu, setCartMenu }) => {
     return updatedCartItem;
   })
 
-  //function calls when clicking on Total
+
   const updateCartItems = () => {
-    console.log({ updatedCartItems })
-    setCartItems(() => updatedCartItems)
-    console.log("updating cart items")
-  }
+    console.log({ updatedCartItems });
+    setCartItems(() => updatedCartItems);
+    console.log("updating cart items");
+  };
 
   const calculateTotalPrice = () => {
     return cartItems.reduce(function (accumulator, item) {
       return accumulator + calculateTotalPriceOfItem(item.cartItemId);
     }, 0);
   };
-
   return (
     <motion.div
       initial={{ opacity: 0, x: 200 }}
@@ -49,16 +47,27 @@ const Cart = ({ cartMenu, setCartMenu }) => {
             onClick={() => setCartMenu(false)}
             whileTap={{ scale: 0.75 }}
           >
-            <MdOutlineKeyboardTab style={{ fontSize: '1.5rem', color: '#686868' }} />
+            <MdOutlineKeyboardTab
+              style={{ fontSize: "1.5rem", color: "#686868" }}
+            />
           </motion.div>
           <h6 className="cartTitle">Your Cart</h6>
-          <motion.p whileTap={{ scale: 0.75 }} className="clearBtn" onClick={clearCart}>
-            Clear <RiRefreshFill />{' '}
+          <motion.p
+            whileTap={{ scale: 0.75 }}
+            className="clearBtn"
+            onClick={clearCart}
+          >
+            Clear <RiRefreshFill />{" "}
           </motion.p>
         </div>
         <div className="cart__item-list">
           {cartItems?.map((item) => (
-            <CartItem key={item.id} cartItem={item} setFlag={setFlag} flag={flag} />
+            <CartItem
+              key={item.id}
+              cartItem={item}
+              setFlag={setFlag}
+              flag={flag}
+            />
           ))}
         </div>
         <div className="cartTotalContainer">
@@ -72,7 +81,8 @@ const Cart = ({ cartMenu, setCartMenu }) => {
           </div>
           <div className="divider"></div>
           <div className="cartTotal">
-            <p onClick={updateCartItems} >Total</p>
+            {/* <p>Total</p> */}
+            <p onClick={updateCartItems}>Total</p>
             <p>QAR {calculateTotalPrice()}</p>
           </div>
           <If condition={Boolean(user)}>
@@ -81,7 +91,10 @@ const Cart = ({ cartMenu, setCartMenu }) => {
                 <motion.button
                   className="checkoutBtn"
                   whileTap={{ scale: 0.8 }}
-                  onClick={() => setCartMenu(false)}
+                  onClick={() => {
+                    setCartMenu(false);
+                    updateCartItems();
+                  }}
                   disabled={calculateTotalPrice() === 0 ? true : false}
                 >
                   Checkout
@@ -106,5 +119,4 @@ const Cart = ({ cartMenu, setCartMenu }) => {
     </motion.div>
   );
 };
-
 export default Cart;

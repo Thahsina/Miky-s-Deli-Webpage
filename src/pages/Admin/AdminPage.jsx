@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-
-import Helmet from "../../Components/Helmet";
+import { Helmet } from "react-helmet-async";
 import { AnimatePresence, motion } from "framer-motion";
 
 import "../../Components/styles/admin.css";
@@ -60,7 +59,15 @@ const Admin = () => {
   };
 
   return (
-    <Helmet title="Admin">
+    <>
+    <Helmet>
+        <title>Miky's Deli - Amin</title>
+        <meta
+          name="robots"
+          content="noindex"
+        />
+        <link rel="canonical" href="/admin" />
+      </Helmet>
       <div className="d-flex">
         {/* <Col lg="4"className=""> */}
         <div className="main-container">
@@ -123,7 +130,7 @@ const Admin = () => {
           <Outlet />
         </div>
       </div>
-    </Helmet>
+    </>
   );
 };
 

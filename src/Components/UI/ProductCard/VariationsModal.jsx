@@ -66,6 +66,137 @@ function Sizes({
   );
 }
 
+function ExtraFlavour({ extraFlavours, selectedExFlavours, handleChangeExFlavour }) {
+  return (
+    <div style={{ width: '100%' }}>
+      <h6
+        style={{
+          width: '100%',
+          color: 'green',
+          margin: 0,
+        }}
+      >
+        Extra Flavours
+      </h6>
+      <small style={{ color: 'rgb(184, 179, 179)' }}>Add Extra Flavours</small>
+      <div className="addonBtns-container">
+        {extraFlavours?.map((eachExtraFlavour, index) => {
+          return (
+            <div className="addonBtn" key={index}>
+              <Checkbox
+                checked={Boolean(
+                  selectedExFlavours?.findIndex(
+                    (a) => a.extraFlavour === eachExtraFlavour.extraFlavour,
+                  ) + 1,
+                )}
+                color="success"
+                onChange={() => {
+                  handleChangeExFlavour(eachExtraFlavour);
+                }}
+              />
+              <div className="addonDetails">
+                <div className="addonDetails__name">{eachExtraFlavour?.extraFlavour}</div>
+                <div className="addonDetails__price">
+                  Qr <span>{eachExtraFlavour?.price}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function PastaTypes({ selectedPastaType, pastaTypes, handleChangePastaType }) {
+  return (
+    <div style={{ width: '100%' }}>
+      <h6
+        style={{
+          width: '100%',
+          color: 'green',
+          margin: 0,
+        }}
+      >
+        Pasta Types
+      </h6>
+      <small style={{ color: 'rgb(184, 179, 179)' }}>Choose Pasta Type</small>
+      <div className="sizeBtns-container">
+        <RadioGroup
+          aria-labelledby="demo-controlled-radio-buttons-group"
+          name="radio-buttons"
+          value={selectedPastaType?.pastaType}
+        >
+          {pastaTypes?.map((pastaType, index) => (
+            <div className="sizeBtn" key={index}>
+              <Radio
+                color="success"
+                name="radio-buttons"
+                value={pastaType}
+                onChange={() => {
+                  handleChangePastaType(pastaType);
+                }}
+              />
+              <div className="sizeDetails">
+                <div className="sizeDetails__name">{pastaType}</div>
+              </div>
+            </div>
+          ))}
+        </RadioGroup>
+        <hr
+          style={{
+            background: '#139652',
+            color: '#139652',
+            borderColor: '#139652',
+            height: '3px',
+            width: '50%',
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function Flavours({ selectedFlavour, flavours, handleChangeFlavour }) {
+  return (
+    <div style={{ width: '100%' }}>
+      <h6
+        style={{
+          width: '100%',
+          color: 'green',
+          margin: 0,
+        }}
+      >
+        Flavours
+      </h6>
+      <small style={{ color: 'rgb(184, 179, 179)' }}>Choose your Flavour</small>
+      <div className="sizeBtns-container">
+        <RadioGroup
+          aria-labelledby="demo-controlled-radio-buttons-group"
+          name="radio-buttons"
+          value={selectedFlavour?.flavour}
+        >
+          {flavours?.map((flavour, index) => (
+            <div className="sizeBtn" key={index}>
+              <Radio
+                color="success"
+                name="radio-buttons"
+                value={flavour}
+                onChange={() => {
+                  handleChangeFlavour(flavour);
+                }}
+              />
+              <div className="sizeDetails">
+                <div className="sizeDetails__name">{flavour}</div>
+              </div>
+            </div>
+          ))}
+        </RadioGroup>
+      </div>
+    </div>
+  );
+}
+
 function MeatOptions({
   meatOptions,
   selectedMeatOption,
@@ -134,6 +265,7 @@ function Addons({ addOns, selectedAddons, handleAddonsChange, canNotAddToCart })
       >
         Add Ons
       </h6>
+
       <small style={{ color: 'rgb(184, 179, 179)' }}>Choose addon items from list</small>
       <div className="addonBtns-container">
         {addOns?.map((variant, index) => {
@@ -168,7 +300,6 @@ function calculatePrice({ sizePrice, addons, meatOptionPrice, quantity }) {
 }
 
 function VariationsModal({ modal, toggle, modalInfo }) {
-  console.log({ modalInfo });
   const { cartItems, updateItem, deleteItem, addToCart, increase, decrease } = useStateValue()[2];
   // if item is already present in cart, display values from cart
   const [cartItemId, setCartItemId] = useState();
@@ -178,10 +309,14 @@ function VariationsModal({ modal, toggle, modalInfo }) {
   const [selectedAddons, setSelectedAddons] = useState([]);
   const [selectedMeatOption, setSelectedMeatOption] = useState();
   const [selectedSize, setSelectedSize] = React.useState();
+  const [selectedPastaType, setSelectedPastaType] = React.useState(null);
+  const [selectedFlavour, setSelectedFlavour] = React.useState(null);
+  const [selectedExFlavours, setSelectedExFlavours] = React.useState([]);
   const isItemWithVariations =
     Boolean(modalInfo.variations?.find((i) => i.sizes)) ||
     Boolean(modalInfo.variations?.find((i) => i.meatOptions));
   const canNotAddToCart = !selectedSize && !selectedMeatOption && isItemWithVariations;
+
   const handleChangeSize = (newSize) => {
     // if item is present in cart, update the values in cart
     if (currentItem)
@@ -194,9 +329,69 @@ function VariationsModal({ modal, toggle, modalInfo }) {
     // clear adddons when size is selected
     if (selectedSize) setSelectedAddons([]);
   };
+
+  const handleChangeExFlavour = (exFlavourOption) => {
+    if (currentItem) {
+      // if item is present in cart, update the values in cart also
+      const isPresent = currentItem.selectedExFlavours.find(
+        (a) => a.extraFlavour === exFlavourOption.extraFlavour,
+      );
+      if (!isPresent) {
+        updateItem(currentItem.cartItemId, {
+          ...currentItem,
+          selectedExFlavours: [...currentItem.selectedExFlavours, exFlavourOption],
+        });
+      } else {
+        updateItem(currentItem.cartItemId, {
+          ...currentItem,
+          selectedExFlavours: currentItem.selectedExFlavours.filter(
+            (a) => a.extraFlavour !== exFlavourOption.extraFlavour,
+          ),
+        });
+      }
+    }
+    // update local variables values
+    const isPresent = selectedExFlavours?.find(
+      (a) => a.extraFlavour === exFlavourOption.extraFlavour,
+    );
+    if (!isPresent) {
+      selectedSize && setSelectedExFlavours([...selectedExFlavours, exFlavourOption]);
+    } else {
+      // if already present, remove the addon
+      setSelectedExFlavours(
+        selectedExFlavours.filter((a) => a.extraFlavour !== exFlavourOption.extraFlavour),
+      );
+    }
+  };
+
+  const handleChangePastaType = (newPastaType) => {
+    if (currentItem)
+      updateItem(currentItem.cartItemId, {
+        ...currentItem,
+        selectedPastaType: newPastaType,
+        selectedAddons: [],
+      });
+    setSelectedPastaType(() => newPastaType);
+    // clear adddons when size is selected
+    if (selectedSize) setSelectedAddons([]);
+  };
+
+  const handleChangeFlavour = (newFlavour) => {
+    if (currentItem)
+      updateItem(currentItem.cartItemId, {
+        ...currentItem,
+        selectedFlavour: newFlavour,
+        selectedAddons: [],
+      });
+    setSelectedFlavour(() => newFlavour);
+  };
+
   const handleMeatOptionChange = (option) => {
     if (currentItem)
-      updateItem(currentItem.cartItemId, { ...currentItem, selectedMeatOption: option });
+      updateItem(currentItem.cartItemId, {
+        ...currentItem,
+        selectedMeatOption: option,
+      });
     setSelectedMeatOption(option);
   };
   const handleAddonsChange = (option) => {
@@ -275,9 +470,24 @@ function VariationsModal({ modal, toggle, modalInfo }) {
                           setVariantDescription={setVariantDescription}
                         />
                       </Case>
+                      <Case condition={Boolean(variation.flavours)}>
+                        <Flavours
+                          flavours={variation?.flavours || []}
+                          selectedFlavour={currentItem?.selectedFlavour || selectedFlavour}
+                          handleChangeFlavour={(fl) => handleChangeFlavour(fl)}
+                        />
+                      </Case>
+                      <Case condition={Boolean(variation.pastaTypes)}>
+                        <PastaTypes
+                          pastaTypes={variation?.pastaTypes || []}
+                          selectedPastaType={currentItem?.selectedPastaType || selectedPastaType}
+                          handleChangePastaType={(pt) => handleChangePastaType(pt)}
+                        />
+                      </Case>
                     </Switch>
                   ))}
                 </div>
+
                 {modalInfo.variations?.map(
                   (variation) =>
                     variation.addOns && (
@@ -286,6 +496,17 @@ function VariationsModal({ modal, toggle, modalInfo }) {
                         selectedAddons={currentItem?.selectedAddons || selectedAddons}
                         handleAddonsChange={handleAddonsChange}
                         canNotAddToCart={canNotAddToCart}
+                      />
+                    ),
+                )}
+
+                {modalInfo.variations?.map(
+                  (variation) =>
+                    variation.extraFlavours && (
+                      <ExtraFlavour
+                        extraFlavours={variation?.extraFlavours}
+                        selectedExFlavours={currentItem?.selectedExFlavours || selectedExFlavours}
+                        handleChangeExFlavour={handleChangeExFlavour}
                       />
                     ),
                 )}
@@ -344,6 +565,9 @@ function VariationsModal({ modal, toggle, modalInfo }) {
                       selectedAddons,
                       selectedSize,
                       selectedMeatOption,
+                      selectedPastaType,
+                      selectedFlavour,
+                      selectedExFlavours,
                     });
                     // set current item to cart item currently handled
                     setCartItemId(cartItemId);

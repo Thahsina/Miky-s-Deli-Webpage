@@ -5,7 +5,7 @@ import { actionType } from "../../context/reducer";
 import { useStateValue } from "../../context/StateProvider";
 
 const CateringOrderCardAdmin = ({ data }) => {
-  console.log(data);
+  
   return (
     <>
       {data &&
@@ -38,45 +38,49 @@ const CateringOrderCardAdmin = ({ data }) => {
                     <div className="orderPrice">
                       QAR&nbsp;&nbsp;<b>{orderItem.price}</b>{" "}
                     </div>
-                    
                   </Col>
                   <Col md="12" sm="12">
                     <h6 style={{ color: "red", margin: "0.5rem" }}>Options</h6>
                     {orderItem.selectedOptions.map((eachSelctedOption) => (
-                      <div style={{ marginLeft: "0.8rem"}}>
+                      <div style={{ marginLeft: "0.8rem" }}>
                         - {eachSelctedOption.name}{" "}
-                        <span style={{marginLeft:"2rem"}}>x{eachSelctedOption.quantity}</span>{" "}
+                        <span style={{ marginLeft: "2rem" }}>
+                          x{eachSelctedOption.quantity}
+                        </span>{" "}
                       </div>
                     ))}
 
-                    <h6 style={{ color: "green", margin: "0.5rem" }}>
-                      Add-Ons
-                    </h6>
+                    {orderItem.selectedAddons && (
+                      <h6 style={{ color: "green", margin: "0.5rem" }}>
+                        Add-Ons
+                      </h6>
+                    )}
                     {orderItem.selectedAddons?.map((eachSelctedAddon) => (
                       <div style={{ marginLeft: "0.8rem" }}>
                         - {eachSelctedAddon.addOn}{" "}
                       </div>
                     ))}
 
-                    <h6 style={{ color: "green", margin: "0.5rem" }}>
-                      Extra Services
-                    </h6>
+                    {orderItem.extraServes && (
+                      <h6 style={{ color: "green", margin: "0.5rem" }}>
+                        Extra Services
+                      </h6>
+                    )}
+                    {orderItem.extraServes && (
+                      <div style={{ margin: "0.5rem" }}>
+                        <span>&nbsp;-{orderItem.extraServes}</span> Extra Serves
+                        Requested
+                      </div>
+                    )}
 
-                    <div style={{ margin: "0.5rem" }}>
-                      <span>
-                       &nbsp;-{orderItem.extraServes}
-                      </span>{" "}
-                      Extra Serves Requested
-                    </div>
-
-                    <div style={{ marginLeft: "0.8rem"}}>
+                    <div style={{ marginLeft: "0.8rem" }}>
                       {orderItem.isExtraFemaleServer === true && (
-                       <span>- Requested Female Server</span>
+                        <span>- Requested Female Server</span>
                       )}
                     </div>
-                    <div style={{ marginLeft: "0.8rem"}}>
+                    <div style={{ marginLeft: "0.8rem" }}>
                       {orderItem.isExtraMaleServer === true && (
-                       <span>- Requested 1 Extra Server</span>
+                        <span>- Requested 1 Extra Server</span>
                       )}
                     </div>
                   </Col>

@@ -18,9 +18,9 @@ const Footer = () => {
       <Container className="mb-4">
         <Row>
           <Col lg="12" md="12" sm="12">
-            <h3 className="text-center text-white">
+            <h2 className="text-center text-white">
               Follow us on Social Media
-            </h3>
+            </h2>
             <ListGroup>
               <ListGroupItem className="follow-icons border-0 ps-0 pe-0">
                 <ul className="socials text-center list-unstyled">
@@ -30,9 +30,9 @@ const Footer = () => {
                   <a href="https://www.instagram.com/mikysdeli/?hl=en">
                     <BsInstagram className="icon" />
                   </a>
-                  <a href="">
+                  {/* <a href="">
                     <BsSnapchat className="icon" />
-                  </a>
+                  </a> */}
                   <a href="https://wa.me/97455251120">
                     <BsWhatsapp className="icon" />
                   </a>
@@ -40,7 +40,7 @@ const Footer = () => {
               </ListGroupItem>
             </ListGroup>
             <Container className="contactUs__container">
-              <h4 style={{ paddingBottom: "1rem" }}>Contact Us</h4>
+              <h3 style={{ paddingBottom: "1rem" }}>Contact Us</h3>
 
               <Row>
                 {/* <Col sm={{ size: "auto", offset: 1 }} > */}
@@ -51,7 +51,7 @@ const Footer = () => {
                     defaultCollapseIcon={<ExpandMoreIcon />}
                     defaultExpandIcon={<ChevronRightIcon />}
                     sx={{
-                      height: 80,
+                      height: 100,
                       flexGrow: 1,
                       maxWidth: 400,
                       // overflowY: "auto",
@@ -69,6 +69,14 @@ const Footer = () => {
                     >
                       <TreeItem nodeId="4" label="66992879" />
                     </TreeItem>
+
+                    {/* <TreeItem
+                      nodeId="3"
+                      sx={{ pb: 1.5 }}
+                      label="Katara"
+                    >
+                      <TreeItem nodeId="4" label="66992879" />
+                    </TreeItem> */}
                   </TreeView>
                 </Col>
                 {/* <Col sm={{ size: "auto", offset: 1 }}> */}

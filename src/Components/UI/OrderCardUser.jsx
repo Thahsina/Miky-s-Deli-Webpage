@@ -1,23 +1,27 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Col, Row } from "reactstrap";
 import { useStateValue } from "../../context/StateProvider";
 import "../styles/orderCardUser.css";
 import useCollapse from "react-collapsed";
 
 const OrderCardUser = ({ data }) => {
+  const navigate = useNavigate();
   const { addToCart } = useStateValue()[2];
   const [isExpanded, setExpanded] = useState(false);
   const { getCollapseProps, getToggleProps } = useCollapse({ isExpanded });
   const [currentOrderId, setCurrentOrderId] = useState();
 
-  const reOrder = (userCartItems) => {
-    // userCartItems.map((userCartItem) => addToCart(userCartItem));
-    userCartItems.forEach((userCartItem) => {
-      // console.log(userCartItem);
-     
-      console.log(addToCart(userCartItem));
-    });
-  };
+  // const reOrder = (userCartItems) => {
+  //   // userCartItems.map((userCartItem) => addToCart(userCartItem));
+  //   userCartItems.forEach((userCartItem) => {
+  //     console.log(userCartItem);
+  //     const userOrderItems = [];
+  //     userOrderItems.push(userCartItem)
+  //     console.log(userOrderItems, "array")
+      
+  //   });
+  // };
 
   return (
     <>
@@ -113,7 +117,10 @@ const OrderCardUser = ({ data }) => {
               <div className="orderActionButtons">
                 <button
                   className="orderAcceptBtn"
-                  onClick={() => reOrder(eachUserOrder.cartItems)}
+                  onClick={() =>
+                    navigate("/menu")
+                    //  reOrder(eachUserOrder.cartItems)
+                    }
                 >
                   ReOrder
                 </button>

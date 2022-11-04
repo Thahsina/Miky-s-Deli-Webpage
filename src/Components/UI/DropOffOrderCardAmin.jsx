@@ -4,8 +4,7 @@ import { Container, Col, Row } from "reactstrap";
 import { actionType } from "../../context/reducer";
 import { useStateValue } from "../../context/StateProvider";
 
-const DropOffOrderCardAdmin= ({ data }) => {
-  console.log(data);
+const DropOffOrderCardAdmin = ({ data }) => {
   return (
     <>
       {data &&
@@ -20,12 +19,14 @@ const DropOffOrderCardAdmin= ({ data }) => {
               <Col sm="6">
                 <div className="orderDate">
                   <b>Date</b> :{" "}
-                  <span>{eachCateringOrder.orderDate?.substr(0, 16)}</span>
+                  <span>
+                    {eachCateringOrder.dropOffOrderDate?.substr(3, 18)}
+                  </span>
                 </div>
               </Col>
             </Row>
             <div>
-              {eachCateringOrder.cateringOrder?.map((orderItem) => (
+              {eachCateringOrder.dropoffOrder?.map((orderItem) => (
                 <Row className="mb-2 mt-4">
                   {" "}
                   {/* row for each cartIem */}
@@ -38,50 +39,56 @@ const DropOffOrderCardAdmin= ({ data }) => {
                     <div className="orderPrice">
                       QAR&nbsp;&nbsp;<b>{orderItem.price}</b>{" "}
                     </div>
-                    
                   </Col>
                   <Col md="12" sm="12">
                     <h6 style={{ color: "red", margin: "0.5rem" }}>Options</h6>
                     {orderItem.selectedOptions.map((eachSelctedOption) => (
-                      <div style={{ marginLeft: "0.8rem"}}>
-                        - {eachSelctedOption.name}{" "}
-                        <span style={{marginLeft:"2rem"}}>x{eachSelctedOption.quantity}</span>{" "}
-                      </div>
-                    ))}
-
-                    <h6 style={{ color: "green", margin: "0.5rem" }}>
-                      Add-Ons
-                    </h6>
-                    {orderItem.selectedAddons?.map((eachSelctedAddon) => (
                       <div style={{ marginLeft: "0.8rem" }}>
-                        - {eachSelctedAddon.addOn}{" "}
+                        - {eachSelctedOption.name}{" "}
+                        <span style={{ marginLeft: "2rem" }}>
+                          x{eachSelctedOption.quantity}
+                        </span>{" "}
                       </div>
                     ))}
 
-                    <h6 style={{ color: "green", margin: "0.5rem" }}>
-                      Extra Services
-                    </h6>
-
-                    <div style={{ margin: "0.5rem" }}>
-                      <span>
-                       &nbsp;-{orderItem.extraServes}
-                      </span>{" "}
-                      Extra Serves Requested
-                    </div>
-
-                    <div style={{ marginLeft: "0.8rem"}}>
-                      {orderItem.isExtraFemaleServer === true && (
-                       <span>- Requested Female Server</span>
-                      )}
-                    </div>
-                    <div style={{ marginLeft: "0.8rem"}}>
-                      {orderItem.isExtraMaleServer === true && (
-                       <span>- Requested 1 Extra Server</span>
-                      )}
-                    </div>
+                    {orderItem.selectedAddons && (
+                      <h6 style={{ color: "green", margin: "0.5rem" }}>
+                        Add-Ons
+                      </h6>
+                    )}
+                    {orderItem.selectedAddons?.map((eachSelectedAddon) => (
+                      <div style={{ marginLeft: "0.8rem" }}>
+                        - {eachSelectedAddon.addOn}{" "}
+                      </div>
+                    ))}
                   </Col>
                 </Row>
               ))}
+
+              <hr
+                style={{
+                  background: "#139652",
+                  color: "#139652",
+                  borderColor: "#139652",
+                  height: "3px",
+                  width: "80%",
+                }}
+              />
+
+              <div
+                className="dropoff__locationContainer"
+                style={{ marginLeft: "0.8rem" }}
+              >
+                <h6 style={{ color: "#139652" }}>Delivery Address</h6>
+                <span>
+                  <b>Longitude : </b>
+                  {eachCateringOrder.location[0]}
+                </span>
+                <span>
+                  <b>Latitude : </b>
+                  {eachCateringOrder.location[1]}
+                </span>
+              </div>
             </div>
           </div>
         ))}

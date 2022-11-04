@@ -94,7 +94,7 @@ const Category = () => {
   return (
     <Container>
       <Row>
-        <h4 className="text-center mb-4">Our Speciality</h4>
+        <h2 className="text-center mb-4">Our Speciality</h2>
         {/* {categoryData.map((item, index) => ( */}
         {categoryState.categories.map((item, index) => (
           <Col lg="3" md="4" sm="6" xs="6" className="mb-4" key={index}>
