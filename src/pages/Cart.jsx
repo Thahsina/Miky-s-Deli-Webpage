@@ -17,12 +17,9 @@ const Cart = ({ cartMenu, setCartMenu }) => {
 
 
   const updatedCartItems = cartItems.map((cartItem) => {
-    if (cartItem.variations) {
-      const price = calculateTotalPriceOfItem(cartItem.cartItemId);
-      const updatedCartItem = { ...cartItem, price };
-      return updatedCartItem;
-    }
-    return cartItem;
+    const calcPrice = calculateTotalPriceOfItem(cartItem.cartItemId);
+    const updatedCartItem = { ...cartItem, calcPrice };
+    return updatedCartItem;
   })
 
   //function calls when clicking on Total
