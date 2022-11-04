@@ -14,17 +14,14 @@ const Cart = ({ cartMenu, setCartMenu }) => {
   const { cartItems, clearCart, calculateTotalPriceOfItem, setCartItems } =
     useStateValue()[2];
   const [flag, setFlag] = useState(1);
- 
-  const updatedCartItems = cartItems.map((cartItem) => {
-    if (cartItem.variations) {
-      const price = calculateTotalPriceOfItem(cartItem.cartItemId);
-      const updatedCartItem = { ...cartItem, price };
-      return updatedCartItem;
-    }
-    return cartItem;
-  });
 
-  
+  const updatedCartItems = cartItems.map((cartItem) => {
+    const calcPrice = calculateTotalPriceOfItem(cartItem.cartItemId);
+    const updatedCartItem = { ...cartItem, calcPrice };
+    return updatedCartItem;
+  })
+
+
   const updateCartItems = () => {
     console.log({ updatedCartItems });
     setCartItems(() => updatedCartItems);
