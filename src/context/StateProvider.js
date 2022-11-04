@@ -38,8 +38,11 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     if (item.variations) {
       let totalPrice = 0;
       totalPrice +=
-        Number(item?.selectedSize?.price || 0) + Number(item?.selectedMeatOption?.price || 0);
+        Number(item?.selectedSize?.price || 0) +
+        Number(item?.selectedMeatOption?.price || 0) +
+        Number(item?.price || 0);
       item.selectedAddons?.forEach((a) => (totalPrice += Number(a.price)));
+      item.extraFlavours?.forEach((f) => (totalPrice += Number(f.price)));
       return totalPrice * Number(item.qty);
     } else {
       // if item does not have any variations
@@ -50,8 +53,15 @@ export const StateProvider = ({ reducer, initialState, children }) => {
     // if no size or meatOption is selected for an item with variations, do not add to cart
     const isItemWithVariations =
       Boolean(item?.variations?.find((i) => i.sizes)) ||
-      Boolean(item?.variations?.find((i) => i.meatOptions));
-    if (!item.selectedSize && !item.selectedMeatOption && isItemWithVariations) return;
+      Boolean(item?.variations?.find((i) => i.meatOptions)) ||
+      Boolean(item?.variations?.find((i) => i.pastaTypes));
+    if (
+      !item.selectedSize &&
+      !item.selectedMeatOption &&
+      !item.selectedPastaType &&
+      isItemWithVariations
+    )
+      return;
     // every cart item has a cartItemId which is separate from product id
     const cartItemId = Date.now() * Math.ceil(Math.random() * 1000);
     // while adding to cart, the initial quantity is 1

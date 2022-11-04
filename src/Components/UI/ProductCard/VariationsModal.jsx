@@ -66,7 +66,7 @@ function Sizes({
   );
 }
 
-function ExtraFlavour({ extraFlavours, selectedExFlavours, handleChangeExFlavour }) {
+function ExtraFlavour({ extraFlavours, disabled, selectedExFlavours, handleChangeExFlavour }) {
   return (
     <div style={{ width: '100%' }}>
       <h6
@@ -84,6 +84,7 @@ function ExtraFlavour({ extraFlavours, selectedExFlavours, handleChangeExFlavour
           return (
             <div className="addonBtn" key={index}>
               <Checkbox
+                disabled={disabled}
                 checked={Boolean(
                   selectedExFlavours?.findIndex(
                     (a) => a.extraFlavour === eachExtraFlavour.extraFlavour,
@@ -157,7 +158,7 @@ function PastaTypes({ selectedPastaType, pastaTypes, handleChangePastaType }) {
   );
 }
 
-function Flavours({ selectedFlavour, flavours, handleChangeFlavour }) {
+function Flavours({ selectedFlavour, disabled, flavours, handleChangeFlavour }) {
   return (
     <div style={{ width: '100%' }}>
       <h6
@@ -181,6 +182,7 @@ function Flavours({ selectedFlavour, flavours, handleChangeFlavour }) {
               <Radio
                 color="success"
                 name="radio-buttons"
+                disabled={disabled}
                 value={flavour}
                 onChange={() => {
                   handleChangeFlavour(flavour);
@@ -293,14 +295,16 @@ function Addons({ addOns, selectedAddons, handleAddonsChange, canNotAddToCart })
   );
 }
 
-function calculatePrice({ sizePrice, addons, meatOptionPrice, quantity }) {
+function calculatePrice({ sizePrice, addons, meatOptionPrice, quantity, extraFlavours }) {
   let val = Number(sizePrice || 0) + Number(meatOptionPrice || 0);
   addons?.forEach((a) => (val += Number(a.price)));
+  extraFlavours?.forEach((f) => (val += Number(f.price)));
   return val * Number(quantity);
 }
 
 function VariationsModal({ modal, toggle, modalInfo }) {
   const { cartItems, updateItem, deleteItem, addToCart, increase, decrease } = useStateValue()[2];
+  console.log({ modalInfo });
   // if item is already present in cart, display values from cart
   const [cartItemId, setCartItemId] = useState();
   const currentItem = cartItems.find((i) => i.cartItemId === cartItemId);
@@ -314,8 +318,10 @@ function VariationsModal({ modal, toggle, modalInfo }) {
   const [selectedExFlavours, setSelectedExFlavours] = React.useState([]);
   const isItemWithVariations =
     Boolean(modalInfo.variations?.find((i) => i.sizes)) ||
-    Boolean(modalInfo.variations?.find((i) => i.meatOptions));
-  const canNotAddToCart = !selectedSize && !selectedMeatOption && isItemWithVariations;
+    Boolean(modalInfo.variations?.find((i) => i.meatOptions)) ||
+    Boolean(modalInfo.variations?.find((i) => i.pastaTypes));
+  const canNotAddToCart =
+    !selectedSize && !selectedMeatOption && !selectedPastaType && isItemWithVariations;
 
   const handleChangeSize = (newSize) => {
     // if item is present in cart, update the values in cart
@@ -331,7 +337,7 @@ function VariationsModal({ modal, toggle, modalInfo }) {
   };
 
   const handleChangeExFlavour = (exFlavourOption) => {
-    if (currentItem) {
+    if (currentItem && currentItem.selectedSize) {
       // if item is present in cart, update the values in cart also
       const isPresent = currentItem.selectedExFlavours.find(
         (a) => a.extraFlavour === exFlavourOption.extraFlavour,
@@ -340,6 +346,7 @@ function VariationsModal({ modal, toggle, modalInfo }) {
         updateItem(currentItem.cartItemId, {
           ...currentItem,
           selectedExFlavours: [...currentItem.selectedExFlavours, exFlavourOption],
+          selectedAddons: [],
         });
       } else {
         updateItem(currentItem.cartItemId, {
@@ -347,9 +354,12 @@ function VariationsModal({ modal, toggle, modalInfo }) {
           selectedExFlavours: currentItem.selectedExFlavours.filter(
             (a) => a.extraFlavour !== exFlavourOption.extraFlavour,
           ),
+          selectedAddons: [],
         });
       }
     }
+    // if size is not selected do nothing
+    if (!selectedSize) return;
     // update local variables values
     const isPresent = selectedExFlavours?.find(
       (a) => a.extraFlavour === exFlavourOption.extraFlavour,
@@ -362,6 +372,7 @@ function VariationsModal({ modal, toggle, modalInfo }) {
         selectedExFlavours.filter((a) => a.extraFlavour !== exFlavourOption.extraFlavour),
       );
     }
+    setSelectedAddons([]);
   };
 
   const handleChangePastaType = (newPastaType) => {
@@ -372,18 +383,22 @@ function VariationsModal({ modal, toggle, modalInfo }) {
         selectedAddons: [],
       });
     setSelectedPastaType(() => newPastaType);
-    // clear adddons when size is selected
-    if (selectedSize) setSelectedAddons([]);
+    setSelectedAddons([]);
   };
 
   const handleChangeFlavour = (newFlavour) => {
-    if (currentItem)
+    // if currentItem is in cart update values in cart also
+    if (currentItem && currentItem.selectedSize) {
       updateItem(currentItem.cartItemId, {
         ...currentItem,
         selectedFlavour: newFlavour,
         selectedAddons: [],
       });
+    }
+    // if size is not selected do not change flavour
+    if (!selectedSize) return;
     setSelectedFlavour(() => newFlavour);
+    setSelectedAddons([]);
   };
 
   const handleMeatOptionChange = (option) => {
@@ -425,6 +440,7 @@ function VariationsModal({ modal, toggle, modalInfo }) {
     addons: currentItem?.selectedAddons || selectedAddons,
     meatOptionPrice: currentItem?.selectedMeatOption?.price || selectedMeatOption?.price,
     quantity: currentItem?.qty || 1,
+    extraFlavours: selectedExFlavours,
   });
   return (
     <Modal size="lg" isOpen={modal} toggle={toggle}>
@@ -472,6 +488,7 @@ function VariationsModal({ modal, toggle, modalInfo }) {
                       </Case>
                       <Case condition={Boolean(variation.flavours)}>
                         <Flavours
+                          disabled={!(currentItem?.selectedSize || selectedSize)}
                           flavours={variation?.flavours || []}
                           selectedFlavour={currentItem?.selectedFlavour || selectedFlavour}
                           handleChangeFlavour={(fl) => handleChangeFlavour(fl)}
@@ -504,6 +521,7 @@ function VariationsModal({ modal, toggle, modalInfo }) {
                   (variation) =>
                     variation.extraFlavours && (
                       <ExtraFlavour
+                        disabled={!(currentItem?.selectedSize || selectedSize)}
                         extraFlavours={variation?.extraFlavours}
                         selectedExFlavours={currentItem?.selectedExFlavours || selectedExFlavours}
                         handleChangeExFlavour={handleChangeExFlavour}
