@@ -12,11 +12,9 @@ function calculatePrice({ price, quantity }) {
 
 function OtherModal({ modal, toggle, modalInfo }) {
   const { cartItems, addToCart, deleteItem, increase, decrease } = useStateValue()[2];
-  console.log({ modalInfo })
   // find this item in cartItems
   const [cartItemId, setCartItemId] = React.useState();
   const currentItem = cartItems.find((i) => i.cartItemId === cartItemId);
-  console.log({ currentItem })
   return (
     <Modal size="md" isOpen={modal} toggle={toggle}>
       <ModalHeader className="modalHeader" toggle={toggle}>

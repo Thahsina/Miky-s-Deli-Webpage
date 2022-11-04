@@ -10,9 +10,11 @@ export const StateProvider = ({ reducer, initialState, children }) => {
   // console.log({ bookedItems });
   // console.log(cartItems)
 
-  console.log({ cartItems });
+  console.log({ cartItems, bookedItems });
 
   const bookItem = (item) => {
+    // do not add to bookedItems when no option is selected
+    if (item.selectedOptions?.length === 0) return;
     // every booked item has a bookingId which is separate from product id
     const bookingId = Date.now() * Math.ceil(Math.random() * 1000);
     setBookedItems([...bookedItems, { ...item, bookingId }]);
@@ -52,10 +54,14 @@ export const StateProvider = ({ reducer, initialState, children }) => {
       // if item does not have any variations
       return Number(item.price) * Number(item.qty);
     }
-    
   };
 
   const addToCart = (item) => {
+    // if no size or meatOption is selected for an item with variations, do not add to cart
+    const isItemWithVariations =
+      Boolean(item?.variations?.find((i) => i.sizes)) ||
+      Boolean(item?.variations?.find((i) => i.meatOptions));
+    if (!item.selectedSize && !item.selectedMeatOption && isItemWithVariations) return;
     // every cart item has a cartItemId which is separate from product id
     const cartItemId = Date.now() * Math.ceil(Math.random() * 1000);
     // while adding to cart, the initial quantity is 1
@@ -64,7 +70,7 @@ export const StateProvider = ({ reducer, initialState, children }) => {
   };
 
   const increase = (cartItemId) => {
-    console.log("increase")
+    console.log('increase');
     let itemIndex = cartItems.findIndex((i) => i.cartItemId === cartItemId);
     let item = cartItems[itemIndex];
     item = { ...item, qty: Number(item.qty) + 1 };
@@ -82,7 +88,7 @@ export const StateProvider = ({ reducer, initialState, children }) => {
   const updateItem = (cartItemId, updatedItem) => {
     let itemIndex = cartItems.findIndex((i) => i.cartItemId === cartItemId);
     let item = cartItems[itemIndex];
-    console.log({ item })
+    console.log({ item });
     setCartItems(() => [
       ...cartItems.slice(0, itemIndex),
       { ...item, ...updatedItem },

@@ -122,7 +122,7 @@ function MeatOptions({
   );
 }
 
-function Addons({ addOns, selectedAddons, handleAddonsChange }) {
+function Addons({ addOns, selectedAddons, handleAddonsChange, canNotAddToCart }) {
   return (
     <div style={{ width: '100%' }}>
       <h6
@@ -140,6 +140,7 @@ function Addons({ addOns, selectedAddons, handleAddonsChange }) {
           return (
             <div className="addonBtn" key={index}>
               <Checkbox
+                disabled={canNotAddToCart}
                 checked={Boolean(selectedAddons.findIndex((a) => a.addOn === variant.addOn) + 1)}
                 color="success"
                 onChange={() => {
@@ -167,17 +168,20 @@ function calculatePrice({ sizePrice, addons, meatOptionPrice, quantity }) {
 }
 
 function VariationsModal({ modal, toggle, modalInfo }) {
+  console.log({ modalInfo });
   const { cartItems, updateItem, deleteItem, addToCart, increase, decrease } = useStateValue()[2];
   // if item is already present in cart, display values from cart
   const [cartItemId, setCartItemId] = useState();
   const currentItem = cartItems.find((i) => i.cartItemId === cartItemId);
-  // console.log({ modalInfo })
-  // console.log({ currentItem })
   const [arabicVariantDescription, setArabicVariantDescription] = useState();
   const [variantDescription, setVariantDescription] = useState();
   const [selectedAddons, setSelectedAddons] = useState([]);
   const [selectedMeatOption, setSelectedMeatOption] = useState();
   const [selectedSize, setSelectedSize] = React.useState();
+  const isItemWithVariations =
+    Boolean(modalInfo.variations?.find((i) => i.sizes)) ||
+    Boolean(modalInfo.variations?.find((i) => i.meatOptions));
+  const canNotAddToCart = !selectedSize && !selectedMeatOption && isItemWithVariations;
   const handleChangeSize = (newSize) => {
     // if item is present in cart, update the values in cart
     if (currentItem)
@@ -281,6 +285,7 @@ function VariationsModal({ modal, toggle, modalInfo }) {
                         addOns={variation?.addOns}
                         selectedAddons={currentItem?.selectedAddons || selectedAddons}
                         handleAddonsChange={handleAddonsChange}
+                        canNotAddToCart={canNotAddToCart}
                       />
                     ),
                 )}
@@ -325,7 +330,8 @@ function VariationsModal({ modal, toggle, modalInfo }) {
           <When condition={calculatedPrice}>
             <div>
               <motion.button
-                whileTap={{ scale: 0.9 }}
+                whileTap={{ scale: canNotAddToCart ? 1 : 0.9 }}
+                disabled={canNotAddToCart}
                 onClick={() => {
                   // if already present, remove from cart
                   if (currentItem) {

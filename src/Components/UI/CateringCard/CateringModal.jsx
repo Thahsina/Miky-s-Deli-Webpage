@@ -377,10 +377,10 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
       cateringOrder: bookedItems,
       id: `${Date.now()}`,
       orderNumber: `${Math.floor(100000 + Math.random() * 900000)}`,
-    }
+    };
 
-    saveCateringOrder(cateringOrderData)
-  }
+    saveCateringOrder(cateringOrderData);
+  };
 
   return (
     <>
@@ -851,11 +851,11 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
             </div>
           </div>
           <motion.button
-            whileTap={{ scale: 0.9 }}
+            whileTap={{ scale: selectedOptions.length === 0 ? 1 : 0.9 }}
             type="button"
             className="booknowBtn"
             data-dismiss="modal"
-            disabled={selectedOptions === [] ? true : false}
+            disabled={selectedOptions.length === 0}
             onClick={() => {
               if (currentItem) {
                 deleteBookedItem(bookingId);
@@ -869,12 +869,7 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                   extraServes,
                 });
                 setBookingId(id);
-              }
-
-              bookNowToggle();
-              {
-                /* <DateTimePicker />;
-              bookNowToggle(); */
+                bookNowToggle();
               }
             }}
           >
@@ -901,16 +896,14 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
         className="bookNowModal"
         style={{ cursor: 'pointer', padding: '1rem' }}
       >
-        <ModalHeader toggle={bookNowToggle}>
-          When do you want to book this order ?
-        </ModalHeader>
+        <ModalHeader toggle={bookNowToggle}>When do you want to book this order ?</ModalHeader>
         <ModalBody className="dateTimePicker__container">
           <DateTimePicker
             setDateAndTime={setDateAndTime}
-          // getDateTime={(e) => {
-          //   setDateAndTime(() => e);
-          //   console.log(e.toString())
-          // }}
+            // getDateTime={(e) => {
+            //   setDateAndTime(() => e);
+            //   console.log(e.toString())
+            // }}
           />
 
           <Button
@@ -930,13 +923,11 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
       <Modal
         isOpen={confirmationModal}
         toggle={confirmationToggle}
-        style={{ cursor: "pointer", padding: "1rem" }}
+        style={{ cursor: 'pointer', padding: '1rem' }}
       >
         <ModalBody className="dateTimePicker__container">
-          Your order for catering service is confirmed on{" "}
-          <h4>{dateAndTime?.toString()}</h4>
+          Your order for catering service is confirmed on <h4>{dateAndTime?.toString()}</h4>
           {/* <h4>Fri 23 June 2022 4:30pm</h4> */}
-
         </ModalBody>
       </Modal>
     </>
