@@ -21,7 +21,7 @@ const Cart = ({ cartMenu, setCartMenu }) => {
     return updatedCartItem;
   })
 
-
+console.log(cartItems)
   const updateCartItems = () => {
     console.log({ updatedCartItems });
     setCartItems(() => updatedCartItems);

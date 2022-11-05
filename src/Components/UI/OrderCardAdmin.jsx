@@ -30,6 +30,7 @@ const OrderCard = ({ data }) => {
                 </div>
               </Col>
             </Row>
+            {console.log(eachOrder)}
             <div className="orderItemsList">
               {eachOrder.cartItems?.map((orderItem) => (
                 <Row className="mb-2 mt-4">
@@ -44,14 +45,74 @@ const OrderCard = ({ data }) => {
                     x{orderItem.qty}
                   </Col>
                   <Col sm="3" md="4">
-                    <div className="orderPrice">QAR&nbsp;&nbsp;{orderItem.price}</div>
+                    <div className="orderPrice">
+                      QAR&nbsp;&nbsp;{orderItem.calcPrice}
+                    </div>
                     {/* {console.log(orderItem.selectedAddons)} */}
                     {/* {console.log(orderItem.selectedSize)} */}
                   </Col>
                   <Col md="12" sm="12">
-                    <div style={{ marginLeft: "0.8rem" }}>- Addons </div>
-                    <div style={{ marginLeft: "0.8rem" }}>- Meat Options </div>
-                    <div style={{ marginLeft: "0.8rem" }}>- Pasta type </div>
+                    {orderItem.selectedSize && (
+                      <>
+                        <h6 style={{ color: "green", margin: "0.5rem" }}>
+                          Selected Size
+                        </h6>
+                        <div style={{ marginLeft: "0.8rem" }}>
+                          - {orderItem.selectedSize.size}{" "}
+                        </div>
+                      </>
+                    )}
+                    {orderItem.selectedAddons && (
+                      <h6 style={{ color: "green", margin: "0.5rem" }}>
+                        Selected Add-Ons
+                      </h6>
+                    )}
+                    {orderItem.selectedAddons?.map((eachSelectedAddon) => (
+                      <div style={{ marginLeft: "0.8rem" }}>
+                        - {eachSelectedAddon.addOn}{" "}
+                      </div>
+                    ))}
+                    {orderItem.selectedExFlavours && (
+                      <h6 style={{ color: "green", margin: "0.5rem" }}>
+                        Selected Extra Flavours
+                      </h6>
+                    )}
+                    {orderItem.selectedExFlavours?.map((eachSelectedExFlavours) => (
+                      <div style={{ marginLeft: "0.8rem" }}>
+                        - {eachSelectedExFlavours.extraFlavour}{" "}
+                      </div>
+                    ))}
+                    
+                    {orderItem.selectedMeatOption && (
+                      <>
+                        <h6 style={{ color: "green", margin: "0.5rem" }}>
+                          Selected Meat
+                        </h6>
+                        <div style={{ marginLeft: "0.8rem" }}>
+                          - {orderItem.selectedMeatOption.meatOption}{" "}
+                        </div>
+                      </>
+                    )}
+                    {orderItem.selectedPastaType && (
+                      <>
+                        <h6 style={{ color: "green", margin: "0.5rem" }}>
+                          Selected Pasta Type
+                        </h6>
+                        <div style={{ marginLeft: "0.8rem" }}>
+                          - {orderItem.selectedPastaType}{" "}
+                        </div>
+                      </>
+                    )}
+                    {orderItem.selectedFlavour && (
+                      <>
+                        <h6 style={{ color: "green", margin: "0.5rem" }}>
+                          Selected Flavour
+                        </h6>
+                        <div style={{ marginLeft: "0.8rem" }}>
+                          - {orderItem.selectedFlavour}{" "}
+                        </div>
+                      </>
+                    )}
                   </Col>
                 </Row>
               ))}

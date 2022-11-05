@@ -17,9 +17,8 @@ const OrderCardUser = ({ data }) => {
   //   userCartItems.forEach((userCartItem) => {
   //     console.log(userCartItem);
   //     const userOrderItems = [];
-  //     userOrderItems.push(userCartItem)
-  //     console.log(userOrderItems, "array")
-      
+  //     userOrderItems.push(userCartItem);
+  //     console.log(userOrderItems, "array");
   //   });
   // };
 
@@ -54,9 +53,75 @@ const OrderCardUser = ({ data }) => {
                   </div>
                 </Col>
                 <Col md="12" sm="12">
-                  <div style={{ marginLeft: "0.8rem" }}>- Addons </div>
-                  <div style={{ marginLeft: "0.8rem" }}>- Meat Options </div>
-                  <div style={{ marginLeft: "0.8rem" }}>- Pasta type </div>
+                  
+
+                  {eachUserOrder.cartItems[0].selectedSize && (
+                    <>
+                      <p style={{ color: "green", margin: "0.5rem" }}>
+                        Selected Size
+                      </p>
+                      <div style={{ marginLeft: "0.8rem" }}>
+                        - {eachUserOrder.cartItems[0].selectedSize.size}{" "}
+                      </div>
+                    </>
+                  )}
+                  {console.log(eachUserOrder.cartItems[0].selectedAddons)}
+                  {eachUserOrder.cartItems[0].selectedAddons && (
+                    <p style={{ color: "green", margin: "0.5rem" }}>
+                      Selected Add-Ons
+                    </p>
+                  )}
+                  {eachUserOrder.cartItems[0].selectedAddons?.map(
+                    (eachSelectedAddon) => (
+                      <div style={{ marginLeft: "0.8rem" }}>
+                        - {eachSelectedAddon.addOn}{" "}
+                      </div>
+                    )
+                  )}
+
+                  {eachUserOrder.cartItems[0].selectedExFlavours &&
+                    eachUserOrder.cartItems[0].selectedExFlavours?.map(
+                      (eachSelectedExFlavours) => (
+                        <div style={{ marginLeft: "0.8rem" }}>
+                          - {eachSelectedExFlavours.extraFlavour}{" "}
+                        </div>
+                      )
+                    )}
+
+                  {eachUserOrder.cartItems[0].selectedMeatOption && (
+                    <>
+                      <p style={{ color: "green", margin: "0.5rem" }}>
+                        Selected Meat
+                      </p>
+                      <div style={{ marginLeft: "0.8rem" }}>
+                        -{" "}
+                        {
+                          eachUserOrder.cartItems[0].selectedMeatOption
+                            .meatOption
+                        }{" "}
+                      </div>
+                    </>
+                  )}
+                  {eachUserOrder.cartItems[0].selectedPastaType && (
+                    <>
+                      <p style={{ color: "green", margin: "0.5rem" }}>
+                        Selected Pasta Type
+                      </p>
+                      <div style={{ marginLeft: "0.8rem" }}>
+                        - {eachUserOrder.cartItems[0].selectedPastaType}{" "}
+                      </div>
+                    </>
+                  )}
+                  {eachUserOrder.cartItems[0].selectedFlavour && (
+                    <>
+                      <p style={{ color: "green", margin: "0.5rem" }}>
+                        Selected Flavour
+                      </p>
+                      <div style={{ marginLeft: "0.8rem" }}>
+                        - {eachUserOrder.cartItems[0].selectedFlavour}{" "}
+                      </div>
+                    </>
+                  )}
                 </Col>
               </Row>
 
@@ -81,14 +146,74 @@ const OrderCardUser = ({ data }) => {
                           {userOrderItem.price}
                         </div>
                       </Col>
+
                       <Col md="12" sm="12">
-                        <div style={{ marginLeft: "0.8rem" }}>- Addons </div>
-                        <div style={{ marginLeft: "0.8rem" }}>
-                          - Meat Options{" "}
-                        </div>
-                        <div style={{ marginLeft: "0.8rem" }}>
-                          - Pasta type{" "}
-                        </div>
+                        <div style={{ marginLeft: "0.8rem" }}>{"  "}</div>
+                        <div style={{ marginLeft: "0.8rem" }}>{"  "}</div>
+                        <div style={{ marginLeft: "0.8rem" }}>{"  "}</div>
+                        {userOrderItem.selectedSize && (
+                          <>
+                            <p style={{ color: "green", margin: "0.5rem" }}>
+                              Selected Size
+                            </p>
+                            <div style={{ marginLeft: "0.8rem" }}>
+                              - {userOrderItem.selectedSize.size}{" "}
+                            </div>
+                          </>
+                        )}
+                        {console.log(userOrderItem.selectedAddons)}
+                        {userOrderItem.selectedAddons && (
+                          <p style={{ color: "green", margin: "0.5rem" }}>
+                            Selected Add-Ons
+                          </p>
+                        )}
+                        {userOrderItem.selectedAddons?.map(
+                          (eachSelectedAddon) => (
+                            <div style={{ marginLeft: "0.8rem" }}>
+                              - {eachSelectedAddon.addOn}{" "}
+                            </div>
+                          )
+                        )}
+
+                        {userOrderItem.selectedExFlavours &&
+                          userOrderItem.selectedExFlavours?.map(
+                            (eachSelectedExFlavours) => (
+                              <div style={{ marginLeft: "0.8rem" }}>
+                                - {eachSelectedExFlavours.extraFlavour}{" "}
+                              </div>
+                            )
+                          )}
+
+                        {userOrderItem.selectedMeatOption && (
+                          <>
+                            <p style={{ color: "green", margin: "0.5rem" }}>
+                              Selected Meat
+                            </p>
+                            <div style={{ marginLeft: "0.8rem" }}>
+                              - {userOrderItem.selectedMeatOption.meatOption}{" "}
+                            </div>
+                          </>
+                        )}
+                        {userOrderItem.selectedPastaType && (
+                          <>
+                            <p style={{ color: "green", margin: "0.5rem" }}>
+                              Selected Pasta Type
+                            </p>
+                            <div style={{ marginLeft: "0.8rem" }}>
+                              - {userOrderItem.selectedPastaType}{" "}
+                            </div>
+                          </>
+                        )}
+                        {userOrderItem.selectedFlavour && (
+                          <>
+                            <p style={{ color: "green", margin: "0.5rem" }}>
+                              Selected Flavour
+                            </p>
+                            <div style={{ marginLeft: "0.8rem" }}>
+                              - {userOrderItem.selectedFlavour}{" "}
+                            </div>
+                          </>
+                        )}
                       </Col>
                     </Row>
                   </section>
@@ -117,10 +242,10 @@ const OrderCardUser = ({ data }) => {
               <div className="orderActionButtons">
                 <button
                   className="orderAcceptBtn"
-                  onClick={() =>
-                    navigate("/menu")
-                    //  reOrder(eachUserOrder.cartItems)
-                    }
+                  onClick={
+                    () => navigate("/menu")
+                    // reOrder(eachUserOrder.cartItems)
+                  }
                 >
                   ReOrder
                 </button>

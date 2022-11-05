@@ -59,7 +59,7 @@ const Checkout = () => {
       specialRequests: specialRequest,
       id: `${Date.now()}`,
       orderNumber: `${Math.floor(100000 + Math.random() * 900000)}`,
-      total: calculateTotalPriceOfItem(),
+      total: calculateTotalPrice(),
     };
 
     saveOrder(orderData);
