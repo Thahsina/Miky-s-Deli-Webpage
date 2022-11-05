@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import "../../styles/productCard.css";
-import "react-loading-skeleton/dist/skeleton.css";
-import { If, Then, Else, When } from 'react-if'
-import VariationsModal from "./VariationsModal";
-import OtherModal from "./OtherModal";
+import React, { useState } from 'react';
+import '../../styles/productCard.css';
+import 'react-loading-skeleton/dist/skeleton.css';
+import { If, Then, Else, When } from 'react-if';
+import VariationsModal from './VariationsModal';
+import OtherModal from './OtherModal';
 
 const ProductCard = ({ data }) => {
   const [modal, setModal] = useState(false);
@@ -22,7 +22,7 @@ const ProductCard = ({ data }) => {
               toggle();
               setModalInfo(item);
             }}
-            style={{ width: "15rem" }}
+            style={{ width: '15rem' }}
           >
             <img
               className="card-img-top mt-2"
@@ -40,15 +40,11 @@ const ProductCard = ({ data }) => {
       <When condition={modalInfo && modal}>
         <If condition={!Boolean(modalInfo.variations)}>
           <Then>
-            <OtherModal
-              modal={modal}
-              toggle={toggle}
-              modalInfo={modalInfo}
-            />
+            <OtherModal modal={modal} toggle={toggle} modalInfo={modalInfo} />
           </Then>
           <Else>
             <VariationsModal
-            key={modalInfo.id}
+              key={modalInfo.id}
               modal={modal}
               toggle={toggle}
               modalInfo={modalInfo}

@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
-import { motion } from "framer-motion";
-import { BiMinus, BiPlus } from "react-icons/bi";
-import { When } from "react-if";
-import { useStateValue } from "../../../context/StateProvider";
-import { useNavigate } from "react-router-dom";
-import { saveDropOffOrder } from "../../../firebaseFunctions";
-import LocationMadal from "../LocationMadal";
+import React, { useState } from 'react';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { motion } from 'framer-motion';
+import { BiMinus, BiPlus } from 'react-icons/bi';
+import { When } from 'react-if';
+import { useStateValue } from '../../../context/StateProvider';
+import { saveDropOffOrder } from '../../../firebaseFunctions';
+import LocationMadal from '../LocationMadal';
 
 function ChoiceItem({ choice, subtitle, quantity, increment, decrement }) {
   return (
@@ -17,9 +16,9 @@ function ChoiceItem({ choice, subtitle, quantity, increment, decrement }) {
           <When condition={Boolean(subtitle)}>
             <small
               style={{
-                fontSize: "1rem",
-                fontWeight: "500",
-                color: "#9196AA",
+                fontSize: '1rem',
+                fontWeight: '500',
+                color: '#9196AA',
               }}
             >
               <BiPlus />
@@ -28,12 +27,8 @@ function ChoiceItem({ choice, subtitle, quantity, increment, decrement }) {
           </When>
         </div>
         <div className="counter d-flex">
-          <motion.button
-            whileTap={{ scale: 0.5 }}
-            className="minusBtn"
-            onTap={() => decrement()}
-          >
-            <BiMinus style={{ fontSize: "1rem" }} />
+          <motion.button whileTap={{ scale: 0.5 }} className="minusBtn" onTap={() => decrement()}>
+            <BiMinus style={{ fontSize: '1rem' }} />
           </motion.button>
           <input
             className="counterQuantity"
@@ -43,12 +38,8 @@ function ChoiceItem({ choice, subtitle, quantity, increment, decrement }) {
             value={quantity}
             readOnly
           />
-          <motion.button
-            whileTap={{ scale: 0.5 }}
-            className="plusBtn"
-            onTap={() => increment()}
-          >
-            <BiPlus style={{ fontSize: "1rem" }} />
+          <motion.button whileTap={{ scale: 0.5 }} className="plusBtn" onTap={() => increment()}>
+            <BiPlus style={{ fontSize: '1rem' }} />
           </motion.button>
         </div>
       </li>
@@ -69,8 +60,7 @@ function calculatePrice({ addons, drinkAddons, defaultPrice }) {
 }
 
 export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
-  const { bookItem, bookedItems, deleteBookedItem, updateBookedItem } =
-    useStateValue()[2];
+  const { bookItem, bookedItems, deleteBookedItem, updateBookedItem } = useStateValue()[2];
   const [bookingId, setBookingId] = React.useState();
   const currentItem = bookedItems.find((i) => i.bookingId === bookingId);
   const [dropoffLng, setDropoffLng] = useState({});
@@ -84,15 +74,14 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
     if (currentItem) {
       // getting maxChoice of option type
       const typeMaxChoices =
-        currentItem?.variations.find((variant) => variant[type])?.maxChoice ||
-        0;
+        currentItem?.variations.find((variant) => variant[type])?.maxChoice || 0;
       const totalSelectedQuantityOfCurrentType = currentItem?.selectedOptions
         .filter((op) => op.type === type) // filtering out current type options
         .map((op) => op.quantity) // getting only selected quantities
         .reduce((sum, current) => (sum += current), 0); // summing up all the quantities
       // if already present, increment quantity
       const foundIndex = currentItem?.selectedOptions.findIndex(
-        (option) => option.name === name && option.type === type
+        (option) => option.name === name && option.type === type,
       );
       if (foundIndex >= 0) {
         const foundOption = currentItem?.selectedOptions[foundIndex];
@@ -117,10 +106,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
       // or if total selected options of a current type are less in quantity than typeMaxChoice proceed ahead
       else if (totalSelectedQuantityOfCurrentType < typeMaxChoices) {
         // if not already present add to array
-        const newOptions = [
-          ...currentItem?.selectedOptions,
-          { name, type, quantity: 1 },
-        ];
+        const newOptions = [...currentItem?.selectedOptions, { name, type, quantity: 1 }];
         updateBookedItem(currentItem?.bookingId, {
           ...currentItem,
           selectedOptions: newOptions,
@@ -129,15 +115,14 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
     }
     // getting maxChoice of option type
     const typeMaxChoices =
-      cateringModalInfo.variations.find((variant) => variant[type])
-        ?.maxChoice || 0;
+      cateringModalInfo.variations.find((variant) => variant[type])?.maxChoice || 0;
     const totalSelectedQuantityOfCurrentType = selectedOptions
       .filter((op) => op.type === type) // filtering out current type options
       .map((op) => op.quantity) // getting only selected quantities
       .reduce((sum, current) => (sum += current), 0); // summing up all the quantities
     // if already present, increment quantity
     const foundIndex = selectedOptions.findIndex(
-      (option) => option.name === name && option.type === type
+      (option) => option.name === name && option.type === type,
     );
     if (foundIndex >= 0) {
       const foundOption = selectedOptions[foundIndex];
@@ -166,7 +151,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
     if (currentItem) {
       // if already present, decrement quantity else do nothing
       const foundIndex = currentItem?.selectedOptions.findIndex(
-        (option) => option.name === name && option.type === type
+        (option) => option.name === name && option.type === type,
       );
       if (foundIndex >= 0) {
         const foundOption = currentItem?.selectedOptions[foundIndex];
@@ -175,7 +160,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
           updateBookedItem(currentItem?.bookingId, {
             ...currentItem,
             selectedOptions: currentItem?.selectedOptions.filter(
-              (option) => !(option.name === name && option.type === type)
+              (option) => !(option.name === name && option.type === type),
             ),
           });
         } else {
@@ -193,16 +178,14 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
     }
     // if already present, decrement quantity else do nothing
     const foundIndex = selectedOptions.findIndex(
-      (option) => option.name === name && option.type === type
+      (option) => option.name === name && option.type === type,
     );
     if (foundIndex >= 0) {
       const foundOption = selectedOptions[foundIndex];
       // if quantity is already 1, remove from array
       if (foundOption.quantity <= 1) {
         setSelectedOptions(
-          selectedOptions.filter(
-            (option) => !(option.name === name && option.type === type)
-          )
+          selectedOptions.filter((option) => !(option.name === name && option.type === type)),
         );
       } else {
         setSelectedOptions([
@@ -223,9 +206,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
           .reduce((sum, current) => (sum += current));
         if (totalQty < 10) {
           // if already present, increment quantity
-          const foundIndex = currentItem?.selectedAddons.findIndex(
-            (a) => a.addOn === addon.addOn
-          );
+          const foundIndex = currentItem?.selectedAddons.findIndex((a) => a.addOn === addon.addOn);
           let newAddons;
           if (foundIndex >= 0) {
             const foundAddon = currentItem?.selectedAddons[foundIndex];
@@ -236,11 +217,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
             ];
           }
           // if not already present add to array
-          else
-            newAddons = [
-              ...currentItem.selectedAddons,
-              { ...addon, quantity: 1 },
-            ];
+          else newAddons = [...currentItem.selectedAddons, { ...addon, quantity: 1 }];
           updateBookedItem(currentItem?.bookingId, {
             ...currentItem,
             selectedAddons: newAddons,
@@ -272,17 +249,13 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
     // if item is already present in bookedItems, update it there also
     if (currentItem) {
       // if already present, decrement quantity
-      const foundIndex = currentItem?.selectedAddons.findIndex(
-        (a) => a.addOn === addon.addOn
-      );
+      const foundIndex = currentItem?.selectedAddons.findIndex((a) => a.addOn === addon.addOn);
       if (foundIndex >= 0) {
         const foundAddon = currentItem?.selectedAddons[foundIndex];
         // if quantity is already 1, remove from array
         let newAddons = [];
         if (foundAddon.quantity <= 1) {
-          newAddons = currentItem?.selectedAddons.filter(
-            (a) => a.addOn !== addon.addOn
-          );
+          newAddons = currentItem?.selectedAddons.filter((a) => a.addOn !== addon.addOn);
         } else {
           newAddons = [
             ...currentItem?.selectedAddons.slice(0, foundIndex),
@@ -302,9 +275,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
       const foundAddon = selectedAddons[foundIndex];
       // if quantity is already 1, remove from array
       if (foundAddon.quantity <= 1) {
-        setSelectedAddons(
-          selectedAddons.filter((a) => a.addOn !== addon.addOn)
-        );
+        setSelectedAddons(selectedAddons.filter((a) => a.addOn !== addon.addOn));
       } else {
         setSelectedAddons([
           ...selectedAddons.slice(0, foundIndex),
@@ -326,7 +297,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
         if (totalQty < 10) {
           // if already present, increment quantity
           const foundIndex = currentItem?.selectedDrinkAddons.findIndex(
-            (a) => a.drinkAddon === addon.drinkAddon
+            (a) => a.drinkAddon === addon.drinkAddon,
           );
           let newAddons;
           if (foundIndex >= 0) {
@@ -336,11 +307,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
               { ...foundAddon, quantity: foundAddon.quantity + 1 },
               ...currentItem?.selectedDrinkAddons.slice(foundIndex + 1),
             ];
-          } else
-            newAddons = [
-              ...currentItem.selectedDrinkAddons,
-              { ...addon, quantity: 1 },
-            ];
+          } else newAddons = [...currentItem.selectedDrinkAddons, { ...addon, quantity: 1 }];
           updateBookedItem(currentItem?.bookingId, {
             ...currentItem,
             selectedDrinkAddons: newAddons,
@@ -356,9 +323,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
       if (totalQty >= 10) return;
     }
     // if already present, increment quantity
-    const foundIndex = selectedDrinkAddons.findIndex(
-      (a) => a.drinkAddon === addon.drinkAddon
-    );
+    const foundIndex = selectedDrinkAddons.findIndex((a) => a.drinkAddon === addon.drinkAddon);
     if (foundIndex >= 0) {
       const foundAddon = selectedDrinkAddons[foundIndex];
       setSelectedDrinkAddons([
@@ -368,18 +333,14 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
       ]);
     }
     // if not already present add to array
-    else
-      setSelectedDrinkAddons([
-        ...selectedDrinkAddons,
-        { ...addon, quantity: 1 },
-      ]);
+    else setSelectedDrinkAddons([...selectedDrinkAddons, { ...addon, quantity: 1 }]);
   };
   const decreaseDrinkAddon = (addon) => {
     // if item is already present in bookedItems, update it there also
     if (currentItem) {
       // if already present, decrement quantity
       const foundIndex = currentItem?.selectedDrinkAddons.findIndex(
-        (a) => a.drinkAddon === addon.drinkAddon
+        (a) => a.drinkAddon === addon.drinkAddon,
       );
       if (foundIndex >= 0) {
         const foundAddon = currentItem?.selectedDrinkAddons[foundIndex];
@@ -387,7 +348,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
         let newAddons = [];
         if (foundAddon.quantity <= 1) {
           newAddons = currentItem?.selectedDrinkAddons.filter(
-            (a) => a.drinkAddon !== addon.drinkAddon
+            (a) => a.drinkAddon !== addon.drinkAddon,
           );
         } else {
           newAddons = [
@@ -403,15 +364,13 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
       }
     }
     // if already present, decrement quantity
-    const foundIndex = selectedDrinkAddons.findIndex(
-      (a) => a.drinkAddon === addon.drinkAddon
-    );
+    const foundIndex = selectedDrinkAddons.findIndex((a) => a.drinkAddon === addon.drinkAddon);
     if (foundIndex >= 0) {
       const foundAddon = selectedDrinkAddons[foundIndex];
       // if quantity is already 1, remove from array
       if (foundAddon.quantity <= 1) {
         setSelectedDrinkAddons(
-          selectedDrinkAddons.filter((a) => a.drinkAddon !== addon.drinkAddon)
+          selectedDrinkAddons.filter((a) => a.drinkAddon !== addon.drinkAddon),
         );
       } else {
         setSelectedDrinkAddons([
@@ -454,7 +413,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
         size="xl"
         toggle={toggle}
         className="catering-modal"
-        style={{ cursor: "pointer" }}
+        style={{ cursor: 'pointer' }}
       >
         <ModalHeader
           className="border-0"
@@ -467,7 +426,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
         >
           <div>
             <h5 className="catering-modal-title">{cateringModalInfo.title}</h5>
-            <small style={{ color: "#139652", fontSize: "14px" }}>
+            <small style={{ color: '#139652', fontSize: '14px' }}>
               {cateringModalInfo.category}
             </small>
           </div>
@@ -491,15 +450,13 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                 {cateringModalInfo.drinkFlavours && (
                   <div className="catering-modal-drinks m-2">
                     <strong>Drinks</strong>
-                    {cateringModalInfo.drinkFlavours?.map(
-                      (drinkFlavour, idx) => (
-                        <ul key={idx}>
-                          <li>
-                            <span>{drinkFlavour}</span>
-                          </li>
-                        </ul>
-                      )
-                    )}
+                    {cateringModalInfo.drinkFlavours?.map((drinkFlavour, idx) => (
+                      <ul key={idx}>
+                        <li>
+                          <span>{drinkFlavour}</span>
+                        </li>
+                      </ul>
+                    ))}
                   </div>
                 )}
               </div>
@@ -518,9 +475,9 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                         <strong>Pasta Types</strong>
                         <span
                           style={{
-                            color: "red",
-                            fontSize: "12px",
-                            margin: "1rem",
+                            color: 'red',
+                            fontSize: '12px',
+                            margin: '1rem',
                           }}
                         >
                           (select 10 choices)
@@ -531,36 +488,32 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                           <ChoiceItem
                             choice={eachType}
                             quantity={
-                              (
-                                currentItem?.selectedOptions || selectedOptions
-                              ).find(
-                                (op) =>
-                                  op.name === eachType &&
-                                  op.type === "pastaTypes"
+                              (currentItem?.selectedOptions || selectedOptions).find(
+                                (op) => op.name === eachType && op.type === 'pastaTypes',
                               )?.quantity || 0
                             }
                             increment={() =>
                               increaseOption({
                                 name: eachType,
-                                type: "pastaTypes",
+                                type: 'pastaTypes',
                               })
                             }
                             decrement={() =>
                               decreaseOption({
                                 name: eachType,
-                                type: "pastaTypes",
+                                type: 'pastaTypes',
                               })
                             }
                           />
-                        ))
+                        )),
                       )}
                       <div className="mb-4">
                         <strong>Choose one of</strong>
                         <span
                           style={{
-                            color: "red",
-                            fontSize: "12px",
-                            margin: "1rem",
+                            color: 'red',
+                            fontSize: '12px',
+                            margin: '1rem',
                           }}
                         >
                           (select 1 choices)
@@ -571,31 +524,27 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                           <ChoiceItem
                             choice={eachChoice}
                             quantity={
-                              (
-                                currentItem?.selectedOptions || selectedOptions
-                              ).find(
-                                (op) =>
-                                  op.name === eachChoice &&
-                                  op.type === "meatChoices"
+                              (currentItem?.selectedOptions || selectedOptions).find(
+                                (op) => op.name === eachChoice && op.type === 'meatChoices',
                               )?.quantity || 0
                             }
                             increment={() =>
                               increaseOption({
                                 name: eachChoice,
-                                type: "meatChoices",
+                                type: 'meatOptions',
                               })
                             }
                             decrement={() =>
                               decreaseOption({
                                 name: eachChoice,
-                                type: "meatChoices",
+                                type: 'meatOptions',
                               })
                             }
                           />
-                        ))
+                        )),
                       )}
                     </div>
-                  )
+                  ),
               )}
               {cateringModalInfo.variations?.map(
                 (variant, idx) =>
@@ -605,9 +554,9 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                         <strong>Burger Choices</strong>
                         <span
                           style={{
-                            color: "red",
-                            fontSize: "12px",
-                            margin: "1rem",
+                            color: 'red',
+                            fontSize: '12px',
+                            margin: '1rem',
                           }}
                         >
                           (select 10 choices)
@@ -618,31 +567,27 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                           <ChoiceItem
                             choice={eachType}
                             quantity={
-                              (
-                                currentItem?.selectedOptions || selectedOptions
-                              ).find(
-                                (op) =>
-                                  op.name === eachType &&
-                                  op.type === "burgerOptions"
+                              (currentItem?.selectedOptions || selectedOptions).find(
+                                (op) => op.name === eachType && op.type === 'burgerOptions',
                               )?.quantity || 0
                             }
                             increment={() =>
                               increaseOption({
                                 name: eachType,
-                                type: "burgerOptions",
+                                type: 'burgerOptions',
                               })
                             }
                             decrement={() =>
                               decreaseOption({
                                 name: eachType,
-                                type: "burgerOptions",
+                                type: 'burgerOptions',
                               })
                             }
                           />
-                        ))
+                        )),
                       )}
                     </div>
-                  )
+                  ),
               )}
               {cateringModalInfo.variations?.map(
                 (variant, idx) =>
@@ -652,9 +597,9 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                         <strong>Pizza Types</strong>
                         <span
                           style={{
-                            color: "red",
-                            fontSize: "12px",
-                            margin: "1rem",
+                            color: 'red',
+                            fontSize: '12px',
+                            margin: '1rem',
                           }}
                         >
                           (select 10 choices)
@@ -665,31 +610,27 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                           <ChoiceItem
                             choice={eachType}
                             quantity={
-                              (
-                                currentItem?.selectedOptions || selectedOptions
-                              ).find(
-                                (op) =>
-                                  op.name === eachType &&
-                                  op.type === "pizzaTypes"
+                              (currentItem?.selectedOptions || selectedOptions).find(
+                                (op) => op.name === eachType && op.type === 'pizzaTypes',
                               )?.quantity || 0
                             }
                             increment={() =>
                               increaseOption({
                                 name: eachType,
-                                type: "pizzaTypes",
+                                type: 'pizzaTypes',
                               })
                             }
                             decrement={() =>
                               decreaseOption({
                                 name: eachType,
-                                type: "pizzaTypes",
+                                type: 'pizzaTypes',
                               })
                             }
                           />
-                        ))
+                        )),
                       )}
                     </div>
-                  )
+                  ),
               )}
               {cateringModalInfo.variations?.map(
                 (variant, idx) =>
@@ -699,9 +640,9 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                         <strong>Rice Choices</strong>
                         <span
                           style={{
-                            color: "red",
-                            fontSize: "12px",
-                            margin: "1rem",
+                            color: 'red',
+                            fontSize: '12px',
+                            margin: '1rem',
                           }}
                         >
                           (select 3 choices)
@@ -712,31 +653,27 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                           <ChoiceItem
                             choice={eachType}
                             quantity={
-                              (
-                                currentItem?.selectedOptions || selectedOptions
-                              ).find(
-                                (op) =>
-                                  op.name === eachType &&
-                                  op.type === "riceTypes"
+                              (currentItem?.selectedOptions || selectedOptions).find(
+                                (op) => op.name === eachType && op.type === 'riceTypes',
                               )?.quantity || 0
                             }
                             increment={() =>
                               increaseOption({
                                 name: eachType,
-                                type: "riceTypes",
+                                type: 'riceTypes',
                               })
                             }
                             decrement={() =>
                               decreaseOption({
                                 name: eachType,
-                                type: "riceTypes",
+                                type: 'riceTypes',
                               })
                             }
                           />
-                        ))
+                        )),
                       )}
                     </div>
-                  )
+                  ),
               )}
             </div>
           </div>
@@ -747,13 +684,11 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                 variant.addOns && (
                   <div key={idx} className="addons-heading d-flex">
                     <h5>
-                      Addons{" "}
-                      <span style={{ color: "red", fontSize: "12px" }}>
-                        (Add plates per tray)
-                      </span>{" "}
+                      Addons{' '}
+                      <span style={{ color: 'red', fontSize: '12px' }}>(Add plates per tray)</span>{' '}
                     </h5>
                   </div>
-                )
+                ),
             )}
             <div className="addons-choices">
               {cateringModalInfo.variations?.map((variant) =>
@@ -764,22 +699,20 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                     subtitle={eachAddon.price}
                     quantity={
                       (currentItem?.selectedAddons || selectedAddons).find(
-                        (a) => a.addOn === eachAddon.addOn
+                        (a) => a.addOn === eachAddon.addOn,
                       )?.quantity || 0
                     }
                     increment={() => increaseAddon(eachAddon)}
                     decrement={() => decreaseAddon(eachAddon)}
                   />
-                ))
+                )),
               )}
               {cateringModalInfo.variations?.map(
                 (variant, idx) =>
                   variant.drinkAddons && (
                     <div key={idx} className="catering-modal-pastaTypes mt-4">
                       <div className="mb-4">
-                        <h6 style={{ color: "#139652" }}>
-                          Reb Bull with Falvours
-                        </h6>
+                        <h6 style={{ color: '#139652' }}>Reb Bull with Falvours</h6>
                       </div>
                       {cateringModalInfo.variations?.map((variant) =>
                         variant.drinkAddons?.map((eachAddon, idx) => (
@@ -788,30 +721,28 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                             choice={eachAddon.drinkAddon}
                             subtitle={eachAddon.price}
                             quantity={
-                              (
-                                currentItem?.selectedDrinkAddons ||
-                                selectedDrinkAddons
-                              ).find(
-                                (a) => a.drinkAddon === eachAddon.drinkAddon
+                              (currentItem?.selectedDrinkAddons || selectedDrinkAddons).find(
+                                (a) => a.drinkAddon === eachAddon.drinkAddon,
                               )?.quantity || 0
                             }
                             increment={() => increaseDrinkAddon(eachAddon)}
                             decrement={() => decreaseDrinkAddon(eachAddon)}
                           />
-                        ))
+                        )),
                       )}
                     </div>
-                  )
+                  ),
               )}
             </div>
           </div>
         </ModalBody>
         <ModalFooter className="catering-modal-footer d-flex justify-content-around border-0 text-center">
           <motion.button
-            whileTap={{ scale: 0.9 }}
+            whileTap={{ scale: selectedOptions.length === 0 ? 1 : 0.9 }}
             type="button"
             className="booknowBtn"
             data-dismiss="modal"
+            disabled={selectedOptions.length === 0}
             onClick={() => {
               if (currentItem) {
                 deleteBookedItem(currentItem.bookingId);
@@ -823,21 +754,18 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                   selectedOptions,
                 });
                 setBookingId(id);
+                confirmationToggle();
+                // saveDropOffOrderDetails();
               }
-              confirmationToggle();
-              // saveDropOffOrderDetails();
             }}
           >
             <span>Book Now</span>
             <span>
-              QAR{" "}
+              QAR{' '}
               {calculatePrice({
                 addons: currentItem?.selectedAddons || selectedAddons,
-                drinkAddons:
-                  currentItem?.selectedDrinkAddons || selectedDrinkAddons,
-                defaultPrice: Number(
-                  currentItem?.price || cateringModalInfo.price
-                ),
+                drinkAddons: currentItem?.selectedDrinkAddons || selectedDrinkAddons,
+                defaultPrice: Number(currentItem?.price || cateringModalInfo.price),
               })}
             </span>
           </motion.button>
@@ -846,19 +774,13 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
       <Modal
         isOpen={confirmationModal}
         toggle={confirmationToggle}
-        style={{ cursor: "pointer", padding: "1rem" }}
+        style={{ cursor: 'pointer', padding: '1rem' }}
       >
         <ModalBody className="dateTimePicker__container">
           <h4>Delivery Address</h4>
-          <LocationMadal
-            setDropoffLat={setDropoffLat}
-            setDropoffLng={setDropoffLng}
-          />
-          {console.log(dropoffLat, dropoffLng, "latlng from dropoodd")}
-          <Button
-            className="dropoff__confirmBtn"
-            onClick={saveDropOffOrderDetails}
-          >
+          <LocationMadal setDropoffLat={setDropoffLat} setDropoffLng={setDropoffLng} />
+          {console.log(dropoffLat, dropoffLng, 'latlng from dropoodd')}
+          <Button className="dropoff__confirmBtn" onClick={saveDropOffOrderDetails}>
             Confrim & Place Order
           </Button>
         </ModalBody>

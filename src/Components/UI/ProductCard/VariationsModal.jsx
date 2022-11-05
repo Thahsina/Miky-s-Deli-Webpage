@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { motion } from "framer-motion";
-import { Container, Row, Col } from "reactstrap";
-import { If, Then, Else, When, Switch, Case } from "react-if";
-import { Radio, Checkbox, RadioGroup } from "@mui/material";
+import React, { useState } from 'react';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { motion } from 'framer-motion';
+import { Container, Row, Col } from 'reactstrap';
+import { If, Then, Else, When, Switch, Case } from 'react-if';
+import { Radio, Checkbox, RadioGroup } from '@mui/material';
 
-import { IoCartSharp } from "react-icons/io5";
-import { useStateValue } from "../../../context/StateProvider";
+import { IoCartSharp } from 'react-icons/io5';
+import { useStateValue } from '../../../context/StateProvider';
 
 function Sizes({
   selectedSize,
@@ -16,17 +16,17 @@ function Sizes({
   setArabicVariantDescription,
 }) {
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: '100%' }}>
       <h6
         style={{
-          width: "100%",
-          color: "green",
+          width: '100%',
+          color: 'green',
           margin: 0,
         }}
       >
         Sizes
       </h6>
-      <small style={{ color: "rgb(184, 179, 179)" }}>Select size</small>
+      <small style={{ color: 'rgb(184, 179, 179)' }}>Select size</small>
       <div className="sizeBtns-container">
         <RadioGroup
           aria-labelledby="demo-controlled-radio-buttons-group"
@@ -41,9 +41,7 @@ function Sizes({
                 value={variant?.size}
                 onChange={(e) => {
                   setVariantDescription(variant?.variantDescription);
-                  setArabicVariantDescription(
-                    variant?.variantDescriptionArabic
-                  );
+                  setArabicVariantDescription(variant?.variantDescriptionArabic);
                   handleChangeSize(variant);
                 }}
               />
@@ -56,11 +54,11 @@ function Sizes({
         </RadioGroup>
         <hr
           style={{
-            background: "#139652",
-            color: "#139652",
-            borderColor: "#139652",
-            height: "3px",
-            width: "50%",
+            background: '#139652',
+            color: '#139652',
+            borderColor: '#139652',
+            height: '3px',
+            width: '50%',
           }}
         />
       </div>
@@ -68,28 +66,29 @@ function Sizes({
   );
 }
 
-function ExtraFlavour({ extraFlavours, selectedExFlavours, handleChangeExFlavour }) {
+function ExtraFlavour({ extraFlavours, disabled, selectedExFlavours, handleChangeExFlavour }) {
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: '100%' }}>
       <h6
         style={{
-          width: "100%",
-          color: "green",
+          width: '100%',
+          color: 'green',
           margin: 0,
         }}
       >
         Extra Flavours
       </h6>
-      <small style={{ color: "rgb(184, 179, 179)" }}>
-        Add Extra Flavours 
-      </small>
+      <small style={{ color: 'rgb(184, 179, 179)' }}>Add Extra Flavours</small>
       <div className="addonBtns-container">
         {extraFlavours?.map((eachExtraFlavour, index) => {
           return (
             <div className="addonBtn" key={index}>
               <Checkbox
+                disabled={disabled}
                 checked={Boolean(
-                  selectedExFlavours?.findIndex((a) => a.extraFlavour === eachExtraFlavour.extraFlavour) + 1
+                  selectedExFlavours?.findIndex(
+                    (a) => a.extraFlavour === eachExtraFlavour.extraFlavour,
+                  ) + 1,
                 )}
                 color="success"
                 onChange={() => {
@@ -112,17 +111,17 @@ function ExtraFlavour({ extraFlavours, selectedExFlavours, handleChangeExFlavour
 
 function PastaTypes({ selectedPastaType, pastaTypes, handleChangePastaType }) {
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: '100%' }}>
       <h6
         style={{
-          width: "100%",
-          color: "green",
+          width: '100%',
+          color: 'green',
           margin: 0,
         }}
       >
         Pasta Types
       </h6>
-      <small style={{ color: "rgb(184, 179, 179)" }}>Choose Pasta Type</small>
+      <small style={{ color: 'rgb(184, 179, 179)' }}>Choose Pasta Type</small>
       <div className="sizeBtns-container">
         <RadioGroup
           aria-labelledby="demo-controlled-radio-buttons-group"
@@ -147,11 +146,11 @@ function PastaTypes({ selectedPastaType, pastaTypes, handleChangePastaType }) {
         </RadioGroup>
         <hr
           style={{
-            background: "#139652",
-            color: "#139652",
-            borderColor: "#139652",
-            height: "3px",
-            width: "50%",
+            background: '#139652',
+            color: '#139652',
+            borderColor: '#139652',
+            height: '3px',
+            width: '50%',
           }}
         />
       </div>
@@ -159,19 +158,19 @@ function PastaTypes({ selectedPastaType, pastaTypes, handleChangePastaType }) {
   );
 }
 
-function Flavours({ selectedFlavour, flavours, handleChangeFlavour }) {
+function Flavours({ selectedFlavour, disabled, flavours, handleChangeFlavour }) {
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: '100%' }}>
       <h6
         style={{
-          width: "100%",
-          color: "green",
+          width: '100%',
+          color: 'green',
           margin: 0,
         }}
       >
         Flavours
       </h6>
-      <small style={{ color: "rgb(184, 179, 179)" }}>Choose your Flavour</small>
+      <small style={{ color: 'rgb(184, 179, 179)' }}>Choose your Flavour</small>
       <div className="sizeBtns-container">
         <RadioGroup
           aria-labelledby="demo-controlled-radio-buttons-group"
@@ -183,6 +182,7 @@ function Flavours({ selectedFlavour, flavours, handleChangeFlavour }) {
               <Radio
                 color="success"
                 name="radio-buttons"
+                disabled={disabled}
                 value={flavour}
                 onChange={() => {
                   handleChangeFlavour(flavour);
@@ -207,22 +207,19 @@ function MeatOptions({
   setVariantDescription,
 }) {
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: '100%' }}>
       <h6
         style={{
-          width: "100%",
-          color: "green",
+          width: '100%',
+          color: 'green',
           margin: 0,
         }}
       >
         Meat Options
       </h6>
-      <small style={{ color: "rgb(184, 179, 179)" }}>Choose 1</small>
+      <small style={{ color: 'rgb(184, 179, 179)' }}>Choose 1</small>
       <div className="sizeBtns-container">
-        <RadioGroup
-          aria-labelledby="demo-controlled-radio-buttons-group"
-          name="radio-buttons"
-        >
+        <RadioGroup aria-labelledby="demo-controlled-radio-buttons-group" name="radio-buttons">
           {meatOptions?.map((variant, index) => (
             <div className="sizeBtn" key={index}>
               <Radio
@@ -232,9 +229,7 @@ function MeatOptions({
                 checked={selectedMeatOption?.meatOption === variant.meatOption}
                 onChange={(e) => {
                   setVariantDescription(variant?.variantDescription);
-                  setArabicVariantDescription(
-                    variant?.variantDescriptionArabic
-                  );
+                  setArabicVariantDescription(variant?.variantDescriptionArabic);
                   handleMeatOptionChange(variant);
                 }}
               />
@@ -248,11 +243,11 @@ function MeatOptions({
         </RadioGroup>
         <hr
           style={{
-            background: "#139652",
-            color: "#139652",
-            borderColor: "#139652",
-            height: "3px",
-            width: "50%",
+            background: '#139652',
+            color: '#139652',
+            borderColor: '#139652',
+            height: '3px',
+            width: '50%',
           }}
         />
       </div>
@@ -260,31 +255,27 @@ function MeatOptions({
   );
 }
 
-function Addons({ addOns, selectedAddons, handleAddonsChange }) {
+function Addons({ addOns, selectedAddons, handleAddonsChange, canNotAddToCart }) {
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: '100%' }}>
       <h6
         style={{
-          width: "100%",
-          color: "green",
+          width: '100%',
+          color: 'green',
           margin: 0,
         }}
       >
         Add Ons
       </h6>
-      
-      <small style={{ color: "rgb(184, 179, 179)" }}>
-        Choose addon items from list
-      </small>
+
+      <small style={{ color: 'rgb(184, 179, 179)' }}>Choose addon items from list</small>
       <div className="addonBtns-container">
         {addOns?.map((variant, index) => {
           return (
             <div className="addonBtn" key={index}>
               <Checkbox
-                checked={Boolean(
-                  selectedAddons.findIndex((a) => a.addOn === variant.addOn) + 1
-                )}
-               
+                disabled={canNotAddToCart}
+                checked={Boolean(selectedAddons.findIndex((a) => a.addOn === variant.addOn) + 1)}
                 color="success"
                 onChange={() => {
                   handleAddonsChange(variant);
@@ -304,28 +295,33 @@ function Addons({ addOns, selectedAddons, handleAddonsChange }) {
   );
 }
 
-function calculatePrice({ sizePrice, addons, meatOptionPrice, quantity }) {
+function calculatePrice({ sizePrice, addons, meatOptionPrice, quantity, extraFlavours }) {
   let val = Number(sizePrice || 0) + Number(meatOptionPrice || 0);
   addons?.forEach((a) => (val += Number(a.price)));
+  extraFlavours?.forEach((f) => (val += Number(f.price)));
   return val * Number(quantity);
 }
 
 function VariationsModal({ modal, toggle, modalInfo }) {
-  const { cartItems, updateItem, deleteItem, addToCart, increase, decrease } =
-    useStateValue()[2];
+  const { cartItems, updateItem, deleteItem, addToCart, increase, decrease } = useStateValue()[2];
+  console.log({ modalInfo });
   // if item is already present in cart, display values from cart
   const [cartItemId, setCartItemId] = useState();
   const currentItem = cartItems.find((i) => i.cartItemId === cartItemId);
-  // console.log({ modalInfo })
-  // console.log({ currentItem })
   const [arabicVariantDescription, setArabicVariantDescription] = useState();
   const [variantDescription, setVariantDescription] = useState();
   const [selectedAddons, setSelectedAddons] = useState([]);
-  const [selectedMeatOption, setSelectedMeatOption] = useState(null);
-  const [selectedSize, setSelectedSize] = React.useState(null);
+  const [selectedMeatOption, setSelectedMeatOption] = useState();
+  const [selectedSize, setSelectedSize] = React.useState();
   const [selectedPastaType, setSelectedPastaType] = React.useState(null);
   const [selectedFlavour, setSelectedFlavour] = React.useState(null);
   const [selectedExFlavours, setSelectedExFlavours] = React.useState([]);
+  const isItemWithVariations =
+    Boolean(modalInfo.variations?.find((i) => i.sizes)) ||
+    Boolean(modalInfo.variations?.find((i) => i.meatOptions)) ||
+    Boolean(modalInfo.variations?.find((i) => i.pastaTypes));
+  const canNotAddToCart =
+    !selectedSize && !selectedMeatOption && !selectedPastaType && isItemWithVariations;
 
   const handleChangeSize = (newSize) => {
     // if item is present in cart, update the values in cart
@@ -340,35 +336,43 @@ function VariationsModal({ modal, toggle, modalInfo }) {
     if (selectedSize) setSelectedAddons([]);
   };
 
-  
   const handleChangeExFlavour = (exFlavourOption) => {
-    if (currentItem) {
+    if (currentItem && currentItem.selectedSize) {
       // if item is present in cart, update the values in cart also
       const isPresent = currentItem.selectedExFlavours.find(
-        (a) => a.extraFlavour === exFlavourOption.extraFlavour
+        (a) => a.extraFlavour === exFlavourOption.extraFlavour,
       );
       if (!isPresent) {
         updateItem(currentItem.cartItemId, {
           ...currentItem,
           selectedExFlavours: [...currentItem.selectedExFlavours, exFlavourOption],
+          selectedAddons: [],
         });
       } else {
         updateItem(currentItem.cartItemId, {
           ...currentItem,
           selectedExFlavours: currentItem.selectedExFlavours.filter(
-            (a) => a.extraFlavour !== exFlavourOption.extraFlavour
+            (a) => a.extraFlavour !== exFlavourOption.extraFlavour,
           ),
+          selectedAddons: [],
         });
       }
     }
+    // if size is not selected do nothing
+    if (!selectedSize) return;
     // update local variables values
-    const isPresent = selectedExFlavours?.find((a) => a.extraFlavour === exFlavourOption.extraFlavour);
+    const isPresent = selectedExFlavours?.find(
+      (a) => a.extraFlavour === exFlavourOption.extraFlavour,
+    );
     if (!isPresent) {
       selectedSize && setSelectedExFlavours([...selectedExFlavours, exFlavourOption]);
     } else {
       // if already present, remove the addon
-      setSelectedExFlavours(selectedExFlavours.filter((a) => a.extraFlavour !== exFlavourOption.extraFlavour));
+      setSelectedExFlavours(
+        selectedExFlavours.filter((a) => a.extraFlavour !== exFlavourOption.extraFlavour),
+      );
     }
+    setSelectedAddons([]);
   };
 
   const handleChangePastaType = (newPastaType) => {
@@ -379,18 +383,22 @@ function VariationsModal({ modal, toggle, modalInfo }) {
         selectedAddons: [],
       });
     setSelectedPastaType(() => newPastaType);
-    // clear adddons when size is selected
-    if (selectedSize) setSelectedAddons([]);
+    setSelectedAddons([]);
   };
 
   const handleChangeFlavour = (newFlavour) => {
-    if (currentItem)
+    // if currentItem is in cart update values in cart also
+    if (currentItem && currentItem.selectedSize) {
       updateItem(currentItem.cartItemId, {
         ...currentItem,
         selectedFlavour: newFlavour,
         selectedAddons: [],
       });
+    }
+    // if size is not selected do not change flavour
+    if (!selectedSize) return;
     setSelectedFlavour(() => newFlavour);
+    setSelectedAddons([]);
   };
 
   const handleMeatOptionChange = (option) => {
@@ -404,9 +412,7 @@ function VariationsModal({ modal, toggle, modalInfo }) {
   const handleAddonsChange = (option) => {
     if (currentItem) {
       // if item is present in cart, update the values in cart also
-      const isPresent = currentItem.selectedAddons.find(
-        (a) => a.addOn === option.addOn
-      );
+      const isPresent = currentItem.selectedAddons.find((a) => a.addOn === option.addOn);
       if (!isPresent) {
         updateItem(currentItem.cartItemId, {
           ...currentItem,
@@ -415,9 +421,7 @@ function VariationsModal({ modal, toggle, modalInfo }) {
       } else {
         updateItem(currentItem.cartItemId, {
           ...currentItem,
-          selectedAddons: currentItem.selectedAddons.filter(
-            (a) => a.addOn !== option.addOn
-          ),
+          selectedAddons: currentItem.selectedAddons.filter((a) => a.addOn !== option.addOn),
         });
       }
     }
@@ -432,24 +436,16 @@ function VariationsModal({ modal, toggle, modalInfo }) {
   };
   // If item is not present in cart show local state calculation, else show calculation according to cart
   const calculatedPrice = calculatePrice({
-    sizePrice:
-      currentItem?.selectedSize?.price ||
-      selectedSize?.price ||
-      modalInfo.price,
+    sizePrice: currentItem?.selectedSize?.price || selectedSize?.price || modalInfo.price,
     addons: currentItem?.selectedAddons || selectedAddons,
-    meatOptionPrice:
-      currentItem?.selectedMeatOption?.price || selectedMeatOption?.price,
+    meatOptionPrice: currentItem?.selectedMeatOption?.price || selectedMeatOption?.price,
     quantity: currentItem?.qty || 1,
+    extraFlavours: selectedExFlavours,
   });
   return (
     <Modal size="lg" isOpen={modal} toggle={toggle}>
       <ModalHeader className="modalHeader" toggle={toggle}>
-        <button
-          onClick={toggle}
-          type="button"
-          className="close"
-          data-dismiss="modal"
-        >
+        <button onClick={toggle} type="button" className="close" data-dismiss="modal">
           <span aria-hidden="true" className="modal_button">
             &times;
           </span>
@@ -464,14 +460,10 @@ function VariationsModal({ modal, toggle, modalInfo }) {
               <div className="imgContainer">
                 <img alt="info-img" src={modalInfo?.imageURL} />
               </div>
-              <p style={{ marginTop: "0.5rem" }}>
-                {modalInfo?.description || variantDescription}
-              </p>
-              <p style={{}}>
-                {modalInfo?.arabicDescription || arabicVariantDescription}
-              </p>
+              <p style={{ marginTop: '0.5rem' }}>{modalInfo?.description || variantDescription}</p>
+              <p style={{}}>{modalInfo?.arabicDescription || arabicVariantDescription}</p>
             </Col>
-            <Col lg="6" md="6" style={{ height: "18rem", overflowY: "scroll" }}>
+            <Col lg="6" md="6" style={{ height: '18rem', overflowY: 'scroll' }}>
               <div className="descContainer">
                 <div className="description col-md-12">
                   {modalInfo.variations?.map((variation) => (
@@ -479,82 +471,62 @@ function VariationsModal({ modal, toggle, modalInfo }) {
                       <Case condition={Boolean(variation.sizes)}>
                         <Sizes
                           sizes={variation?.sizes || []}
-                          selectedSize={
-                            currentItem?.selectedSize || selectedSize
-                          }
+                          selectedSize={currentItem?.selectedSize || selectedSize}
                           handleChangeSize={(sz) => handleChangeSize(sz)}
-                          setArabicVariantDescription={
-                            setArabicVariantDescription
-                          }
+                          setArabicVariantDescription={setArabicVariantDescription}
                           setVariantDescription={setVariantDescription}
                         />
                       </Case>
                       <Case condition={Boolean(variation.meatOptions)}>
                         <MeatOptions
                           meatOptions={variation?.meatOptions || []}
-                          selectedMeatOption={
-                            currentItem?.selectedMeatOption ||
-                            selectedMeatOption
-                          }
-                          handleMeatOptionChange={(op) =>
-                            handleMeatOptionChange(op)
-                          }
-                          setArabicVariantDescription={
-                            setArabicVariantDescription
-                          }
+                          selectedMeatOption={currentItem?.selectedMeatOption || selectedMeatOption}
+                          handleMeatOptionChange={(op) => handleMeatOptionChange(op)}
+                          setArabicVariantDescription={setArabicVariantDescription}
                           setVariantDescription={setVariantDescription}
                         />
                       </Case>
                       <Case condition={Boolean(variation.flavours)}>
                         <Flavours
+                          disabled={!(currentItem?.selectedSize || selectedSize)}
                           flavours={variation?.flavours || []}
-                          selectedFlavour={
-                            currentItem?.selectedFlavour || selectedFlavour
-                          }
+                          selectedFlavour={currentItem?.selectedFlavour || selectedFlavour}
                           handleChangeFlavour={(fl) => handleChangeFlavour(fl)}
                         />
                       </Case>
                       <Case condition={Boolean(variation.pastaTypes)}>
                         <PastaTypes
                           pastaTypes={variation?.pastaTypes || []}
-                          selectedPastaType={
-                            currentItem?.selectedPastaType || selectedPastaType
-                          }
-                          handleChangePastaType={(pt) =>
-                            handleChangePastaType(pt)
-                          }
+                          selectedPastaType={currentItem?.selectedPastaType || selectedPastaType}
+                          handleChangePastaType={(pt) => handleChangePastaType(pt)}
                         />
                       </Case>
                     </Switch>
                   ))}
                 </div>
-                
+
                 {modalInfo.variations?.map(
                   (variation) =>
                     variation.addOns && (
                       <Addons
                         addOns={variation?.addOns}
-                        selectedAddons={
-                          currentItem?.selectedAddons || selectedAddons
-                        }
-                        
+                        selectedAddons={currentItem?.selectedAddons || selectedAddons}
                         handleAddonsChange={handleAddonsChange}
+                        canNotAddToCart={canNotAddToCart}
                       />
-                    )
+                    ),
                 )}
 
                 {modalInfo.variations?.map(
                   (variation) =>
-                    variation.extraFlavours
-                    && (
+                    variation.extraFlavours && (
                       <ExtraFlavour
-                      extraFlavours={variation?.extraFlavours}
-                      selectedExFlavours={
-                          currentItem?.selectedExFlavours || selectedExFlavours
-                        }
+                        disabled={!(currentItem?.selectedSize || selectedSize)}
+                        extraFlavours={variation?.extraFlavours}
+                        selectedExFlavours={currentItem?.selectedExFlavours || selectedExFlavours}
                         handleChangeExFlavour={handleChangeExFlavour}
                       />
-                    )
+                    ),
                 )}
               </div>
             </Col>
@@ -597,7 +569,8 @@ function VariationsModal({ modal, toggle, modalInfo }) {
           <When condition={calculatedPrice}>
             <div>
               <motion.button
-                whileTap={{ scale: 0.9 }}
+                whileTap={{ scale: canNotAddToCart ? 1 : 0.9 }}
+                disabled={canNotAddToCart}
                 onClick={() => {
                   // if already present, remove from cart
                   if (currentItem) {
@@ -612,15 +585,13 @@ function VariationsModal({ modal, toggle, modalInfo }) {
                       selectedMeatOption,
                       selectedPastaType,
                       selectedFlavour,
-                      selectedExFlavours
+                      selectedExFlavours,
                     });
                     // set current item to cart item currently handled
                     setCartItemId(cartItemId);
                   }
                 }}
-                className={`cart_btn btn btn-primary ${
-                  currentItem ? "active" : ""
-                }`}
+                className={`cart_btn btn btn-primary ${currentItem ? 'active' : ''}`}
               >
                 <span className="add_to_cart">Add to cart</span>
                 <span className="added">Added!</span>
