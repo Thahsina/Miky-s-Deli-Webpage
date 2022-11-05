@@ -112,6 +112,14 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
       updateBookedItem(currentItem?.bookingId, {
         ...currentItem,
         isExtraMaleServer: !currentItem?.isExtraMaleServer,
+        // claculating total price on update
+        calcPrice: calculatePrice({
+          isExtraServer: !currentItem?.isExtraMaleServer,
+          addons: currentItem?.selectedAddons,
+          serves: currentItem?.extraServes,
+          unitPrice: Number(cateringModalInfo?.unitPrice),
+          defaultPrice: Number(cateringModalInfo?.price),
+        }),
       });
     }
     setExtraMaleServer(!isExtraMaleServer);
@@ -124,7 +132,7 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
         isExtraFemaleServer: !currentItem?.isExtraFemaleServer,
       });
     }
-    setExtraFemaleServer(!isExtraMaleServer);
+    setExtraFemaleServer(!isExtraFemaleServer);
   };
   const increaseExtraServe = () => {
     console.log('increasing');
@@ -133,6 +141,14 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
       updateBookedItem(currentItem?.bookingId, {
         ...currentItem,
         extraServes: currentItem?.extraServes >= 9 ? 9 : currentItem?.extraServes + 1,
+        // claculating total price on update
+        calcPrice: calculatePrice({
+          isExtraServer: currentItem?.isExtraMaleServer,
+          addons: currentItem?.selectedAddons,
+          serves: currentItem?.extraServes >= 9 ? 9 : currentItem?.extraServes + 1,
+          unitPrice: Number(cateringModalInfo?.unitPrice),
+          defaultPrice: Number(cateringModalInfo?.price),
+        }),
       });
     }
     setExtraServes((s) => (s >= 9 ? 9 : s + 1));
@@ -143,6 +159,14 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
       updateBookedItem(currentItem?.bookingId, {
         ...currentItem,
         extraServes: currentItem?.extraServes <= 0 ? 0 : currentItem?.extraServes - 1,
+        // claculating total price on update
+        calcPrice: calculatePrice({
+          isExtraServer: currentItem?.isExtraMaleServer,
+          addons: currentItem?.selectedAddons,
+          serves: currentItem?.extraServes <= 0 ? 0 : currentItem?.extraServes - 1,
+          unitPrice: Number(cateringModalInfo?.unitPrice),
+          defaultPrice: Number(cateringModalInfo?.price),
+        }),
       });
     }
     setExtraServes((s) => (s <= 0 ? 0 : s - 1));
@@ -274,6 +298,11 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
       }
     }
   };
+  if (currentItem?.selectedOptions.length === 0) {
+    // if options are decreased to zero, delete the item from booking
+    deleteBookedItem(currentItem?.bookingId);
+    setBookingId(null);
+  }
   const increaseAddon = (addon) => {
     // if item is already is present in bookedItems, update it there also
     if (currentItem) {
@@ -295,6 +324,14 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
             updateBookedItem(currentItem?.bookingId, {
               ...currentItem,
               selectedAddons: newAddons,
+              // claculating total price on update
+              calcPrice: calculatePrice({
+                isExtraServer: currentItem?.isExtraMaleServer,
+                addons: newAddons,
+                serves: currentItem?.extraServes,
+                unitPrice: Number(cateringModalInfo?.unitPrice),
+                defaultPrice: Number(cateringModalInfo?.price),
+              }),
             });
           }
         }
@@ -341,6 +378,14 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
         updateBookedItem(currentItem?.bookingId, {
           ...currentItem,
           selectedAddons: newAddons,
+          // claculating total price on update
+          calcPrice: calculatePrice({
+            isExtraServer: currentItem?.isExtraMaleServer,
+            addons: newAddons,
+            serves: currentItem?.extraServes,
+            unitPrice: Number(cateringModalInfo?.unitPrice),
+            defaultPrice: Number(cateringModalInfo?.price),
+          }),
         });
       }
     }
@@ -360,7 +405,7 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
       }
     }
   };
-  // console.log({ cateringModalInfo, currentItem });
+  // console.log({ cateringModalInfo, currentItem, bookedItems });
   const [{ user }] = useStateValue();
   const [bookNowModal, setBookNowModal] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(false);
@@ -867,6 +912,14 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                   isExtraFemaleServer,
                   isExtraMaleServer,
                   extraServes,
+                  // claculating total price on update
+                  calcPrice: calculatePrice({
+                    addons: selectedAddons,
+                    serves: extraServes,
+                    unitPrice: cateringModalInfo.unitPrice,
+                    isExtraServer: isExtraMaleServer,
+                    defaultPrice: cateringModalInfo.price,
+                  }),
                 });
                 setBookingId(id);
                 bookNowToggle();
@@ -877,10 +930,10 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
             <span>
               QAR{' '}
               {calculatePrice({
-                addons: selectedAddons,
-                serves: extraServes,
+                addons: currentItem?.selectedAddons || selectedAddons,
+                serves: currentItem?.extraServes || extraServes,
                 unitPrice: cateringModalInfo.unitPrice,
-                isExtraServer: isExtraMaleServer,
+                isExtraServer: currentItem?.isExtraMaleServer || isExtraMaleServer,
                 defaultPrice: cateringModalInfo.price,
               })}
             </span>

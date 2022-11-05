@@ -196,6 +196,11 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
       }
     }
   };
+  if (currentItem?.selectedOptions.length === 0) {
+    // if options are decreased to zero, delete the item from booking
+    deleteBookedItem(currentItem?.bookingId);
+    setBookingId(null);
+  }
   const increaseAddon = (addon) => {
     // if item is already is present in bookedItems, update it there also
     if (currentItem) {
@@ -221,6 +226,12 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
           updateBookedItem(currentItem?.bookingId, {
             ...currentItem,
             selectedAddons: newAddons,
+            // calculate total price on update
+            calcPrice: calculatePrice({
+              addons: newAddons,
+              drinkAddons: currentItem?.selectedDrinkAddons,
+              defaultPrice: Number(cateringModalInfo.price),
+            }),
           });
         }
       }
@@ -266,6 +277,12 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
         updateBookedItem(currentItem?.bookingId, {
           ...currentItem,
           selectedAddons: newAddons,
+          // calculate total price on update
+          calcPrice: calculatePrice({
+            addons: newAddons,
+            drinkAddons: currentItem?.selectedDrinkAddons,
+            defaultPrice: Number(cateringModalInfo.price),
+          }),
         });
       }
     }
@@ -311,6 +328,12 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
           updateBookedItem(currentItem?.bookingId, {
             ...currentItem,
             selectedDrinkAddons: newAddons,
+            // calculate total price on update
+            calcPrice: calculatePrice({
+              addons: currentItem?.selectedAddons,
+              drinkAddons: newAddons,
+              defaultPrice: Number(cateringModalInfo.price),
+            }),
           });
         }
       }
@@ -360,6 +383,12 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
         updateBookedItem(currentItem?.bookingId, {
           ...currentItem,
           selectedDrinkAddons: newAddons,
+          // calculate total price on update
+          calcPrice: calculatePrice({
+            addons: currentItem?.selectedAddons,
+            drinkAddons: newAddons,
+            defaultPrice: Number(cateringModalInfo.price),
+          }),
         });
       }
     }
