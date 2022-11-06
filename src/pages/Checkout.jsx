@@ -431,16 +431,16 @@ const Checkout = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       saveOrderDetails();
-                      // clearCart();
+                      clearCart();
                       toggleConfirm();
                       fetchAllOrders();
-                      // setTimeout(() => {
-                      //   navigate("/");
-                      //   dispatch({
-                      //     type: actionType.SET_USER,
-                      //     user: null,
-                      //   });
-                      // }, 4000);
+                      setTimeout(() => {
+                        navigate("/");
+                        // dispatch({
+                        //   type: actionType.SET_USER,
+                        //   user: null,
+                        // });
+                      }, 4000);
                     }}
                     disabled={
                       // address.latlng === "" ||

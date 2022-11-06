@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import Category from "../Components/UI/Category";
 import "../Components/styles/home.css";
+import TestimonialSlider from '../Components/UI/TestimonialSlider'
 import { Container, Row, Col} from "reactstrap";
 import { GiChemicalDrop } from "react-icons/gi";
 import { SiLeaflet } from "react-icons/si";
@@ -143,6 +144,9 @@ const Home = () => {
               ))}
             </Row>
           </Container>
+        </section>
+        <section className="testimonial__section">
+          <TestimonialSlider/>
         </section>
       </>
     

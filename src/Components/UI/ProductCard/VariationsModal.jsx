@@ -311,10 +311,10 @@ function VariationsModal({ modal, toggle, modalInfo }) {
   const [arabicVariantDescription, setArabicVariantDescription] = useState();
   const [variantDescription, setVariantDescription] = useState();
   const [selectedAddons, setSelectedAddons] = useState([]);
-  const [selectedMeatOption, setSelectedMeatOption] = useState();
-  const [selectedSize, setSelectedSize] = React.useState();
+  const [selectedMeatOption, setSelectedMeatOption] = useState(null);
+  const [selectedSize, setSelectedSize] = React.useState(null);
   const [selectedPastaType, setSelectedPastaType] = React.useState(null);
-  const [selectedFlavour, setSelectedFlavour] = React.useState(null);
+  const [selectedFlavour, setSelectedFlavour] = React.useState([]);
   const [selectedExFlavours, setSelectedExFlavours] = React.useState([]);
   const isItemWithVariations =
     Boolean(modalInfo.variations?.find((i) => i.sizes)) ||

@@ -49,78 +49,50 @@ const OrderCardUser = ({ data }) => {
                 <Col sm="3" md="4">
                   <div className="orderPrice">
                     <b>QAR&nbsp;&nbsp;</b>
-                    {eachUserOrder.cartItems[0].price}
+                    {eachUserOrder.cartItems[0].calcPrice}
                   </div>
                 </Col>
                 <Col md="12" sm="12">
-                  
-
-                  {eachUserOrder.cartItems[0].selectedSize && (
-                    <>
-                      <p style={{ color: "green", margin: "0.5rem" }}>
-                        Selected Size
-                      </p>
-                      <div style={{ marginLeft: "0.8rem" }}>
-                        - {eachUserOrder.cartItems[0].selectedSize.size}{" "}
-                      </div>
-                    </>
-                  )}
-                  {console.log(eachUserOrder.cartItems[0].selectedAddons)}
                   {eachUserOrder.cartItems[0].selectedAddons && (
-                    <p style={{ color: "green", margin: "0.5rem" }}>
-                      Selected Add-Ons
-                    </p>
+                    <div style={{ marginLeft: "0.8rem" }}>
+                      - Addons:{" "}
+                      {eachUserOrder.cartItems[0].selectedAddons?.map(
+                        (eachSelectedAddon) => (
+                          <> {eachSelectedAddon.addOn} </>
+                        )
+                      )}
+                    </div>
                   )}
-                  {eachUserOrder.cartItems[0].selectedAddons?.map(
-                    (eachSelectedAddon) => (
-                      <div style={{ marginLeft: "0.8rem" }}>
-                        - {eachSelectedAddon.addOn}{" "}
-                      </div>
-                    )
-                  )}
-
-                  {eachUserOrder.cartItems[0].selectedExFlavours &&
-                    eachUserOrder.cartItems[0].selectedExFlavours?.map(
-                      (eachSelectedExFlavours) => (
-                        <div style={{ marginLeft: "0.8rem" }}>
-                          - {eachSelectedExFlavours.extraFlavour}{" "}
-                        </div>
-                      )
-                    )}
-
-                  {eachUserOrder.cartItems[0].selectedMeatOption && (
-                    <>
-                      <p style={{ color: "green", margin: "0.5rem" }}>
-                        Selected Meat
-                      </p>
-                      <div style={{ marginLeft: "0.8rem" }}>
-                        -{" "}
-                        {
-                          eachUserOrder.cartItems[0].selectedMeatOption
-                            .meatOption
-                        }{" "}
-                      </div>
-                    </>
+                  {eachUserOrder.cartItems[0].selectedSize && (
+                    <div style={{ marginLeft: "0.8rem" }}>
+                      - Size: {eachUserOrder.cartItems[0].selectedSize?.size}
+                    </div>
                   )}
                   {eachUserOrder.cartItems[0].selectedPastaType && (
-                    <>
-                      <p style={{ color: "green", margin: "0.5rem" }}>
-                        Selected Pasta Type
-                      </p>
-                      <div style={{ marginLeft: "0.8rem" }}>
-                        - {eachUserOrder.cartItems[0].selectedPastaType}{" "}
-                      </div>
-                    </>
+                    <div style={{ marginLeft: "0.8rem" }}>
+                      - Pasta type:{" "}
+                      {eachUserOrder.cartItems[0].selectedPastaType}
+                    </div>
+                  )}
+                  {console.log(
+                    eachUserOrder.cartItems[0].selectedFlavour,
+                    eachUserOrder.cartItems[0].title
                   )}
                   {eachUserOrder.cartItems[0].selectedFlavour && (
-                    <>
-                      <p style={{ color: "green", margin: "0.5rem" }}>
-                        Selected Flavour
-                      </p>
-                      <div style={{ marginLeft: "0.8rem" }}>
-                        - {eachUserOrder.cartItems[0].selectedFlavour}{" "}
-                      </div>
-                    </>
+                    <div style={{ marginLeft: "0.8rem" }}>
+                      - Flavour:{" "}
+                      <b>{eachUserOrder.cartItems[0].selectedFlavour}</b>
+                    </div>
+                  )}
+                  {eachUserOrder.cartItems[0].selectedExFlavours && (
+                    <div style={{ marginLeft: "0.8rem" }}>
+                      - Extra Flavours:{" "}
+                      {eachUserOrder.cartItems[0].selectedExFlavours?.map(
+                        (eachSelectedExFlavours) => (
+                          <b> {eachSelectedExFlavours?.extraFlavour} </b>
+                        )
+                      )}
+                    </div>
                   )}
                 </Col>
               </Row>
@@ -151,69 +123,46 @@ const OrderCardUser = ({ data }) => {
                         <div style={{ marginLeft: "0.8rem" }}>{"  "}</div>
                         <div style={{ marginLeft: "0.8rem" }}>{"  "}</div>
                         <div style={{ marginLeft: "0.8rem" }}>{"  "}</div>
-                        {userOrderItem.selectedSize && (
-                          <>
-                            <p style={{ color: "green", margin: "0.5rem" }}>
-                              Selected Size
-                            </p>
-                            <div style={{ marginLeft: "0.8rem" }}>
-                              - {userOrderItem.selectedSize.size}{" "}
-                            </div>
-                          </>
-                        )}
-                        {console.log(userOrderItem.selectedAddons)}
                         {userOrderItem.selectedAddons && (
-                          <p style={{ color: "green", margin: "0.5rem" }}>
-                            Selected Add-Ons
-                          </p>
+                          <div style={{ marginLeft: "0.8rem" }}>
+                            - Addons:{" "}
+                            {userOrderItem.selectedAddons?.map(
+                              (eachSelectedAddon) => (
+                                <> {eachSelectedAddon.addOn} </>
+                              )
+                            )}
+                          </div>
                         )}
-                        {userOrderItem.selectedAddons?.map(
-                          (eachSelectedAddon) => (
-                            <div style={{ marginLeft: "0.8rem" }}>
-                              - {eachSelectedAddon.addOn}{" "}
-                            </div>
-                          )
-                        )}
-
-                        {userOrderItem.selectedExFlavours &&
-                          userOrderItem.selectedExFlavours?.map(
-                            (eachSelectedExFlavours) => (
-                              <div style={{ marginLeft: "0.8rem" }}>
-                                - {eachSelectedExFlavours.extraFlavour}{" "}
-                              </div>
-                            )
-                          )}
-
-                        {userOrderItem.selectedMeatOption && (
-                          <>
-                            <p style={{ color: "green", margin: "0.5rem" }}>
-                              Selected Meat
-                            </p>
-                            <div style={{ marginLeft: "0.8rem" }}>
-                              - {userOrderItem.selectedMeatOption.meatOption}{" "}
-                            </div>
-                          </>
+                        {userOrderItem.selectedSize && (
+                          <div style={{ marginLeft: "0.8rem" }}>
+                            - Size:{" "}
+                            {eachUserOrder.cartItems[0].selectedSize?.size}
+                          </div>
                         )}
                         {userOrderItem.selectedPastaType && (
-                          <>
-                            <p style={{ color: "green", margin: "0.5rem" }}>
-                              Selected Pasta Type
-                            </p>
-                            <div style={{ marginLeft: "0.8rem" }}>
-                              - {userOrderItem.selectedPastaType}{" "}
-                            </div>
-                          </>
+                          <div style={{ marginLeft: "0.8rem" }}>
+                            - Pasta type:{" "}
+                            {eachUserOrder.cartItems[0].selectedPastaType}
+                          </div>
                         )}
+                        
                         {userOrderItem.selectedFlavour && (
-                          <>
-                            <p style={{ color: "green", margin: "0.5rem" }}>
-                              Selected Flavour
-                            </p>
-                            <div style={{ marginLeft: "0.8rem" }}>
-                              - {userOrderItem.selectedFlavour}{" "}
-                            </div>
-                          </>
+                          <div style={{ marginLeft: "0.8rem" }}>
+                            - Flavour:{" "}
+                            <b>{userOrderItem.selectedFlavour}</b>
+                          </div>
                         )}
+                        {userOrderItem.selectedExFlavours && (
+                          <div style={{ marginLeft: "0.8rem" }}>
+                            - Extra Flavours:{" "}
+                            {userOrderItem.selectedExFlavours?.map(
+                              (eachSelectedExFlavours) => (
+                                <b> {eachSelectedExFlavours?.extraFlavour} </b>
+                              )
+                            )}
+                          </div>
+                        )}
+                       
                       </Col>
                     </Row>
                   </section>
