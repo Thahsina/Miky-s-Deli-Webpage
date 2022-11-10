@@ -11,7 +11,7 @@ export const StateProvider = ({ reducer, initialState, children }) => {
 
   const bookItem = (item) => {
     // do not add to bookedItems when no option is selected
-    if (item.selectedOptions?.length === 0) return;
+    if (item.hasOptions && item.selectedOptions?.length === 0) return;
     // every booked item has a bookingId which is separate from product id
     const bookingId = Date.now() * Math.ceil(Math.random() * 1000);
     setBookedItems([...bookedItems, { ...item, bookingId }]);

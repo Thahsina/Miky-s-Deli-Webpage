@@ -100,7 +100,6 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
   const { bookItem, bookedItems, deleteBookedItem, updateBookedItem } = useStateValue()[2];
   const [bookingId, setBookingId] = React.useState();
   const currentItem = bookedItems.find((i) => i.bookingId === bookingId);
-
   const [selectedOptions, setSelectedOptions] = React.useState([]);
   const [selectedAddons, setSelectedAddons] = React.useState([]);
   const [isExtraMaleServer, setExtraMaleServer] = React.useState(false);
@@ -900,7 +899,7 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
             type="button"
             className="booknowBtn"
             data-dismiss="modal"
-            disabled={selectedOptions.length === 0}
+            disabled={selectedOptions.length === 0 && cateringModalInfo.hasOptions}
             onClick={() => {
               if (currentItem) {
                 deleteBookedItem(bookingId);
