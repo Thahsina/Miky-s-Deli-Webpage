@@ -30,7 +30,7 @@ const OrderCard = ({ data }) => {
                 </div>
               </Col>
             </Row>
-            {console.log(eachOrder)}
+           
             <div className="orderItemsList">
               {eachOrder.cartItems?.map((orderItem) => (
                 <Row className="mb-2 mt-4">
@@ -44,6 +44,7 @@ const OrderCard = ({ data }) => {
                   <Col sm="1" md="1" className="pr-0 pl-0">
                     x{orderItem.qty}
                   </Col>
+                  {/* {console.log(orderItem.selectedFlavour)} */}
                   <Col sm="3" md="4">
                     <div className="orderPrice">
                       QAR&nbsp;&nbsp;{orderItem.calcPrice}
@@ -68,7 +69,7 @@ const OrderCard = ({ data }) => {
                         - Pasta type: {orderItem.selectedPastaType}
                       </div>
                     )}
-                    {console.log(orderItem.selectedFlavour, orderItem.title)}
+
                     {orderItem.selectedFlavour && (
                       <div style={{ marginLeft: "0.8rem" }}>
                         - Flavour: <b>{orderItem.selectedFlavour}</b>

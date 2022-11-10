@@ -4,11 +4,10 @@ import "./index.css";
 import App from "./App";
 import "remixicon/fonts/remixicon.css";
 import "bootstrap/dist/css/bootstrap.css";
-// import '../src/Components/styles/randomName.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+import {HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router } from "react-router-dom";
 import { StateProvider } from "./context/StateProvider";
 

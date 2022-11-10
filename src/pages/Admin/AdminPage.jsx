@@ -60,16 +60,12 @@ const Admin = () => {
 
   return (
     <>
-    <Helmet>
-        <title>Miky's Deli - Amin</title>
-        <meta
-          name="robots"
-          content="noindex"
-        />
+      <Helmet>
+        <title>Miky's Deli - Admin</title>
+        <meta name="robots" content="noindex" />
         <link rel="canonical" href="/admin" />
       </Helmet>
       <div className="d-flex">
-        {/* <Col lg="4"className=""> */}
         <div className="main-container">
           <motion.div
             animate={{
@@ -125,7 +121,6 @@ const Admin = () => {
           </motion.div>
         </div>
 
-        {/* </Col> */}
         <div className="admin_outlet">
           <Outlet />
         </div>

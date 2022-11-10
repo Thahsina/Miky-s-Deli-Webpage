@@ -258,7 +258,7 @@ const Header = () => {
                           <PersonOutline aria-haspopup="true" />
                         </Box>
                       </DropdownToggle>
-                      <DropdownMenu right>
+                      <DropdownMenu end>
                         <DropdownItem onClick={toggleCollapsed}>
                           <Link
                             style={{

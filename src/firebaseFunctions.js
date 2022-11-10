@@ -2,18 +2,12 @@ import {
   collection,
   deleteDoc,
   doc,
-  getDoc,
   getDocs,
-  getFirestore,
   orderBy,
   query,
   setDoc,
-  where,
 } from "firebase/firestore";
 import { firestore } from "./firebase.config";
-import { useStateValue } from "./context/StateProvider";
-import { actionType } from "./context/reducer";
-
 
 export const saveUser = async (userData) => {
   await setDoc(doc(firestore, "users", `${Date.now()}`), userData, {
@@ -40,15 +34,23 @@ export const saveOrder = async (orderData) => {
 };
 
 export const saveCateringOrder = async (cateringOrderData) => {
-  await setDoc(doc(firestore, "cateringOrders", cateringOrderData.id), cateringOrderData, {
-    merge: true,
-  });
+  await setDoc(
+    doc(firestore, "cateringOrders", cateringOrderData.id),
+    cateringOrderData,
+    {
+      merge: true,
+    }
+  );
 };
 
 export const saveDropOffOrder = async (dropOffOrderData) => {
-  await setDoc(doc(firestore, "dropoffOrders", dropOffOrderData.id), dropOffOrderData, {
-    merge: true,
-  });
+  await setDoc(
+    doc(firestore, "dropoffOrders", dropOffOrderData.id),
+    dropOffOrderData,
+    {
+      merge: true,
+    }
+  );
 };
 
 //get all reviews from firestore
@@ -62,7 +64,10 @@ export const getAllReviews = async () => {
 //get all menu items from firestore
 export const getAllMenuItems = async () => {
   const items = await getDocs(
-    query(collection(firestore, "menuItems"), orderBy("id", "desc"))
+    query(
+      collection(firestore, "menuItems")
+      // , orderBy("id", "desc")
+    )
   );
   return items.docs.map((doc) => doc.data());
 };
@@ -105,22 +110,6 @@ export const getAcceptedOrders = async () => {
   return acceptedOrders.docs.map((doc) => doc.data());
 };
 
-// export const removeAcceptedOrders = async (id) => {
-//   await deleteDoc(doc(firestore, "orders", id));
-// };
-
-export const fetchAllOrders = async () => {
-  await getAllOrders().then((orderData) => {
-    const [dispatch] = useStateValue();
-    // console.log(data);
-    dispatch({
-      type: actionType.SET_ORDERS,
-      orders: orderData,
-    });
-  });
-};
-
-
 export const getAllCateringOrders = async () => {
   const cateringOrders = await getDocs(
     query(collection(firestore, "cateringOrders"), orderBy("id", "desc"))
@@ -128,19 +117,9 @@ export const getAllCateringOrders = async () => {
   return cateringOrders.docs.map((doc) => doc.data());
 };
 
-
 export const getAllDropOffOrders = async () => {
   const dropOffOrders = await getDocs(
     query(collection(firestore, "dropoffOrders"), orderBy("id", "desc"))
   );
   return dropOffOrders.docs.map((doc) => doc.data());
 };
-// export const fetchAcceptedOrders = async () => {
-//   await getAcceptedOrders().then((acceptedOrderData) => {
-//     const [dispatch] = useStateValue();
-//     dispatch({
-//       type: actionType.SET_ACCEPTEDORDERS,
-//       acceptedOrders: acceptedOrderData,
-//     });
-//   });
-// };

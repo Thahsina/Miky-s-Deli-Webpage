@@ -18,19 +18,19 @@ const featureData = [
   {
     title: "Free Delivery",
     imgUrl: featureImg01,
-    desc: "Enjoy our free, quick and safe delivery.Delivering our handmade deliciousness with our hands safely.",
+    desc: "Enjoy our free, quick and safe delivery.Delivering our fresh and handmade deliciousness from our hands to yours safely.",
   },
 
   {
-    title: "Available 24/7",
+    title: "24/7 Dine-In",
     imgUrl: featureImg02,
-    desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, doloremque.",
+    desc: "We strive to offer fast service in a comfortable environment where customers can relax over dinner, drinks or watch their favorite sporting events.",
   },
 
   {
     title: "Catering / Drop-Off",
     imgUrl: featureImg03,
-    desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, doloremque.",
+    desc: "Do you have a special event coming up that you need catering or drop-off service for? Look no further than our professional catering & drop-off services.",
   },
 ];
 
@@ -114,12 +114,10 @@ const Home = () => {
                   we will <span>take care</span>
                 </h2>
                 <p className="mb-1 mt-4 feature__text">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Dolor, officiis?
+                Miky's Deli, we are a popular place where you can order Italian deli foods from 
                 </p>
                 <p className="feature__text">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Aperiam, eius.{" "}
+                salads, sandwiches, wraps, burgers and more at any time of the day !!{" "}
                 </p>
               </Col>
 

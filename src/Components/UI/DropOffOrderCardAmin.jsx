@@ -9,7 +9,7 @@ const DropOffOrderCardAdmin = ({ data }) => {
     <>
       {data &&
         data.map((eachCateringOrder) => (
-          <div className="cateringOrderCard">
+          <div className="cateringOrderCard" key={eachCateringOrder.id}>
             <Row className="orderCard_header">
               <Col sm="6">
                 <div className="orderNumber">

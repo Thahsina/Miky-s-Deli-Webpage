@@ -26,8 +26,7 @@ const OrderCardUser = ({ data }) => {
     <>
       {data &&
         data.map((eachUserOrder, index) => (
-          <div className="orderCard__user">
-            {/* {console.log(eachUserOrder.cartItems)} */}
+          <div className="orderCard__user" key={eachUserOrder.id}>
             <Row className="orderCard_header">
               <div className="orderDate__user">
                 Date :<span>{eachUserOrder.orderDate?.substr(3, 12)}</span>

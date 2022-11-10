@@ -36,7 +36,7 @@ const CateringOrderCardAdmin = ({ data }) => {
                   </Col>
                   <Col sm="3" md="5">
                     <div className="orderPrice">
-                      QAR&nbsp;&nbsp;<b>{orderItem.price}</b>{" "}
+                      QAR&nbsp;&nbsp;<b>{orderItem.calcPrice}</b>{" "}
                     </div>
                   </Col>
                   <Col md="12" sm="12">

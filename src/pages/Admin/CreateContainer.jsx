@@ -353,7 +353,7 @@ const CreateContainer = () => {
                       <MdFoodBank />
                       <input
                         type="text"
-                        requried
+                        requried="true"
                         placeholder="Give me a description...."
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
@@ -363,7 +363,7 @@ const CreateContainer = () => {
                       <MdFoodBank />
                       <input
                         type="text"
-                        requried
+                        requried='true'
                         placeholder="Give me an arabic description...."
                         value={arabicDescription}
                         onChange={(e) => setArabicDescription(e.target.value)}

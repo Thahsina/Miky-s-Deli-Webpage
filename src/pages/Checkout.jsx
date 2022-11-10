@@ -13,9 +13,8 @@ import "../Components/styles/checkout.css";
 import { Modal, ModalBody } from "reactstrap";
 import TickImg from "../images/tick.png";
 import Area from "../pages/Area";
-import { saveOrder, getAllOrders, fetchAllOrders } from "../firebaseFunctions";
+import { saveOrder, getAllOrders } from "../firebaseFunctions";
 import { actionType } from "../context/reducer";
-
 
 const Checkout = () => {
   const [{ user, deliveryZone, orders }, dispatch] = useStateValue();
@@ -37,6 +36,16 @@ const Checkout = () => {
     }, 0);
   };
 
+  const fetchNewOrders = async () => {
+    await getAllOrders().then((orderData) => {
+      // console.log(data);
+      dispatch({
+        type: actionType.SET_ORDERS,
+        orders: orderData,
+      });
+    });
+  };
+
   const [address, setAddress] = useState({
     name: "",
     email: "",
@@ -45,7 +54,6 @@ const Checkout = () => {
     buildingNo: "",
     flatNo: "",
     nearestLandmark: "",
-    // deliveryZone: deliveryZone,
     latlng: "",
   });
 
@@ -413,7 +421,7 @@ const Checkout = () => {
                     </label>
                   </div>
                 </div>
-
+                {console.log(orders)}
                 {/* action buttons */}
                 <div className="step-actions mb-4 text-center">
                   <Link to="/menu">
@@ -433,14 +441,11 @@ const Checkout = () => {
                       saveOrderDetails();
                       clearCart();
                       toggleConfirm();
-                      fetchAllOrders();
+                      fetchNewOrders();
                       setTimeout(() => {
                         navigate("/");
-                        // dispatch({
-                        //   type: actionType.SET_USER,
-                        //   user: null,
-                        // });
                       }, 4000);
+                      clearTimeout();
                     }}
                     disabled={
                       // address.latlng === "" ||
@@ -466,7 +471,8 @@ const Checkout = () => {
                 <ModalBody className="checkout__modal-content text-center">
                   <img src={TickImg} alt=" Green Tick" />
                   <h2>Thank You!</h2>
-                  <p>Your order is Comfirmed</p>
+                  <p>Your order is on its way…(Hooray!) </p>
+                  <p>Order will be delivered in approximately 60 minutes.</p>
                   <h3>See you again at another mealtime.</h3>
                 </ModalBody>
               </Modal>

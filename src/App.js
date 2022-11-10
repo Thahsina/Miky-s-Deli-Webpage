@@ -1,6 +1,6 @@
 import Layout from "./Components/Layout";
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import Area from "./pages/Area";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
@@ -18,7 +18,7 @@ import { actionType } from "./context/reducer";
 import { SkeletonTheme } from "react-loading-skeleton";
 
 function App() {
-  const [{ menuItems, acceptedOrders, user }, dispatch] = useStateValue();
+  const [dispatch] = useStateValue();
 
   const fetchMenuItems = async () => {
     await getAllMenuItems().then((data) => {
@@ -100,7 +100,7 @@ function App() {
     fetchAllCateringOrders();
     fetchAllDropOffOrders()
   }, []);
-  //  useEffect(()=>{<Area/>},[])
+   useEffect(()=>{<Area/>},[])
   return (
     <SkeletonTheme duration={2} baseColor="#666464" highlightColor="#525252">
       <LocalizationProvider dateAdapter={AdapterDateFns}>

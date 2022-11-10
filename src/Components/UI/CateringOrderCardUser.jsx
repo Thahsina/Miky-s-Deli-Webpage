@@ -7,7 +7,7 @@ const CateringOrderCardUser = ({ data }) => {
     <>
       {data &&
         data.map((eachCateringOrder) => (
-          <div className="cateringOrderCard__user">
+          <div className="cateringOrderCard__user" key={eachCateringOrder.id}>
             <Row className="cateringOrderCard__userHeader">
               <Col sm="6">
                 <div className="cateringOrderCard__userTime">

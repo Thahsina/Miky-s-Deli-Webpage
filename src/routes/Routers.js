@@ -6,9 +6,9 @@ import {
   Navigate,
 } from "react-router-dom";
 import Home from "../pages/Home";
-import CateringPage from "../pages/CateringPage";
-import ServicesPage from "../pages/ServicesPage";
-import DropoffPage from "../pages/DropoffPage";
+import CateringPage from "../pages/Services.jsx/CateringPage";
+import ServicesPage from "../pages/Services.jsx/ServicesPage";
+import DropoffPage from "../pages/Services.jsx/DropoffPage";
 import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import Admin from "../pages/Admin/AdminPage";
@@ -25,7 +25,7 @@ import Dashboard from "../pages/UserProfile/Dashboard";
 import ProfileInfo from "../pages/UserProfile/ProfileInfo";
 import Map from "../Components/UI/Map";
 import NotFoundPage from "../Components/UI/notFoundPage";
-import CardSkeleton from "../Components/UI/CardSkeleton";
+// import CardSkeleton from "../Components/UI/CardSkeleton";
 const LazyMenu = React.lazy(() => import("../pages/Menu"));
 
 const Routers = () => {
@@ -34,9 +34,6 @@ const Routers = () => {
       <Route path="*" element={<NotFoundPage />} />
       <Route path="/" element={<Navigate to="/home" />} />
       <Route path="/home" element={<Home />} />
-      {/* <Route path="/profile" element={<UserProfile />} /> */}
-
-      {/* <Route path="/menu" element={<Menu />} /> */}
       <Route
         path="/menu"
         element={

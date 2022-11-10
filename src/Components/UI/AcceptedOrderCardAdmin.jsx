@@ -17,7 +17,7 @@ const AcceptedOrderCard = ({ data }) => {
     <>
       {data &&
         data.map((eachOrder) => (
-          <div className="orderCard">
+          <div className="orderCard" key={eachOrder.id}>
             <Row>
               <Col lg="12" md="12">
                 <div className="text-center m-4">

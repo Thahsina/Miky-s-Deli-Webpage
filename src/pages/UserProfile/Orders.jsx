@@ -6,6 +6,7 @@ import { useStateValue } from "../../context/StateProvider";
 
 const Orders = () => {
   const [{ acceptedOrders, user }] = useStateValue();
+  // const [{ cartItems }] = useStateValue()[2]
   const [userOrder, setUserOrder] = useState();
 
   const fetchUserOrders = async (user) => {
