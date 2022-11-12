@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { Checkbox } from '@mui/material';
-import { When } from 'react-if';
-import { motion } from 'framer-motion';
-import Barista from '../../../images/barista.png';
-import Server from '../../../images/server.png';
-import StopWatch from '../../../images/stopwatch.png';
-import FemaleServer from '../../../images/femaleServer.png';
-import { FaClock } from 'react-icons/fa';
-import { BiMinus, BiPlus } from 'react-icons/bi';
-import { useStateValue } from '../../../context/StateProvider';
-import DateTimePicker from './../DateTimePicker';
-import { saveCateringOrder } from '../../../firebaseFunctions';
+import React, { useState } from "react";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Checkbox } from "@mui/material";
+import { When } from "react-if";
+import { motion } from "framer-motion";
+import Barista from "../../../images/barista.png";
+import Server from "../../../images/server.png";
+import StopWatch from "../../../images/stopwatch.png";
+import FemaleServer from "../../../images/femaleServer.png";
+import { FaClock } from "react-icons/fa";
+import { BiMinus, BiPlus } from "react-icons/bi";
+import { useStateValue } from "../../../context/StateProvider";
+import DateTimePicker from "./../DateTimePicker";
+import { saveCateringOrder } from "../../../firebaseFunctions";
 
 function ChoiceItem({ choice, subtitle, quantity, increment, decrement }) {
   return (
@@ -22,9 +22,9 @@ function ChoiceItem({ choice, subtitle, quantity, increment, decrement }) {
           <When condition={Boolean(subtitle)}>
             <small
               style={{
-                fontSize: '1rem',
-                fontWeight: '500',
-                color: '#9196AA',
+                fontSize: "1rem",
+                fontWeight: "500",
+                color: "#9196AA",
               }}
             >
               <BiPlus />
@@ -33,8 +33,12 @@ function ChoiceItem({ choice, subtitle, quantity, increment, decrement }) {
           </When>
         </div>
         <div className="counter d-flex">
-          <motion.button whileTap={{ scale: 0.5 }} className="minusBtn" onTap={() => decrement()}>
-            <BiMinus style={{ fontSize: '1rem' }} />
+          <motion.button
+            whileTap={{ scale: 0.5 }}
+            className="minusBtn"
+            onTap={() => decrement()}
+          >
+            <BiMinus style={{ fontSize: "1rem" }} />
           </motion.button>
           <input
             className="counterQuantity"
@@ -44,8 +48,12 @@ function ChoiceItem({ choice, subtitle, quantity, increment, decrement }) {
             value={quantity}
             readOnly
           />
-          <motion.button whileTap={{ scale: 0.5 }} className="plusBtn" onTap={() => increment()}>
-            <BiPlus style={{ fontSize: '1rem' }} />
+          <motion.button
+            whileTap={{ scale: 0.5 }}
+            className="plusBtn"
+            onTap={() => increment()}
+          >
+            <BiPlus style={{ fontSize: "1rem" }} />
           </motion.button>
         </div>
       </li>
@@ -53,16 +61,23 @@ function ChoiceItem({ choice, subtitle, quantity, increment, decrement }) {
   );
 }
 
-function Category({ options, title, totalSelectable, selectedOptions, increment, decrement }) {
+function Category({
+  options,
+  title,
+  totalSelectable,
+  selectedOptions,
+  increment,
+  decrement,
+}) {
   return (
     <div className="catering-modal-pastaTypes">
       <div className="mb-4">
         <strong>{title}</strong>
         <span
           style={{
-            color: 'red',
-            fontSize: '12px',
-            margin: '1rem',
+            color: "red",
+            fontSize: "12px",
+            margin: "1rem",
           }}
         >
           (select {totalSelectable} choices)
@@ -74,7 +89,7 @@ function Category({ options, title, totalSelectable, selectedOptions, increment,
           choice={eachType.name}
           quantity={
             (selectedOptions || selectedOptions).find(
-              (op) => op.name === eachType.name && op.type === eachType.type,
+              (op) => op.name === eachType.name && op.type === eachType.type
             )?.quantity || 0
           }
           increment={() => increment(eachType)}
@@ -85,7 +100,13 @@ function Category({ options, title, totalSelectable, selectedOptions, increment,
   );
 }
 
-function calculatePrice({ addons, isExtraServer, serves, unitPrice, defaultPrice }) {
+function calculatePrice({
+  addons,
+  isExtraServer,
+  serves,
+  unitPrice,
+  defaultPrice,
+}) {
   let val = 0;
   addons?.forEach((a) => {
     val += Number(a.price) * Number(a.quantity);
@@ -97,7 +118,8 @@ function calculatePrice({ addons, isExtraServer, serves, unitPrice, defaultPrice
 }
 
 const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
-  const { bookItem, bookedItems, deleteBookedItem, updateBookedItem } = useStateValue()[2];
+  const { bookItem, bookedItems, deleteBookedItem, updateBookedItem } =
+    useStateValue()[2];
   const [bookingId, setBookingId] = React.useState();
   const currentItem = bookedItems.find((i) => i.bookingId === bookingId);
 
@@ -135,17 +157,19 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
     setExtraFemaleServer(!isExtraFemaleServer);
   };
   const increaseExtraServe = () => {
-    console.log('increasing');
+    console.log("increasing");
     // if item is already booked, update the item in booked items also
     if (currentItem) {
       updateBookedItem(currentItem?.bookingId, {
         ...currentItem,
-        extraServes: currentItem?.extraServes >= 9 ? 9 : currentItem?.extraServes + 1,
+        extraServes:
+          currentItem?.extraServes >= 9 ? 9 : currentItem?.extraServes + 1,
         // claculating total price on update
         calcPrice: calculatePrice({
           isExtraServer: currentItem?.isExtraMaleServer,
           addons: currentItem?.selectedAddons,
-          serves: currentItem?.extraServes >= 9 ? 9 : currentItem?.extraServes + 1,
+          serves:
+            currentItem?.extraServes >= 9 ? 9 : currentItem?.extraServes + 1,
           unitPrice: Number(cateringModalInfo?.unitPrice),
           defaultPrice: Number(cateringModalInfo?.price),
         }),
@@ -158,12 +182,14 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
     if (currentItem) {
       updateBookedItem(currentItem?.bookingId, {
         ...currentItem,
-        extraServes: currentItem?.extraServes <= 0 ? 0 : currentItem?.extraServes - 1,
+        extraServes:
+          currentItem?.extraServes <= 0 ? 0 : currentItem?.extraServes - 1,
         // claculating total price on update
         calcPrice: calculatePrice({
           isExtraServer: currentItem?.isExtraMaleServer,
           addons: currentItem?.selectedAddons,
-          serves: currentItem?.extraServes <= 0 ? 0 : currentItem?.extraServes - 1,
+          serves:
+            currentItem?.extraServes <= 0 ? 0 : currentItem?.extraServes - 1,
           unitPrice: Number(cateringModalInfo?.unitPrice),
           defaultPrice: Number(cateringModalInfo?.price),
         }),
@@ -176,14 +202,15 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
     if (currentItem) {
       // getting maxChoice of option type
       const typeMaxChoices =
-        currentItem?.variations.find((variant) => variant[type])?.maxChoice || 0;
+        currentItem?.variations.find((variant) => variant[type])?.maxChoice ||
+        0;
       const totalSelectedQuantityOfCurrentType = currentItem?.selectedOptions
         .filter((op) => op.type === type) // filtering out current type options
         .map((op) => op.quantity) // getting only selected quantities
         .reduce((sum, current) => (sum += current), 0); // summing up all the quantities
       // if already present, increment quantity
       const foundIndex = currentItem?.selectedOptions.findIndex(
-        (option) => option.name === name && option.type === type,
+        (option) => option.name === name && option.type === type
       );
       if (foundIndex >= 0) {
         const foundOption = currentItem?.selectedOptions[foundIndex];
@@ -208,7 +235,10 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
       // or if total selected options of a current type are less in quantity than typeMaxChoice proceed ahead
       else if (totalSelectedQuantityOfCurrentType < typeMaxChoices) {
         // if not already present add to array
-        const newOptions = [...currentItem?.selectedOptions, { name, type, quantity: 1 }];
+        const newOptions = [
+          ...currentItem?.selectedOptions,
+          { name, type, quantity: 1 },
+        ];
         updateBookedItem(currentItem?.bookingId, {
           ...currentItem,
           selectedOptions: newOptions,
@@ -217,14 +247,15 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
     }
     // getting maxChoice of option type
     const typeMaxChoices =
-      cateringModalInfo.variations.find((variant) => variant[type])?.maxChoice || 0;
+      cateringModalInfo.variations.find((variant) => variant[type])
+        ?.maxChoice || 0;
     const totalSelectedQuantityOfCurrentType = selectedOptions
       .filter((op) => op.type === type) // filtering out current type options
       .map((op) => op.quantity) // getting only selected quantities
       .reduce((sum, current) => (sum += current), 0); // summing up all the quantities
     // if already present, increment quantity
     const foundIndex = selectedOptions.findIndex(
-      (option) => option.name === name && option.type === type,
+      (option) => option.name === name && option.type === type
     );
     if (foundIndex >= 0) {
       const foundOption = selectedOptions[foundIndex];
@@ -253,7 +284,7 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
     if (currentItem) {
       // if already present, decrement quantity else do nothing
       const foundIndex = currentItem?.selectedOptions.findIndex(
-        (option) => option.name === name && option.type === type,
+        (option) => option.name === name && option.type === type
       );
       if (foundIndex >= 0) {
         const foundOption = currentItem?.selectedOptions[foundIndex];
@@ -262,7 +293,7 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
           updateBookedItem(currentItem?.bookingId, {
             ...currentItem,
             selectedOptions: currentItem?.selectedOptions.filter(
-              (option) => !(option.name === name && option.type === type),
+              (option) => !(option.name === name && option.type === type)
             ),
           });
         } else {
@@ -280,14 +311,16 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
     }
     // if already present, decrement quantity else do nothing
     const foundIndex = selectedOptions.findIndex(
-      (option) => option.name === name && option.type === type,
+      (option) => option.name === name && option.type === type
     );
     if (foundIndex >= 0) {
       const foundOption = selectedOptions[foundIndex];
       // if quantity is already 1, remove from array
       if (foundOption.quantity <= 1) {
         setSelectedOptions(
-          selectedOptions.filter((option) => !(option.name === name && option.type === type)),
+          selectedOptions.filter(
+            (option) => !(option.name === name && option.type === type)
+          )
         );
       } else {
         setSelectedOptions([
@@ -313,7 +346,9 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
           .reduce((sum, current) => (sum += current));
         if (totalQty < 10) {
           // if already present, increment quantity
-          const foundIndex = currentItem?.selectedAddons.findIndex((a) => a.addOn === addon.addOn);
+          const foundIndex = currentItem?.selectedAddons.findIndex(
+            (a) => a.addOn === addon.addOn
+          );
           if (foundIndex >= 0) {
             const foundAddon = currentItem?.selectedAddons[foundIndex];
             const newAddons = [
@@ -361,13 +396,17 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
     // if item is already present in bookedItems, update it there also
     if (currentItem) {
       // if already present, decrement quantity
-      const foundIndex = currentItem?.selectedAddons.findIndex((a) => a.addOn === addon.addOn);
+      const foundIndex = currentItem?.selectedAddons.findIndex(
+        (a) => a.addOn === addon.addOn
+      );
       if (foundIndex >= 0) {
         const foundAddon = currentItem?.selectedAddons[foundIndex];
         // if quantity is already 1, remove from array
         let newAddons = [];
         if (foundAddon.quantity <= 1) {
-          newAddons = currentItem?.selectedAddons.filter((a) => a.addOn !== addon.addOn);
+          newAddons = currentItem?.selectedAddons.filter(
+            (a) => a.addOn !== addon.addOn
+          );
         } else {
           newAddons = [
             ...currentItem?.selectedAddons.slice(0, foundIndex),
@@ -395,7 +434,9 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
       const foundAddon = selectedAddons[foundIndex];
       // if quantity is already 1, remove from array
       if (foundAddon.quantity <= 1) {
-        setSelectedAddons(selectedAddons.filter((a) => a.addOn !== addon.addOn));
+        setSelectedAddons(
+          selectedAddons.filter((a) => a.addOn !== addon.addOn)
+        );
       } else {
         setSelectedAddons([
           ...selectedAddons.slice(0, foundIndex),
@@ -434,7 +475,7 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
         size="xl"
         toggle={toggle}
         className="catering-modal"
-        style={{ cursor: 'pointer' }}
+        style={{ cursor: "pointer" }}
       >
         <ModalHeader
           className="catering-modal-header border-0"
@@ -447,7 +488,7 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
         >
           <div>
             <h5 className="catering-modal-title">{cateringModalInfo.title}</h5>
-            <small style={{ color: '#139652', fontSize: '14px' }}>
+            <small style={{ color: "#139652", fontSize: "14px" }}>
               {cateringModalInfo.category}
             </small>
           </div>
@@ -457,15 +498,16 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
             <div className="row">
               <div className="col-md-12">
                 <div className="catering-modal-icons mb-2">
-                  {cateringModalInfo.category === 'Hot Coffee . Iced Coffee . Dessert' &&
+                  {cateringModalInfo.category ===
+                    "Hot Coffee . Iced Coffee . Dessert" &&
                     cateringModalInfo.presentation?.map((eachItem, idx) => (
                       <div className="d-flex flex-column" key={idx}>
                         <img
                           src={Barista}
                           style={{
-                            width: '5rem',
-                            height: '5rem',
-                            margin: '1rem',
+                            width: "5rem",
+                            height: "5rem",
+                            margin: "1rem",
                           }}
                           alt="Barista Icon"
                         />
@@ -479,9 +521,9 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                       <img
                         src={Server}
                         style={{
-                          width: '5rem',
-                          height: '5rem',
-                          margin: '1rem',
+                          width: "5rem",
+                          height: "5rem",
+                          margin: "1rem",
                         }}
                         alt="Server Icon"
                       />
@@ -494,11 +536,11 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                     <div className="d-flex flex-column">
                       <FaClock
                         style={{
-                          color: '#FF0000',
-                          width: '4rem',
-                          height: '5rem',
-                          margin: '1rem',
-                          fontSize: '1.3rem',
+                          color: "#FF0000",
+                          width: "4rem",
+                          height: "5rem",
+                          margin: "1rem",
+                          fontSize: "1.3rem",
                         }}
                       />
                       <strong className="align-self-center text-center">
@@ -511,9 +553,9 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                       <img
                         src={StopWatch}
                         style={{
-                          width: '5rem',
-                          height: '5rem',
-                          margin: '1rem',
+                          width: "5rem",
+                          height: "5rem",
+                          margin: "1rem",
                         }}
                         alt="StopWatch Icon"
                       />
@@ -533,7 +575,7 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                             <span>{hotDrink}</span>
                           </li>
                         </ul>
-                      )),
+                      ))
                     )}
                   </div>
                 )}
@@ -569,12 +611,12 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
               <h5>Options</h5>
               {cateringModalInfo.variations?.map((variant, idx) => (
                 <When condition={Boolean(variant.options)} key={idx}>
-                  <span style={{ color: 'red', fontSize: '12px' }}>
+                  <span style={{ color: "red", fontSize: "12px" }}>
                     (select 4 choices of Cold Drinks)
                   </span>
-                  <Button className="btn btn-danger">Required</Button>
                 </When>
               ))}
+              <Button className="btn btn-danger">Required</Button>
             </div>
             <div className="options-choices">
               {cateringModalInfo.variations?.map((variant) =>
@@ -584,13 +626,17 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                     choice={eachOption}
                     quantity={
                       (currentItem?.selectedOptions || selectedOptions).find(
-                        (op) => op.name === eachOption && op.type === 'options',
+                        (op) => op.name === eachOption && op.type === "options"
                       )?.quantity || 0
                     }
-                    increment={() => increaseOption({ name: eachOption, type: 'options' })}
-                    decrement={() => decreaseOption({ name: eachOption, type: 'options' })}
+                    increment={() =>
+                      increaseOption({ name: eachOption, type: "options" })
+                    }
+                    decrement={() =>
+                      decreaseOption({ name: eachOption, type: "options" })
+                    }
                   />
-                )),
+                ))
               )}
               {cateringModalInfo.variations?.map((variant, idx) => (
                 <>
@@ -602,12 +648,12 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                             <strong>Pasta Types</strong>
                             <span
                               style={{
-                                color: 'red',
-                                fontSize: '12px',
-                                margin: '1rem',
+                                color: "red",
+                                fontSize: "12px",
+                                margin: "1rem",
                               }}
                             >
-                              (select {variant.maxChoice} item)
+                              (select {variant.maxChoice} items)
                             </span>
                           </div>
                           {variant.pastaTypes?.map((eachType, idx) => (
@@ -615,20 +661,25 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                               key={idx}
                               choice={eachType}
                               quantity={
-                                (currentItem?.selectedOptions || selectedOptions).find(
-                                  (op) => op.name === eachType && op.type === 'pastaTypes',
+                                (
+                                  currentItem?.selectedOptions ||
+                                  selectedOptions
+                                ).find(
+                                  (op) =>
+                                    op.name === eachType &&
+                                    op.type === "pastaTypes"
                                 )?.quantity || 0
                               }
                               increment={() =>
                                 increaseOption({
                                   name: eachType,
-                                  type: 'pastaTypes',
+                                  type: "pastaTypes",
                                 })
                               }
                               decrement={() =>
                                 decreaseOption({
                                   name: eachType,
-                                  type: 'pastaTypes',
+                                  type: "pastaTypes",
                                 })
                               }
                             />
@@ -639,9 +690,9 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                             <strong>Sauce Types</strong>
                             <span
                               style={{
-                                color: 'red',
-                                fontSize: '12px',
-                                margin: '1rem',
+                                color: "red",
+                                fontSize: "12px",
+                                margin: "1rem",
                               }}
                             >
                               (select {variant.maxChoice} item)
@@ -652,20 +703,25 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                               key={idx}
                               choice={eachType}
                               quantity={
-                                (currentItem?.selectedOptions || selectedOptions).find(
-                                  (op) => op.name === eachType && op.type === 'sauceTypes',
+                                (
+                                  currentItem?.selectedOptions ||
+                                  selectedOptions
+                                ).find(
+                                  (op) =>
+                                    op.name === eachType &&
+                                    op.type === "sauceTypes"
                                 )?.quantity || 0
                               }
                               increment={() =>
                                 increaseOption({
                                   name: eachType,
-                                  type: 'sauceTypes',
+                                  type: "sauceTypes",
                                 })
                               }
                               decrement={() =>
                                 decreaseOption({
                                   name: eachType,
-                                  type: 'sauceTypes',
+                                  type: "sauceTypes",
                                 })
                               }
                             />
@@ -676,9 +732,9 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                             <strong>Meat Options</strong>
                             <span
                               style={{
-                                color: 'red',
-                                fontSize: '12px',
-                                margin: '1rem',
+                                color: "red",
+                                fontSize: "12px",
+                                margin: "1rem",
                               }}
                             >
                               (select {variant.maxChoice} item)
@@ -688,20 +744,25 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                                 key={idx}
                                 choice={eachType}
                                 quantity={
-                                  (currentItem?.selectedOptions || selectedOptions).find(
-                                    (op) => op.name === eachType && op.type === 'meatChoices',
+                                  (
+                                    currentItem?.selectedOptions ||
+                                    selectedOptions
+                                  ).find(
+                                    (op) =>
+                                      op.name === eachType &&
+                                      op.type === "meatChoices"
                                   )?.quantity || 0
                                 }
                                 increment={() =>
                                   increaseOption({
                                     name: eachType,
-                                    type: 'meatChoices',
+                                    type: "meatChoices",
                                   })
                                 }
                                 decrement={() =>
                                   decreaseOption({
                                     name: eachType,
-                                    type: 'meatChoices',
+                                    type: "meatChoices",
                                   })
                                 }
                               />
@@ -710,12 +771,14 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                         </When>
                         <When condition={Boolean(variant.drinkChoices)}>
                           <div className="mb-4">
-                            <strong>Soft Drink(7up or Sprite) with choice of Flavours</strong>
+                            <strong>
+                              Soft Drink(7up or Sprite) with choice of Flavours
+                            </strong>
                             <span
                               style={{
-                                color: 'red',
-                                fontSize: '12px',
-                                margin: '1rem',
+                                color: "red",
+                                fontSize: "12px",
+                                margin: "1rem",
                               }}
                             >
                               (select {variant.maxChoice} item)
@@ -726,20 +789,25 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                               key={idx}
                               choice={eachType}
                               quantity={
-                                (currentItem?.selectedOptions || selectedOptions).find(
-                                  (op) => op.name === eachType && op.type === 'drinkChoices',
+                                (
+                                  currentItem?.selectedOptions ||
+                                  selectedOptions
+                                ).find(
+                                  (op) =>
+                                    op.name === eachType &&
+                                    op.type === "drinkChoices"
                                 )?.quantity || 0
                               }
                               increment={() =>
                                 increaseOption({
                                   name: eachType,
-                                  type: 'drinkChoices',
+                                  type: "drinkChoices",
                                 })
                               }
                               decrement={() =>
                                 decreaseOption({
                                   name: eachType,
-                                  type: 'drinkChoices',
+                                  type: "drinkChoices",
                                 })
                               }
                             />
@@ -750,9 +818,9 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                   </When>
                 </>
               ))}
-              <When condition={cateringModalInfo.category === 'Burger Cart'}>
+              <When condition={cateringModalInfo.category === "Burger Cart"}>
                 <Category
-                  title={'Burger Choices'}
+                  title={"Burger Choices"}
                   totalSelectable={30}
                   options={(() => {
                     // Immediately Invoked Function Expression (IIFE)
@@ -761,19 +829,21 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                       if (variant.burgerOptions)
                         allOptions = variant.burgerOptions.map((op) => ({
                           name: op,
-                          type: 'burgerOptions',
+                          type: "burgerOptions",
                         }));
                     });
                     return allOptions;
                   })()}
-                  selectedOptions={currentItem?.selectedOptions || selectedOptions}
+                  selectedOptions={
+                    currentItem?.selectedOptions || selectedOptions
+                  }
                   increment={(op) => increaseOption(op)}
                   decrement={(op) => decreaseOption(op)}
                 />
               </When>
-              <When condition={cateringModalInfo.category === 'Rice Station'}>
+              <When condition={cateringModalInfo.category === "Rice Station"}>
                 <Category
-                  title={'Rice Choices'}
+                  title={"Rice Choices"}
                   totalSelectable={30}
                   options={(() => {
                     // Immediately Invoked Function Expression (IIFE)
@@ -782,19 +852,21 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                       if (variant.riceOptions)
                         allOptions = variant.riceOptions.map((op) => ({
                           name: op,
-                          type: 'riceOptions',
+                          type: "riceOptions",
                         }));
                     });
                     return allOptions;
                   })()}
-                  selectedOptions={currentItem?.selectedOptions || selectedOptions}
+                  selectedOptions={
+                    currentItem?.selectedOptions || selectedOptions
+                  }
                   increment={(op) => increaseOption(op)}
                   decrement={(op) => decreaseOption(op)}
                 />
               </When>
-              <When condition={cateringModalInfo.category === 'Mix Grill'}>
+              <When condition={cateringModalInfo.category === "Mix Grill"}>
                 <Category
-                  title={'Mix Grill Choices'}
+                  title={"Mix Grill Choices"}
                   totalSelectable={90}
                   options={(() => {
                     // Immediately Invoked Function Expression (IIFE)
@@ -803,12 +875,14 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                       if (variant.grillOptions)
                         allOptions = variant.grillOptions.map((op) => ({
                           name: op,
-                          type: 'grillOptions',
+                          type: "grillOptions",
                         }));
                     });
                     return allOptions;
                   })()}
-                  selectedOptions={currentItem?.selectedOptions || selectedOptions}
+                  selectedOptions={
+                    currentItem?.selectedOptions || selectedOptions
+                  }
                   increment={(op) => increaseOption(op)}
                   decrement={(op) => decreaseOption(op)}
                 />
@@ -820,8 +894,10 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
               <When condition={Boolean(variant.addOns)} key={idx}>
                 <div className="addons-heading d-flex">
                   <h5>
-                    Addons{' '}
-                    <span style={{ color: 'red', fontSize: '12px' }}>(Add plates per tray)</span>{' '}
+                    Addons{" "}
+                    <span style={{ color: "red", fontSize: "12px" }}>
+                      (Add plates per tray)
+                    </span>{" "}
                   </h5>
                 </div>
                 {variant?.addOns?.map((eachAddon, idx) => (
@@ -831,7 +907,7 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                     subtitle={eachAddon.price}
                     quantity={
                       (currentItem?.selectedAddons || selectedAddons).find(
-                        (a) => a.addOn === eachAddon.addOn,
+                        (a) => a.addOn === eachAddon.addOn
                       )?.quantity || 0
                     }
                     increment={() => increaseAddon(eachAddon)}
@@ -850,7 +926,11 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                   checked={currentItem?.isExtraMaleServer || isExtraMaleServer}
                   onChange={() => toggleMaleServer()}
                 />
-                <img src={Server} style={{ width: '35px', height: '33px' }} alt="Server Icon" />
+                <img
+                  src={Server}
+                  style={{ width: "35px", height: "33px" }}
+                  alt="Server Icon"
+                />
                 <p>Request One Extra Server</p>
               </div>
             </div>
@@ -859,12 +939,14 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                 <Checkbox
                   type="checkbox"
                   color="success"
-                  checked={currentItem?.isExtraFemaleServer || isExtraFemaleServer}
+                  checked={
+                    currentItem?.isExtraFemaleServer || isExtraFemaleServer
+                  }
                   onChange={() => toggleFemaleServer()}
                 />
                 <img
                   src={FemaleServer}
-                  style={{ width: '35px', height: '33px' }}
+                  style={{ width: "35px", height: "33px" }}
                   alt="Server Icon"
                 />
               </div>
@@ -880,7 +962,7 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                 className="catering-decrease__btn"
                 onClick={() => decreaseExtraServe()}
               >
-                <BiMinus style={{ fontSize: '0.9rem' }} />
+                <BiMinus style={{ fontSize: "0.9rem" }} />
               </motion.div>
               <span className="catering-quantity">
                 <span>Serves</span>
@@ -891,16 +973,19 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                 className="catering-increase__btn"
                 onClick={() => increaseExtraServe()}
               >
-                <BiPlus style={{ fontSize: '1rem' }} />
+                <BiPlus style={{ fontSize: "1rem" }} />
               </motion.div>
             </div>
           </div>
-          <motion.button
-            whileTap={{ scale: selectedOptions.length === 0 ? 1 : 0.9 }}
+          <Button
+            color="primary"
             type="button"
             className="booknowBtn"
             data-dismiss="modal"
-            disabled={selectedOptions.length === 0}
+            // disabled={selectedOptions.length === 0}
+            disabled={
+              selectedOptions.length === 0 && cateringModalInfo.hasOptions
+            }
             onClick={() => {
               if (currentItem) {
                 deleteBookedItem(bookingId);
@@ -922,22 +1007,23 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                   }),
                 });
                 setBookingId(id);
-                bookNowToggle();
               }
+              bookNowToggle();
             }}
           >
             <span>Book Now</span>
             <span>
-              QAR{' '}
+              QAR{" "}
               {calculatePrice({
                 addons: currentItem?.selectedAddons || selectedAddons,
                 serves: currentItem?.extraServes || extraServes,
                 unitPrice: cateringModalInfo.unitPrice,
-                isExtraServer: currentItem?.isExtraMaleServer || isExtraMaleServer,
+                isExtraServer:
+                  currentItem?.isExtraMaleServer || isExtraMaleServer,
                 defaultPrice: cateringModalInfo.price,
               })}
             </span>
-          </motion.button>
+          </Button>
         </ModalFooter>
       </Modal>
       <Modal
@@ -947,9 +1033,11 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
         // keyboard="false"
         // backdrop="static"
         className="bookNowModal"
-        style={{ cursor: 'pointer', padding: '1rem' }}
+        style={{ cursor: "pointer", padding: "1rem" }}
       >
-        <ModalHeader toggle={bookNowToggle}>When do you want to book this order ?</ModalHeader>
+        <ModalHeader toggle={bookNowToggle}>
+          When do you want to book this order ?
+        </ModalHeader>
         <ModalBody className="dateTimePicker__container">
           <DateTimePicker setDateAndTime={setDateAndTime} disablePast />
 
@@ -970,10 +1058,11 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
       <Modal
         isOpen={confirmationModal}
         toggle={confirmationToggle}
-        style={{ cursor: 'pointer', padding: '1rem' }}
+        style={{ cursor: "pointer", padding: "1rem" }}
       >
         <ModalBody className="dateTimePicker__container">
-          Your order for catering service is confirmed on <h4>{dateAndTime?.toString()}</h4>
+          Your order for catering service is confirmed on{" "}
+          <h4>{dateAndTime?.toString()}</h4>
           {/* <h4>Fri 23 June 2022 4:30pm</h4> */}
         </ModalBody>
       </Modal>

@@ -766,12 +766,13 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
           </div>
         </ModalBody>
         <ModalFooter className="catering-modal-footer d-flex justify-content-around border-0 text-center">
-          <motion.button
-            whileTap={{ scale: selectedOptions.length === 0 ? 1 : 0.9 }}
+          <Button
+            color="primary"
             type="button"
             className="booknowBtn"
             data-dismiss="modal"
-            disabled={selectedOptions.length === 0}
+            // disabled={selectedOptions.length === 0}
+            disabled={selectedOptions.length === 0 && cateringModalInfo.hasOptions}
             onClick={() => {
               if (currentItem) {
                 deleteBookedItem(currentItem.bookingId);
@@ -797,7 +798,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
                 defaultPrice: Number(currentItem?.price || cateringModalInfo.price),
               })}
             </span>
-          </motion.button>
+          </Button>
         </ModalFooter>
       </Modal>
       <Modal

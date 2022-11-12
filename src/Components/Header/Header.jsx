@@ -217,6 +217,13 @@ const Header = () => {
                   {item.display}
                 </NavLink>
               ))}
+              <Button
+                direction="row-responsive"
+                className="signin"
+                onClick={toggleModal}
+              >
+                Sign In
+              </Button>
             </div>
           </div>
 
@@ -258,7 +265,7 @@ const Header = () => {
                           <PersonOutline aria-haspopup="true" />
                         </Box>
                       </DropdownToggle>
-                      <DropdownMenu end>
+                      <DropdownMenu end className="dropDownMenu">
                         <DropdownItem onClick={toggleCollapsed}>
                           <Link
                             style={{
@@ -284,87 +291,6 @@ const Header = () => {
                     </UncontrolledDropdown>
                   </Collapse>
                 </>
-
-                // <div>
-                // <Box
-                //   component={IconButton}
-                //   p={1.25}
-                //   bgcolor="grey.200"
-                //   onClick={handleClick}
-                // >
-                //   <PersonOutline
-                //     aria-controls={open ? "account-menu" : undefined}
-                //     aria-haspopup="true"
-                //     aria-expanded={open ? "true" : undefined}
-                //   />
-                //   <Menu
-                //     anchorEl={anchorEl}
-                //     id="account-menu"
-                //     open={open}
-                //     getContentAnchorEl={null}
-                //     onClose={handleClose}
-                //     onClick={handleClose}
-                //     PaperProps={{
-                //       style: {
-                //         left: '50%',
-                //         transform: 'translateX(30rem) translateY(32%)',
-                //       },
-                //       elevation: 0,
-                //       sx: {
-                //         overflow: "visible",
-                //         filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                //         mt: 1.5,
-                //         "& .MuiAvatar-root": {
-                //           width: 32,
-                //           height: 32,
-                //           ml: -2.5,
-                //           mr: 1,
-                //         },
-                //         "&:before": {
-                //           content: '""',
-                //           display: "block",
-                //           position: "absolute",
-                //           top: 0,
-                //           right: 14,
-                //           width: 10,
-                //           height: 10,
-                //           bgcolor: "background.paper",
-                //           transform: "translateY(-50%) rotate(45deg)",
-                //           zIndex: 0,
-                //         },
-                //       },
-                //     }}
-                //     anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                //     transformOrigin={{ vertical: "top", horizontal: "center" }}
-                //   >
-                //     <Link
-                //       style={{
-                //         textDecoration: "none",
-                //         color: "unset",
-                //         paddingX: "2rem",
-                //       }}
-                //       to="/dashboard/profileInfo"
-                //     >
-                //       <MenuItem
-                //         onClick={() => {
-                //           handleClose();
-                //         }}
-                //       >
-                //         Dashboard
-                //       </MenuItem>
-                //     </Link>
-
-                //     <MenuItem
-                //       onClick={() => {
-                //         handleClose();
-                //         logout();
-                //         navigate("/");
-                //       }}
-                //     >
-                //       Sign out
-                //     </MenuItem>
-                //   </Menu>
-                // </Box>
               )}
 
               {isLogoutMenu && (

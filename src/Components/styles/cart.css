@@ -134,6 +134,11 @@
   border: none;
 }
 
+.checkoutBtn:disabled {
+  background: #139652;
+  opacity: 0.65;
+}
+
 /* .checkoutBtn a {
   color: #ffffff;
   font-size: 1.125rem;
@@ -154,6 +159,10 @@
   .cartSubTotal {
     height: 2.5rem;
   }
+  .checkoutBtn {
+    height: 2.5rem;
+    width: 9.5rem;
+  }
 }
 
 @media only screen and (max-width: 576px) {
@@ -163,6 +172,7 @@
 
   .checkoutBtn {
     height: 2.5rem;
+    width: 9.5rem;
   }
   .cartSubTotal {
     height: 2.5rem;
