@@ -106,7 +106,7 @@ console.log(cartItems)
                 <motion.button
                   type="button"
                   whileTap={{ scale: 0.8 }}
-                  className="checkoutBtn"
+                  className="signIn__checkoutBtn"
                   onClick={() => setCartMenu(false)}
                 >
                   Sign In to Check Out

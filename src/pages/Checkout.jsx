@@ -86,8 +86,8 @@ const Checkout = () => {
 
   useEffect(() => {
     // const bounds = [
-    //   [51.531415650446405, 25.237558639201637], // Southwest coordinates
-    //   [51.46894450363408, 25.432925196559935], // Northeast coordinates
+    //   [51.34941219742703, 25.141354964436943], // Southwest coordinates
+    //   [51.620611003666454, 25.43802583814565], // Northeast coordinates
     // ];
 
     const map = new mapboxgl.Map({

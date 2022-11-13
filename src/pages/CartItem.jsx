@@ -18,7 +18,7 @@ const CartItem = ({ cartItem, setFlag, flag }) => {
         <img src={cartItem?.imageURL} alt="product-img" />
 
         <div className="cart__product-info w-100 d-flex align-items-center gap-4 justify-content-between">
-          <div>
+          <div className='cart__product-infoContainer'>
             <h6 className="cart__product-title">{cartItem?.title}</h6>
             <span className="cart__product-price "> QAR {totalPriceOfItem}</span>
           </div>

@@ -104,6 +104,15 @@ function ExtraFlavour({ extraFlavours, disabled, selectedExFlavours, handleChang
             </div>
           );
         })}
+        <hr
+          style={{
+            background: '#139652',
+            color: '#139652',
+            borderColor: '#139652',
+            height: '3px',
+            width: '50%',
+          }}
+        />
       </div>
     </div>
   );
@@ -504,7 +513,17 @@ function VariationsModal({ modal, toggle, modalInfo }) {
                     </Switch>
                   ))}
                 </div>
-
+                {modalInfo.variations?.map(
+                  (variation) =>
+                    variation.extraFlavours && (
+                      <ExtraFlavour
+                        disabled={!(currentItem?.selectedSize || selectedSize)}
+                        extraFlavours={variation?.extraFlavours}
+                        selectedExFlavours={currentItem?.selectedExFlavours || selectedExFlavours}
+                        handleChangeExFlavour={handleChangeExFlavour}
+                      />
+                    ),
+                )}
                 {modalInfo.variations?.map(
                   (variation) =>
                     variation.addOns && (
@@ -517,17 +536,7 @@ function VariationsModal({ modal, toggle, modalInfo }) {
                     ),
                 )}
 
-                {modalInfo.variations?.map(
-                  (variation) =>
-                    variation.extraFlavours && (
-                      <ExtraFlavour
-                        disabled={!(currentItem?.selectedSize || selectedSize)}
-                        extraFlavours={variation?.extraFlavours}
-                        selectedExFlavours={currentItem?.selectedExFlavours || selectedExFlavours}
-                        handleChangeExFlavour={handleChangeExFlavour}
-                      />
-                    ),
-                )}
+               
               </div>
             </Col>
           </Row>

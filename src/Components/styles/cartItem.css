@@ -9,6 +9,10 @@
   object-fit: cover;
 }
 
+.cart__product-infoContainer{
+  width: 90px;
+}
+
 .cart__product-title {
   font-size: 0.8rem;
   font-weight: 400;
