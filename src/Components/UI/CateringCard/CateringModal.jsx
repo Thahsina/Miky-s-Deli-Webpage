@@ -122,7 +122,6 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
     useStateValue()[2];
   const [bookingId, setBookingId] = React.useState();
   const currentItem = bookedItems.find((i) => i.bookingId === bookingId);
-
   const [selectedOptions, setSelectedOptions] = React.useState([]);
   const [selectedAddons, setSelectedAddons] = React.useState([]);
   const [isExtraMaleServer, setExtraMaleServer] = React.useState(false);
