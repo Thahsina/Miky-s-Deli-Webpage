@@ -127,6 +127,8 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
   const [isExtraMaleServer, setExtraMaleServer] = React.useState(false);
   const [isExtraFemaleServer, setExtraFemaleServer] = React.useState(false);
   const [extraServes, setExtraServes] = React.useState(0);
+  console.log({ selectedOptions })
+
   const toggleMaleServer = () => {
     // if item is already booked, update the item in booked items also
     if (currentItem) {
@@ -454,6 +456,7 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
   const confirmationToggle = () => {
     setConfirmationModal(!confirmationModal);
   };
+
 
   const saveCateringOrderDetails = () => {
     const cateringOrderData = {
@@ -983,7 +986,7 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
             data-dismiss="modal"
             // disabled={selectedOptions.length === 0}
             disabled={
-              selectedOptions.length === 0 && cateringModalInfo.hasOptions
+              selectedOptions.length <= 3 && cateringModalInfo.hasOptions
             }
             onClick={() => {
               if (currentItem) {
@@ -1006,8 +1009,9 @@ const CateringModal = ({ modal, toggle, cateringModalInfo }) => {
                   }),
                 });
                 setBookingId(id);
+                bookNowToggle();
+
               }
-              bookNowToggle();
             }}
           >
             <span>Book Now</span>
