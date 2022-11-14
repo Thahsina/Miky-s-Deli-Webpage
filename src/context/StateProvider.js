@@ -1,6 +1,4 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { getAllOrders } from '../firebaseFunctions';
-import { actionType } from './reducer';
 export const StateContext = createContext();
 export const StateProvider = ({ reducer, initialState, children }) => {
   const [cartItems, setCartItems] = React.useState([]);

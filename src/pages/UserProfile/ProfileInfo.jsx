@@ -1,18 +1,17 @@
 import React, { useState } from "react";
-import Dashboard from "./SideBar";
 import "../../Components/styles/profileInfo.css";
 import {
   Container,
   Row,
   Col,
   FormGroup,
-  Form,
+  
   Input,
   Button,
 } from "reactstrap";
 import { FaCamera } from "react-icons/fa";
 import { useStateValue } from "../../context/StateProvider";
-import { getAuth, updateProfile } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import NoprofileImg from "../../images/noprofile.jpg";
 import { saveUser } from "../../firebaseFunctions";
 
@@ -22,7 +21,7 @@ const ProfileInfo = () => {
   const [email, setEmail] = useState(user.email);
   const [img, setImage] = useState(false);
   const [preview, setPreview] = useState(null);
-  const auth = getAuth();
+  // const auth = getAuth();
 
   const updateProfileInfo = () => {
     user.displayName = name;
@@ -40,10 +39,10 @@ const ProfileInfo = () => {
 
   console.log(user);
 
-  const changeProfilePic = () => {
-    user.photoUrl = "";
-    console.log("img selected");
-  };
+  // const changeProfilePic = () => {
+  //   user.photoUrl = "";
+  //   console.log("img selected");
+  // };
 
   return (
     <>
@@ -52,10 +51,11 @@ const ProfileInfo = () => {
           <Col lg="4">
             <div className="profileInfo__container">
               <div className="profileImg">
-                <img src={preview ? preview : NoprofileImg} />
+                <img src={preview ? preview : NoprofileImg} alt="User Profile picture"/>
                 <div className="profileImg__round">
                   <input
                     type="file"
+                    value=""
                     onChange={(e) => {
                       setImage(e.target.files[0]);
                       const reader = new FileReader();

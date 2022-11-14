@@ -28,7 +28,7 @@ const Checkout = () => {
   const navigate = useNavigate();
   let date = new Date();
   const options = { month: "long" };
-  let month = new Intl.DateTimeFormat("en-US", options).format(date);
+  // let month = new Intl.DateTimeFormat("en-US", options).format(date);
 
   const calculateTotalPrice = () => {
     return cartItems.reduce(function (accumulator, item) {

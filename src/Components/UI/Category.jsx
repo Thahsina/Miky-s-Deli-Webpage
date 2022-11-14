@@ -15,29 +15,29 @@ import "../styles/category.css";
 import { useEffect } from "react";
 import { useRef } from "react";
 
-const categoryData = [
-  {
-    display: "Pizzas",
-    imgUrl: categoryImg01,
-  },
-  {
-    display: "Pastas",
-    imgUrl: categoryImg02,
-  },
+// const categoryData = [
+//   {
+//     display: "Pizzas",
+//     imgUrl: categoryImg01,
+//   },
+//   {
+//     display: "Pastas",
+//     imgUrl: categoryImg02,
+//   },
 
-  {
-    display: "Sandwiches",
-    imgUrl: categoryImg03,
-  },
+//   {
+//     display: "Sandwiches",
+//     imgUrl: categoryImg03,
+//   },
 
-  {
-    display: "Appetizers",
-    imgUrl: categoryImg04,
-  },
-];
+//   {
+//     display: "Appetizers",
+//     imgUrl: categoryImg04,
+//   },
+// ];
 
 const Category = () => {
-  const [{ menuItems }, dispatch] = useStateValue();
+  const [{ menuItems }] = useStateValue();
   const [islandClick, setIslandClick] = useState(false);
   const [scrollValue, setScrollValue] = useState(0);
   const specialitySection = useRef();
@@ -64,13 +64,13 @@ const Category = () => {
     });
   };
 
-  const toggleActiveCatStyle = (index) => {
-    if (categoryState.categories[index] === categoryState.activeCategory) {
-      return "activeCat";
-    } else {
-      return " ";
-    }
-  };
+  // const toggleActiveCatStyle = (index) => {
+  //   if (categoryState.categories[index] === categoryState.activeCategory) {
+  //     return "activeCat";
+  //   } else {
+  //     return " ";
+  //   }
+  // };
 
   const filterCat = (selectedCat) => {
     const updatedCatItems = menuItems.filter((eachItem) => {

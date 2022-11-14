@@ -8,7 +8,7 @@ import "../styles/footer.css";
 import {
   BsFacebook,
   BsInstagram,
-  BsSnapchat,
+  // BsSnapchat,
   BsWhatsapp,
 } from "react-icons/bs";
 

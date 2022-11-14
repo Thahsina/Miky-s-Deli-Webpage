@@ -3,11 +3,11 @@ import { Helmet } from "react-helmet-async";
 import { AnimatePresence, motion } from "framer-motion";
 
 import "../../Components/styles/admin.css";
-import { MdAdd, MdKeyboardBackspace } from "react-icons/md";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { MdKeyboardBackspace } from "react-icons/md";
+import { NavLink, Outlet } from "react-router-dom";
 import { FaBars, FaHome, FaPlus } from "react-icons/fa";
 import { BsCartCheck } from "react-icons/bs";
-import { Col, Container, Row } from "reactstrap";
+
 
 const routes = [
   {
@@ -41,22 +41,22 @@ const Admin = () => {
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
 
-  const showAnimation = {
-    hidden: {
-      width: 0,
-      opacity: 0,
-      transition: {
-        duration: 0.3,
-      },
-    },
-    show: {
-      opacity: 1,
-      width: "auto",
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
+  // const showAnimation = {
+  //   hidden: {
+  //     width: 0,
+  //     opacity: 0,
+  //     transition: {
+  //       duration: 0.3,
+  //     },
+  //   },
+    // show: {
+    //   opacity: 1,
+    //   width: "auto",
+    //   transition: {
+    //     duration: 0.3,
+    //   },
+    // },
+  // };
 
   return (
     <>

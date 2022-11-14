@@ -1,7 +1,7 @@
 import React from "react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Box, Menu, MenuItem } from "@mui/material";
+import { Box } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import { PersonOutline } from "@mui/icons-material";
 import Cart from "../../pages/Cart";
@@ -9,7 +9,6 @@ import adminUser from "../../images/adminUser.png";
 import {
   Container,
   Button,
-  Modal,
   Collapse,
   DropdownItem,
   DropdownMenu,
@@ -20,10 +19,10 @@ import {
 import { IoIosCloseCircle } from "react-icons/io";
 import { IoCartSharp } from "react-icons/io5";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
-import Area from "../../pages/Area";
+// import Area from "../../pages/Area";
 import PhoneInput from "react-phone-number-input/input";
 import "react-phone-number-input/style.css";
-import { NavLink, Link, Navigate, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import {
   getAuth,
   RecaptchaVerifier,
@@ -62,17 +61,16 @@ const Header = () => {
   const menuRef = useRef(null);
   const toggleMenu = () => menuRef.current.classList.toggle("show__menu");
 
-  const autoFocusRef = useRef(null);
+  // const autoFocusRef = useRef(null);
 
   const [{ user }, dispatch] = useStateValue();
-  const { cartItems, clearCart, calculateTotalPriceOfItem } =
-    useStateValue()[2];
+  const { cartItems } = useStateValue()[2];
   const [isLogoutMenu, setIsLogoutMenu] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("+974 ");
   const [OTP, setOTP] = useState("");
   const [expandForm, setExpandForm] = useState(false);
   const [cartMenu, setCartMenu] = useState(false);
-  const [userRole, setUserRole] = useState();
+  // const [userRole, setUserRole] = useState();
   const [error, setError] = useState(null);
   const [collapsed, setCollapsed] = useState(true);
   const [loginStatus, setLoginStatus] = useState("");
@@ -91,7 +89,7 @@ const Header = () => {
   };
 
   const toggleCollapsed = () => setCollapsed(!collapsed);
-  const open = Boolean(anchorEl);
+  // const open = Boolean(anchorEl);
 
   const firebaseAuth = getAuth(app);
 
@@ -129,19 +127,17 @@ const Header = () => {
   };
 
   const toggleModal = () => {
-    {
-      !user && setIsLogoutMenu(!isLogoutMenu);
-    }
+    !user && setIsLogoutMenu(!isLogoutMenu);
   };
 
-  const handleClose = () => {
-    setAnchorEl(!anchorEl);
-  };
+  // const handleClose = () => {
+  //   setAnchorEl(!anchorEl);
+  // };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-    setAnchorEl(!anchorEl);
-  };
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  //   setAnchorEl(!anchorEl);
+  // };
 
   const logout = () => {
     setIsLogoutMenu(false);

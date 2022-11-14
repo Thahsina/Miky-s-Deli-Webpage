@@ -1,10 +1,10 @@
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink} from "react-router-dom";
 import { FaBars, FaHome, FaUser } from "react-icons/fa";
 import { BsCartCheck } from "react-icons/bs";
 import { useState } from "react";
-import { MdKeyboardBackspace,MdLocationOn,MdFoodBank } from "react-icons/md";
+import { MdKeyboardBackspace,MdFoodBank } from "react-icons/md";
 
 import "../../Components/styles/sideBar.css";
 

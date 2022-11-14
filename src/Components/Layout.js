@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { AnimatePresence } from "framer-motion";
 import Header from "./Header/Header.jsx";
 import Footer from "./Footer/Footer.jsx";

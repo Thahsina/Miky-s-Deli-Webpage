@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import Slider from "react-slick";
 import { Col, Container, Row } from "reactstrap";
 import { useStateValue } from "../../context/StateProvider";
@@ -18,7 +18,7 @@ const TestimonialSlider = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user }] = useStateValue();
   const [isLoading, setIsLoading] = useState(false);
   const [reviewName, setReviewName] = useState("");
   const [email, setEmail] = useState("");

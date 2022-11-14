@@ -6,7 +6,7 @@ import { useStateValue } from "../../context/StateProvider";
 import { Helmet } from "react-helmet-async";
 
 const CateringPage = () => {
-  const [{ cateringMenuItems }, dispatch] = useStateValue();
+  const [{ cateringMenuItems }] = useStateValue();
 
   return (
     <>

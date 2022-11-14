@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Col, Row } from "reactstrap";
-import { useStateValue } from "../../context/StateProvider";
 import "../styles/orderCardUser.css";
 import useCollapse from "react-collapsed";
 
 const OrderCardUser = ({ data }) => {
   const navigate = useNavigate();
-  const { addToCart } = useStateValue()[2];
+  // const { addToCart } = useStateValue()[2];
   const [isExpanded, setExpanded] = useState(false);
   const { getCollapseProps, getToggleProps } = useCollapse({ isExpanded });
   const [currentOrderId, setCurrentOrderId] = useState();

@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useStateValue } from "../../context/StateProvider";
 import OrderCardAdmin from "../../Components/UI/OrderCardAdmin";
 import NoOrderImg from "../../images/NoOrders.svg";
-import { fetchAllOrders, getAllOrders } from "../../firebaseFunctions";
-import { actionType } from "../../context/reducer";
-import { useReducer } from "react";
+
 
 const CurrentOrdersPage = () => {
-  const [{ orders }, dispatch] = useStateValue();
+  const [{ orders }] = useStateValue();
 
 
   return (

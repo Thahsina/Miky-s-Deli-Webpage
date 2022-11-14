@@ -1,18 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Col, Row } from "reactstrap";
 import "../styles/orderCardAdmin.css";
-import {
-  acceptOrders,
-  getAllOrders,
-  fetchAllOrders,
-  fetchAcceptedOrders,
-  getAcceptedOrders,
-} from "../../firebaseFunctions";
-import { actionType } from "../../context/reducer";
-import { useStateValue } from "../../context/StateProvider";
+
+// import { useStateValue } from "../../context/StateProvider";
 
 const AcceptedOrderCard = ({ data }) => {
-  const [{ user, deliveryZone, orders }, dispatch] = useStateValue();
+  // const [{ user, deliveryZone, orders }, dispatch] = useStateValue();
   return (
     <>
       {data &&
@@ -74,7 +67,7 @@ const AcceptedOrderCard = ({ data }) => {
                         - Pasta type: {orderItem.selectedPastaType}
                       </div>
                     )}
-                    {console.log(orderItem.selectedFlavour, orderItem.title)}
+                    {/* {console.log(orderItem.selectedFlavour, orderItem.title)} */}
                     {orderItem.selectedFlavour && (
                       <div style={{ marginLeft: "0.8rem" }}>
                         - Flavour: <b>{orderItem.selectedFlavour}</b>

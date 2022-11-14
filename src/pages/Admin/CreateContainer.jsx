@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Col } from "reactstrap";
 import "../../Components/styles/createItem.css";
 import { AnimatePresence, motion } from "framer-motion";
 import Loader from "../../Components/UI/Loader";
@@ -100,7 +100,7 @@ const categories = [
 ];
 
 const CreateContainer = () => {
-  const [{ menuItems }, dispatch] = useStateValue();
+  const [dispatch] = useStateValue();
   const [title, setTitle] = useState("");
   const [arabicTitle, setArabicTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -121,10 +121,10 @@ const CreateContainer = () => {
 
     uploadTask.on(
       "state_changed",
-      (snapshot) => {
-        const uploadProgress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      },
+      // (snapshot) => {
+        // const uploadProgress =
+        //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      // },
       (error) => {
         console.log(error);
         setFields(true);

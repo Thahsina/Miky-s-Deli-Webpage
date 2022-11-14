@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Row, Table } from "reactstrap";
+import { Col, Container, Row } from "reactstrap";
 import "../../Components/styles/orders.css";
 import OrderCardUser from "../../Components/UI/OrderCardUser";
 import { useStateValue } from "../../context/StateProvider";
@@ -20,7 +20,7 @@ const Orders = () => {
 
   useEffect(() => {
     fetchUserOrders(user);
-  }, []);
+  }, [user]);
 
   return (
     <>

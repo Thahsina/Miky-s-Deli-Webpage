@@ -3,20 +3,20 @@ import { NavLink, Link } from "react-router-dom";
 import "../styles/servicesHeader.css";
 import logo from "../../images/mikyslogo.png";
 
-const nav__links = [
-  {
-    display: "Home",
-    path: "/home",
-  },
-  {
-    display: "Catering Menu",
-    path: "/menu",
-  },
-  {
-    display: "Drop Off Menu",
-    path: "/services/catering",
-  },
-];
+// const nav__links = [
+//   {
+//     display: "Home",
+//     path: "/home",
+//   },
+//   {
+//     display: "Catering Menu",
+//     path: "/menu",
+//   },
+//   {
+//     display: "Drop Off Menu",
+//     path: "/services/catering",
+//   },
+// ];
 
 const ServicesHeader = () => {
   return (

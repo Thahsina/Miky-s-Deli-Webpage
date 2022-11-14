@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Col, Row } from "reactstrap";
 import "../styles/orderCardAdmin.css";
 import {
   acceptOrders,
   getAllOrders,
-  fetchAllOrders,
-  fetchAcceptedOrders,
   getAcceptedOrders,
 } from "../../firebaseFunctions";
 import { actionType } from "../../context/reducer";
 import { useStateValue } from "../../context/StateProvider";
 
 const OrderCard = ({ data }) => {
-  const [{ user, deliveryZone, orders }, dispatch] = useStateValue();
+  const [ dispatch] = useStateValue();
   return (
     <>
       {data &&

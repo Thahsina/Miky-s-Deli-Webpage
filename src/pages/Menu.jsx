@@ -10,7 +10,7 @@ import {
   BsFillArrowLeftCircleFill,
 } from "react-icons/bs";
 import { useStateValue } from "../context/StateProvider";
-import CardSkeleton from "../Components/UI/CardSkeleton";
+// import CardSkeleton from "../Components/UI/CardSkeleton";
 
 const PreviousBtn = (props) => {
   // console.log(props);
@@ -89,7 +89,7 @@ const Menu = () => {
   const [wordEntered, setWordEntered] = useState("");
   const [searchItems, setSearchItems] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [{ menuItems }, dispatch] = useStateValue();
+  const [{ menuItems }] = useStateValue();
   const [items, setItems] = useState(menuItems);
 
   const keys = ["title", "category"];

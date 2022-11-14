@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import ServicesHeader from "../../Components/Header/ServicesHeader";
 import "../../Components/styles/servicesPage.css";
 

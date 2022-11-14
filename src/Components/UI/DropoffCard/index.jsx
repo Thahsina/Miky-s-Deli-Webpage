@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import Location from "../../../images/location.png";
+// import Location from "../../../images/location.png";
 import BookNow from "../../../images/bookNow.png";
 
 import { When } from "react-if";

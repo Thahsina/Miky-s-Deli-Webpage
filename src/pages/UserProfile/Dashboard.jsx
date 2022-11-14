@@ -3,7 +3,7 @@ import SideBar from "../UserProfile/SideBar";
 import { Helmet } from "react-helmet-async";
 import { Outlet } from "react-router-dom";
 import "../../Components/styles/dashboard.css";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Col } from "reactstrap";
 // import ProfileInfo from "./ProfileInfo";
 
 const Dashboard = () => {

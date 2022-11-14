@@ -1,8 +1,7 @@
 import React from "react";
-import { Container, Col, Row } from "reactstrap";
+import {  Col, Row } from "reactstrap";
 // import "../styles/cateringOrderCard.css";
-import { actionType } from "../../context/reducer";
-import { useStateValue } from "../../context/StateProvider";
+
 
 const CateringOrderCardAdmin = ({ data }) => {
   
