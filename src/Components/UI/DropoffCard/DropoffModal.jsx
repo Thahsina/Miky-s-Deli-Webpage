@@ -771,7 +771,7 @@ export default function DropoffModal({ modal, toggle, cateringModalInfo }) {
             type="button"
             className="booknowBtn"
             data-dismiss="modal"
-            // disabled={selectedOptions.length === 0}
+           
             disabled={selectedOptions.length === 0 && cateringModalInfo.hasOptions}
             onClick={() => {
               if (currentItem) {
