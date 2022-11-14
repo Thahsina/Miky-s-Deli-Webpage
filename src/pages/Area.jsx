@@ -6,7 +6,7 @@ import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
 
 const Area = () => {
-  const [dispatch] = useStateValue();
+  const [{},dispatch] = useStateValue();
   const [modal, setModal] = useState(true);
   const toggle = (e) => {
     setModal(!modal);

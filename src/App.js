@@ -18,7 +18,7 @@ import { actionType } from "./context/reducer";
 import { SkeletonTheme } from "react-loading-skeleton";
 
 function App() {
-  const [dispatch] = useStateValue();
+  const [{},dispatch] = useStateValue();
 
   const fetchMenuItems = async () => {
     await getAllMenuItems().then((data) => {
